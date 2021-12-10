@@ -1,0 +1,136 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.menu {
+  font-family: "Poppins", sans-serif;
+  background-color: #e5e5e5;
+  min-height: 100vh;
+
+  &__header {
+    background-color: white;
+    min-height: 7vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    box-shadow: 0px 6px 31px rgba(8, 37, 85, 0.122);
+  }
+
+  &__heading {
+    font-size: 3rem;
+    font-weight: 600;
+  }
+
+  &__cart {
+    display: flex;
+    position: relative;
+  }
+
+  &__cart--icon {
+    font-size: 2rem;
+    border: 4px solid black;
+    padding: 0.8rem 0.7rem;
+    border-radius: 10px;
+  }
+  &__cart--itemCount {
+    font-size: 1.2rem;
+    line-height: 0.5rem;
+    padding: 0.8rem;
+    background: #ffc72c;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    border: 3px solid white;
+    top: -20%;
+    right: -35%;
+  }
+
+  &__logo {
+    display: block;
+    margin: 0 auto;
+    margin-top: 2rem;
+  }
+}
+
+.shop {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 2rem;
+  grid-gap: 3%;
+  &__menu {
+    grid-column: 0 / 1;
+  }
+  &__products {
+    grid-column: 2 / -1;
+  }
+  &__productSection {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 70vh;
+    padding: 1rem;
+    margin-top: 1rem;
+    padding-top: 0rem;
+  }
+  &__menuList {
+    list-style: none;
+  }
+  &__menuListItem {
+    font-size: 28px;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    padding-left: 1.8rem;
+    position: relative;
+    font-weight: normal;
+    line-height: 5rem;
+  }
+  &__menuListItem.active {
+    background-color: #ffc72c;
+    font-weight: 600;
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.15);
+  }
+  &__menuListItem::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    height: 60%;
+    width: 0.5rem;
+    background-color: #ffc72c;
+    top: 1.2rem;
+    left: 0;
+  }
+  &__productSection--card {
+    padding: 1rem;
+    padding-top: 0;
+  }
+  &__productSection--image {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: 284px;
+    height: 147px;
+  }
+  &__productSection--cardHeading {
+    text-align: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  &__productSection--cardParag {
+    color: #8a959e;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  &__productSection--cardPrice {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+}
