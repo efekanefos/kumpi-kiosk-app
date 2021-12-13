@@ -211,7 +211,15 @@ const meals = [
 ];
 
 const shop__productSection = document.querySelector(".shop__productSection");
+const cartSection = document.querySelector(".cartSection");
+const cartSection__closeIcon = document.querySelector(
+  ".cartSection__closeIcon"
+);
 
+/* Fiyatların sıralandığı Array */
+let newArr = [];
+
+/* yemeklerin ui üzerinde dizilmesi */
 shop__productSection.innerHTML = meals
   .map(function (item) {
     return `
@@ -225,4 +233,48 @@ shop__productSection.innerHTML = meals
   })
   .join("");
 
-console.log(shop__productSection);
+/* x ikonunun cartSection kısmını gizlemesi */
+cartSection__closeIcon.addEventListener("click", function () {
+  cartSection.style.transform = "translateY(100%)";
+  cartSection__closeIcon.style.transform = "translateY(-300%)";
+  cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
+});
+
+/* reducer fonksiyonunun ne yapması gerektiğini belirten toplama fonk. */
+function getSum(total, num) {
+  return total + num;
+}
+
+/* Bir Item seçildiğinde tekrarlanan fonk. */
+function selectItem(event) {
+  /* cartSection kısmını ve x ikonunu ortaya çıkarma */
+  cartSection.style.transform = "translateY(0%)";
+  cartSection__closeIcon.style.transform = "translateY(0%)";
+  cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
+
+  /* seçilen yeni Item'in bilgilerini çektiğimiz ana yapı */
+  let newItem = event.target.parentNode.children;
+  console.log(newItem);
+
+  /* seçilen item'ın fiyat verisini alıp float'a çevirip array içine push
+  ettiğimiz kısım */
+  let newItemPrice = parseFloat(
+    event.target.parentNode.children[3].textContent.slice(1, -1)
+  );
+  newArr.push(newItemPrice);
+  console.log(newArr);
+
+  /* reduce metodu ile toplam fiyat bilgisini elde ediyoruz. */
+  console.log(newArr.reduce(getSum, 0));
+
+  /* seçilen item'ın verilerini cartSection üzerinde display ediyoruz. */
+  cartSection.innerHTML = `
+  <img class="cardSection__Img" src="${event.target.parentNode.children[0].src}"/>
+  <h1>${event.target.parentNode.children[1].textContent}</h1>
+  <p>${event.target.parentNode.children[2].textContent}</p>
+  <h3>${event.target.parentNode.children[3].textContent}</h3>`;
+}
+
+/* bu section içindeki herhangi bir item'a tıklanırsa selectItem fonksiyonu
+devreye girsin */
+shop__productSection.addEventListener("click", selectItem);

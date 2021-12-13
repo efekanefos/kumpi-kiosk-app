@@ -8,6 +8,8 @@
   font-family: "Poppins", sans-serif;
   background-color: #e5e5e5;
   min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 
   &__header {
     background-color: white;
@@ -21,7 +23,7 @@
   }
 
   &__heading {
-    font-size: 3rem;
+    font-size: 250%; /* 3rem */
     font-weight: 600;
   }
 
@@ -31,15 +33,15 @@
   }
 
   &__cart--icon {
-    font-size: 2rem;
+    font-size: 200%; /* 2rem */
     border: 4px solid black;
     padding: 0.8rem 0.7rem;
     border-radius: 10px;
   }
   &__cart--itemCount {
-    font-size: 1.2rem;
+    font-size: 90%; /* 1.2rem */
     line-height: 0.5rem;
-    padding: 0.8rem;
+    padding: 18%; /* 0.8rem */
     background: #ffc72c;
     border-radius: 50%;
     display: inline-block;
@@ -53,6 +55,7 @@
     display: block;
     margin: 0 auto;
     margin-top: 2rem;
+    width: 15%;
   }
 }
 
@@ -74,7 +77,7 @@
     align-items: center;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 70vh;
+    height: 78vh;
     padding: 1rem;
     margin-top: 1rem;
     padding-top: 0rem;
@@ -83,7 +86,7 @@
     list-style: none;
   }
   &__menuListItem {
-    font-size: 28px;
+    font-size: 150%; /* 28px */
     margin-top: 1rem;
     padding: 0.5rem;
     padding-left: 1.8rem;
@@ -114,23 +117,111 @@
     display: block;
     margin: 0 auto;
     text-align: center;
-    width: 284px;
-    height: 147px;
+    width: 100%; /*width: 284px; */
+    height: auto; /* height: 147px; */
   }
   &__productSection--cardHeading {
     text-align: center;
     font-style: normal;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 90%; /* 1.1rem */
   }
   &__productSection--cardParag {
     color: #8a959e;
-    font-size: 0.8rem;
+    font-size: 60%; /* 0.8rem */
     text-align: center;
   }
   &__productSection--cardPrice {
     text-align: center;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 100%; /* 1.5rem */
+  }
+}
+
+.cartSection {
+  background-color: #fff;
+  clip-path: polygon(
+    50% 10%,
+    69% 0,
+    100% 0,
+    100% 78%,
+    100% 100%,
+    0 100%,
+    0 78%,
+    0 0,
+    32% 0
+  );
+  width: 100%;
+  height: 80%;
+  position: absolute;
+  bottom: 0rem;
+  left: 0;
+  transform: translateY(100%);
+  text-align: center;
+  transition: all 2s;
+  &__closeIcon {
+    color: #fff;
+    font-size: 10rem;
+    position: absolute;
+    transition: all 2s;
+    top: 20%;
+    left: 50%;
+    transform: translateY(-300%) translate(-50%, -50%);
+    z-index: 9999;
+  }
+  & img {
+    display: block;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 25%;
+  }
+
+  & h1 {
+    font-size: 3rem;
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+
+  & p {
+    font-size: 2rem;
+    color: #8a959e;
+    width: 70%;
+    margin: 0 auto;
+  }
+  & h3 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-top: 5%;
+  }
+}
+
+@media (max-width: 785px) {
+  .shop {
+    &__menuListItem {
+      font-size: 90%; /* 28px */
+      line-height: 3rem;
+    }
+    &__menuListItem::before {
+      height: 60%;
+      top: 0.8rem;
+      left: 0%;
+    }
+  }
+  .menu {
+    &__heading {
+      font-size: 120%; /* 3rem */
+      font-weight: 600;
+    }
+    &__cart--icon {
+      font-size: 100%; /* 2rem */
+      border: 4px solid black;
+      padding: 0.8rem 0.7rem; /* padding: 0.8rem 0.7rem; */
+      border-radius: 10px;
+    }
+    &__cart--itemCount {
+      font-size: 70%; /* 1.2rem */
+      line-height: 0.5rem;
+      padding: 15%; /* 0.8rem */
+    }
   }
 }
