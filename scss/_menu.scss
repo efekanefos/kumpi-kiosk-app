@@ -39,7 +39,7 @@
     border-radius: 10px;
   }
   &__cart--itemCount {
-    font-size: 90%; /* 1.2rem */
+    font-size: 100%; /* 1.2rem */
     line-height: 0.5rem;
     padding: 18%; /* 0.8rem */
     background: #ffc72c;
@@ -49,6 +49,7 @@
     border: 3px solid white;
     top: -20%;
     right: -35%;
+    font-weight: bold;
   }
 
   &__logo {
@@ -156,7 +157,7 @@
   position: absolute;
   bottom: 0rem;
   left: 0;
-  transform: translateY(100%);
+  transform: translateY(100%); /* 100 */
   text-align: center;
   transition: all 2s;
   &__closeIcon {
@@ -169,29 +170,162 @@
     transform: translateY(-300%) translate(-50%, -50%);
     z-index: 9999;
   }
-  & img {
+  &__Btns {
+    display: grid;
+    width: 100%;
+    position: absolute;
+    bottom: 0%;
+    left: 0;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5rem;
+    padding: 5rem;
+    padding-top: 0rem;
+    text-align: center;
+    z-index: 99;
+  }
+  &__leftBtn,
+  &__rightBtn {
+    padding: 2rem 6rem; /* 2rem 6rem */
+    font-size: 2rem; /* 2rem*/
+    border-radius: 42.5px;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+  }
+  &__leftBtn {
+    background-color: #ffc72c;
+    color: #000;
+    transform: translateX(-300%);
+    transition: all 2s;
+  }
+  &__rightBtn {
+    background-color: #000000;
+    color: #fff;
+    transform: translateX(300%);
+    transition: all 2s;
+  }
+  &__Img {
     display: block;
     width: 60%;
     margin: 0 auto;
     margin-top: 25%;
   }
 
-  & h1 {
+  &__Heading {
     font-size: 3rem;
     margin-top: 2%;
     margin-bottom: 2%;
   }
 
-  & p {
+  &__Ingridients {
     font-size: 2rem;
     color: #8a959e;
     width: 70%;
     margin: 0 auto;
   }
-  & h3 {
+  &__Price {
     font-size: 4rem;
     font-weight: 700;
     margin-top: 5%;
+  }
+}
+.basket {
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  top: 7%;
+  right: 0;
+  transform: translateX(150%);
+  transition: all 2s;
+  background-color: white;
+  &__closeIcon {
+    color: black;
+    font-size: 300%;
+    margin-left: 5%;
+    margin-top: 5%;
+    text-align: center;
+  }
+  &__closeIcon::after {
+    content: "close";
+    font-size: 30%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.basket__itemList {
+  padding: 5%;
+  padding-right: 2%;
+  width: 100%;
+  position: relative;
+  &--itemCard {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    margin-top: 10%;
+  }
+  &--itemCard:first-child {
+    margin-top: 0% !important;
+  }
+  &--divv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+  }
+  &--itemImg {
+    width: 50%;
+  }
+  &--itemHeading {
+    font-size: 1.5rem;
+    margin-top: 2%;
+  }
+  &--itemParag {
+    width: 150%;
+    margin-top: 4%;
+  }
+  &--itemPrice {
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: 700;
+    position: absolute;
+    top: 0;
+    right: 30%;
+  }
+
+  &--counterDiv {
+    display: flex;
+    font-size: 150%;
+    color: #ff5722;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  &--counterDiv * {
+    margin-right: 8%;
+    font-weight: 700;
+    font-size: 1.7rem;
+  }
+
+  &--counterPlusBtn,
+  &--counterMinusBtn {
+    background-color: #fff4e4;
+    padding: 4%;
+    border-radius: 50%;
+  }
+
+  &--counterPlusBtn {
+    margin-right: 0%;
+  }
+
+  &__checkoutDiv {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 
