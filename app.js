@@ -224,6 +224,10 @@ const basket__itemList = document.querySelector(".basket__itemList");
 const basket__itemList__totalPrice = document.querySelector(
   ".basket__itemList--totalPrice"
 );
+const customizeSection = document.querySelector(".customizeSection");
+const customizeSection__closeIcon = document.querySelector(
+  ".customizeSection__closeIcon"
+);
 /* Fiyatların sıralandığı Array */
 let newArr = [];
 
@@ -296,6 +300,7 @@ function selectItem(event) {
 let itemCount = parseInt(menu__cart__itemCount.innerText);
 let itemArray = [];
 function addBasket(event) {
+  let productCount = 1;
   /* add Basket butonunun cartSection kısmını gizlemesi */
   cartSection.style.transform = "translateY(100%)";
   cartSection__closeIcon.style.transform = "translateY(-300%)";
@@ -382,12 +387,17 @@ function addBasket(event) {
       event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
     );
     /* addBasket içinde kaldığı için artmıyor olabilir */
+    /*
     let counterSpanPlus = parseInt(
       event.target.parentNode.parentNode.children[2].children[1].innerText
     );
     counterSpanPlus = ++counterSpanPlus;
     console.log(counterSpanPlus);
+    */
     /* */
+    productCount = productCount + 1;
+    event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
+    console.log(productCount);
 
     newArr.push(newItemPrice);
     console.log(newArr);
@@ -400,22 +410,33 @@ function addBasket(event) {
     let newItemPrice = parseFloat(
       event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
     );
+    /*
     let counterSpan =
       event.target.parentNode.parentNode.children[2].children[1].textContent;
     console.log(counterSpan);
-    if (counterSpan > 0) {
+    */
+    if (productCount > 1) {
       //newArr.pop(newItemPrice);
       //console.log(newArr.indexOf(newItemPrice));
       let lastItem = newArr.indexOf(newItemPrice);
       if (lastItem > -1) {
         newArr.splice(lastItem, 1);
       }
+      productCount = productCount - 1;
+      event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
+      console.log(productCount);
 
       //console.log(newArr);
       basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
       menu__cart__itemCount.textContent = newArr.length;
     } else {
-      itemCounterMinusBtn.style.display = "none";
+      let lastItem = newArr.indexOf(newItemPrice);
+      if (lastItem > -1) {
+        newArr.splice(lastItem, 1);
+      }
+      event.target.parentNode.parentNode.style.display = "none";
+      basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+      menu__cart__itemCount.textContent = newArr.length;
     }
   });
   basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
@@ -426,9 +447,62 @@ basket__closeIcon.addEventListener("click", function () {
   basket.style.transform = "translateX(150%)";
 });
 
+customizeSection__closeIcon.addEventListener("click", function () {
+  customizeSection.style.transform = "translateY(100%)";
+  customizeSection__closeIcon.style.transform = "translateY(-300%)";
+  customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
+});
+
+function addCustomize(event) {
+  /* customize kısmının belirmesi */
+  customizeSection.style.transform = "translateY(0%)";
+  customizeSection__closeIcon.style.transform = "translateY(0%)";
+  customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
+
+  /* customize ve addBasket butonlarının olduğu cartSection kısmının kaybolması */
+  cartSection.style.transform = "translateY(100%)";
+  cartSection__closeIcon.style.transform = "translateY(-300%)";
+  cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
+  cartSection__leftBtn.style.transform = "translateX(-300%)";
+  cartSection__rightBtn.style.transform = "translateX(300%)";
+
+  /* seçilen yeni Item'in bilgilerini çektiğimiz ana yapı */
+  let newItemSrc =
+    event.target.parentNode.nextElementSibling.nextElementSibling.children[0]
+      .src;
+  let newItemName =
+    event.target.parentNode.nextElementSibling.nextElementSibling.children[1]
+      .innerText;
+  let newItemParag =
+    event.target.parentNode.nextElementSibling.nextElementSibling.children[2]
+      .innerText;
+  let newItemPrice =
+    event.target.parentNode.nextElementSibling.nextElementSibling.children[3]
+      .innerText;
+  let newItemPriceFloat = parseFloat(
+    event.target.parentNode.nextElementSibling.nextElementSibling.children[3].textContent.slice(
+      1,
+      -1
+    )
+  );
+
+  /* Çıkarilabilir malzeme listesi */
+  let IngridientsArray = [
+    "Slow Roast Peppers",
+    "Tomato Sauce",
+    "Onion",
+    "Garlic",
+    "White Sauce",
+    "Tabouli",
+  ];
+}
+
 /* bu section içindeki herhangi bir item'a tıklanırsa selectItem fonksiyonu
 devreye girsin */
 shop__productSection.addEventListener("click", selectItem);
 
 /* Add Basket(rightBtn) butonuna tıklanırsa addBasket fonksiyonu çalışsın */
 cartSection__rightBtn.addEventListener("click", addBasket);
+
+/* Add Customize(leftBtn) butonuna tıklanırsa addCustomize fonksiyonu çalışsın */
+cartSection__leftBtn.addEventListener("click", addCustomize);
