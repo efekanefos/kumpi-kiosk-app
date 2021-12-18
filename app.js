@@ -228,6 +228,8 @@ const customizeSection = document.querySelector(".customizeSection");
 const customizeSection__closeIcon = document.querySelector(
   ".customizeSection__closeIcon"
 );
+const cartSection__Btns = document.querySelector(".cartSection__Btns");
+
 /* Fiyatların sıralandığı Array */
 let newArr = [];
 
@@ -299,6 +301,7 @@ function selectItem(event) {
 /* sepetteki item sayısını ınteger cinsine çavirip siteden başta alıyoruz. */
 let itemCount = parseInt(menu__cart__itemCount.innerText);
 let itemArray = [];
+
 function addBasket(event) {
   let productCount = 1;
   /* add Basket butonunun cartSection kısmını gizlemesi */
@@ -386,15 +389,7 @@ function addBasket(event) {
     let newItemPrice = parseFloat(
       event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
     );
-    /* addBasket içinde kaldığı için artmıyor olabilir */
-    /*
-    let counterSpanPlus = parseInt(
-      event.target.parentNode.parentNode.children[2].children[1].innerText
-    );
-    counterSpanPlus = ++counterSpanPlus;
-    console.log(counterSpanPlus);
-    */
-    /* */
+
     productCount = productCount + 1;
     event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
     console.log(productCount);
@@ -410,11 +405,7 @@ function addBasket(event) {
     let newItemPrice = parseFloat(
       event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
     );
-    /*
-    let counterSpan =
-      event.target.parentNode.parentNode.children[2].children[1].textContent;
-    console.log(counterSpan);
-    */
+
     if (productCount > 1) {
       //newArr.pop(newItemPrice);
       //console.log(newArr.indexOf(newItemPrice));
@@ -447,10 +438,18 @@ basket__closeIcon.addEventListener("click", function () {
   basket.style.transform = "translateX(150%)";
 });
 
-customizeSection__closeIcon.addEventListener("click", function () {
+/* customize kısmının kapanmasını sağlayan x ikonunun fonksiyonu */
+customizeSection__closeIcon.addEventListener("click", function (event) {
   customizeSection.style.transform = "translateY(100%)";
   customizeSection__closeIcon.style.transform = "translateY(-300%)";
   customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
+
+  function resetList() {
+    /* customize kısmı kaybolurken önceden oluşturulmuş olan malzeme listesini resetler */
+    event.target.parentNode.lastElementChild.innerHTML = "";
+  }
+  /* customize kartı kaybolana kadar silme işini yapmaz sonra yapar */
+  setTimeout(resetList, 2000);
 });
 
 function addCustomize(event) {
@@ -463,8 +462,9 @@ function addCustomize(event) {
   cartSection.style.transform = "translateY(100%)";
   cartSection__closeIcon.style.transform = "translateY(-300%)";
   cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
-  cartSection__leftBtn.style.transform = "translateX(-300%)";
-  cartSection__rightBtn.style.transform = "translateX(300%)";
+  cartSection__leftBtn.style.transform = "translateY(300%)";
+  cartSection__rightBtn.style.transform = "translateY(300%)";
+  cartSection__Btns.style.transform = "translateY(300%)";
 
   /* seçilen yeni Item'in bilgilerini çektiğimiz ana yapı */
   let newItemSrc =
@@ -486,6 +486,47 @@ function addCustomize(event) {
     )
   );
 
+  /* Seçilen Item'ın verileri ana div */
+  let MainItemDiv = document.createElement("div");
+  MainItemDiv.classList.add("MainItemDiv");
+  customizeSection.appendChild(MainItemDiv);
+
+  /* Seçilen Item'ın Image display aşaması */
+  let ItemImg = document.createElement("img");
+  ItemImg.classList.add("MainItemDiv__ItemImg");
+  ItemImg.src = newItemSrc;
+  MainItemDiv.appendChild(ItemImg);
+
+  /* Seçilen Item'ın heading display aşaması */
+  let ItemHeading = document.createElement("h1");
+  ItemHeading.classList.add("MainItemDiv__ItemHeading");
+  ItemHeading.textContent = newItemName;
+  MainItemDiv.appendChild(ItemHeading);
+
+  /* Seçilen Item'ın parag display aşaması */
+  let ItemParag = document.createElement("p");
+  ItemParag.classList.add("MainItemDiv__ItemParag");
+  ItemParag.textContent = newItemParag;
+  MainItemDiv.appendChild(ItemParag);
+
+  /* Seçilen Item'ın price display aşaması */
+  let ItemPrice = document.createElement("p");
+  ItemPrice.classList.add("MainItemDiv__ItemPrice");
+  ItemPrice.textContent = newItemPrice;
+  MainItemDiv.appendChild(ItemPrice);
+
+  /* Remove Elements Heading */
+  let RemoveHeading = document.createElement("h1");
+  RemoveHeading.classList.add("MainItemDiv__RemoveHeading");
+  RemoveHeading.textContent = `Remove Elements`;
+  MainItemDiv.appendChild(RemoveHeading);
+
+  /* Remove Elements Parag */
+  let RemoveParag = document.createElement("p");
+  RemoveParag.classList.add("MainItemDiv__RemoveParag");
+  RemoveParag.textContent = `Choose what you remove`;
+  MainItemDiv.appendChild(RemoveParag);
+
   /* Çıkarilabilir malzeme listesi */
   let IngridientsArray = [
     "Slow Roast Peppers",
@@ -495,6 +536,235 @@ function addCustomize(event) {
     "White Sauce",
     "Tabouli",
   ];
+
+  /* listeyi kapsayan div */
+  let IngridientsDiv = document.createElement("div");
+  IngridientsDiv.classList.add("IngridientsDiv");
+  MainItemDiv.appendChild(IngridientsDiv);
+
+  /* listenin kendisi */
+  let IngridientsList = document.createElement("ul");
+  IngridientsList.classList.add("IngridientsDiv__IngridientsList");
+  IngridientsDiv.appendChild(IngridientsList);
+
+  /* liste elemanlarının liste içerisine eklenmesi */
+  let IngridientsItems = IngridientsArray.map(function (item) {
+    return `
+    <li class="IngridientsDiv__IngridientsListItem">
+    <div id="${item}" class="IngridientsDiv__IngridientsListItem--btn"></div>
+    ${item}</li>
+    `;
+  }).join("");
+  IngridientsList.innerHTML = IngridientsItems;
+
+  /* Butonları ayarlama kısmı */
+  let customizeFullBtn = document.querySelectorAll(".customizeSection  li div");
+  customizeFullBtn.forEach((el) => {
+    el.addEventListener("click", function (e) {
+      el.classList.toggle("empty");
+      console.log(e.target.id);
+      let newIndexName = e.target.id;
+      let lastItem = IngridientsArray.indexOf(newIndexName);
+      if (IngridientsArray.includes(newIndexName)) {
+        if (lastItem > -1) {
+          IngridientsArray.splice(lastItem, 1);
+        }
+        console.log(IngridientsArray);
+      } else {
+        IngridientsArray.push(newIndexName);
+        console.log(IngridientsArray);
+      }
+    });
+  });
+  /* Buttons Div */
+  let BtnsDiv = document.createElement("div");
+  BtnsDiv.classList.add("MainItemDiv__BtnsDiv");
+  MainItemDiv.appendChild(BtnsDiv);
+
+  /* Back Button */
+  let BackBtn = document.createElement("button");
+  BackBtn.classList.add("MainItemDiv__BackBtn");
+  BackBtn.innerText = `Back`;
+  BtnsDiv.appendChild(BackBtn);
+
+  /* Center Button */
+  let AddBasketBtn = document.createElement("button");
+  AddBasketBtn.classList.add("MainItemDiv__AddBasketBtn");
+  AddBasketBtn.innerText = `Add Basket`;
+  BtnsDiv.appendChild(AddBasketBtn);
+
+  /* Next Button */
+  let NextBtn = document.createElement("button");
+  NextBtn.classList.add("MainItemDiv__NextBtn");
+  NextBtn.innerText = `Next`;
+  BtnsDiv.appendChild(NextBtn);
+
+  let MainItemDiv__NextBtnDOM = document.querySelector(".MainItemDiv__NextBtn");
+
+  MainItemDiv__NextBtnDOM.addEventListener("click", function () {
+    IngridientsDiv.style.transform = "translateY(200%)";
+    ExtraProteinDiv.style.transform = "translateY(-150%)";
+    RemoveHeading.textContent = `Add Extra Protein`;
+    RemoveParag.textContent = `Choose up to 3`;
+  });
+
+  let MainItemDiv__BackBtnDOM = document.querySelector(".MainItemDiv__BackBtn");
+
+  MainItemDiv__BackBtnDOM.addEventListener("click", function () {
+    IngridientsDiv.style.transform = "translateY(0%)";
+    ExtraProteinDiv.style.transform = "translateY(0%)";
+    RemoveHeading.textContent = `Remove Elements`;
+    RemoveParag.textContent = `Choose what you remove`;
+  });
+
+  /* Çıkarilabilir malzeme listesi */
+  let ExtraProteinArray = [
+    "Beef Meatballs with Tomato Souce",
+    "Roasted Chorizo",
+    "Lemon and Chilli Chicken (Mild)",
+    "Crispy Chicken",
+    "Golden Halloumi (Vegetarian)",
+    "Falafel (Vegetarian)",
+  ];
+
+  let BeefMeatballswithTomatoSouceCounter = 0;
+  let RoastedChorizoCounter = 0;
+  let LemonandChilliChickenCounter = 0;
+  let CrispyChickenCounter = 0;
+  let GoldenHalloumiVegetarianCounter = 0;
+  let FalafelCounter = 0;
+
+  /* Extra Protein listesi div'i */
+  let ExtraProteinDiv = document.createElement("div");
+  ExtraProteinDiv.classList.add("ExtraProteinDiv");
+  MainItemDiv.appendChild(ExtraProteinDiv);
+
+  /* Extra Protein listesinin kendisi */
+  let ExtraProteinList = document.createElement("ul");
+  ExtraProteinList.classList.add("ExtraProteinDiv__ExtraProteinList");
+  ExtraProteinDiv.appendChild(ExtraProteinList);
+
+  /* liste elemanlarının liste içerisine eklenmesi */
+  let ExtraProteinItems = ExtraProteinArray.map(function (item) {
+    return `
+    <li class="ExtraProteinDiv__ExtraProteinListItem">
+    <div class="ExtraProteinDiv__CountBtns">
+      <i id=${item
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat(
+          "__minus"
+        )} class="ExtraProteinDiv__CountBtns--minus fas fa-minus"></i>
+      <span id=${item
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat("__number")} class="ExtraProteinDiv__CountBtns--number">0</span>
+      <i id=${item
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat(
+          "__plus"
+        )} class="ExtraProteinDiv__CountBtns--plus fas fa-plus"></i>
+    </div>
+    <span class="ExtraProteinDiv__Text">${item}</span>
+    <span class="ExtraProteinDiv__Price">+&#8356;2.50</span>
+    </li>
+    `;
+  }).join("");
+  ExtraProteinList.innerHTML = ExtraProteinItems;
+  let BeefNumber = document.querySelector(
+    "#BeefMeatballswithTomatoSouce__number"
+  );
+  let BeefPlus = document.querySelector("#BeefMeatballswithTomatoSouce__plus");
+  let BeefMinus = document.querySelector(
+    "#BeefMeatballswithTomatoSouce__minus"
+  );
+
+  let RoastedNumber = document.querySelector("#RoastedChorizo__number");
+  let RoastedPlus = document.querySelector("#RoastedChorizo__plus");
+  let RoastedMinus = document.querySelector("#RoastedChorizo__minus");
+
+  //LemonandChilliChicken(Mild)__minus
+
+  let LemonNumber = document.querySelector(
+    "#LemonandChilliChickenMild__number"
+  );
+  let LemonPlus = document.querySelector("#LemonandChilliChickenMild__plus");
+  let LemonMinus = document.querySelector("#LemonandChilliChickenMild__minus");
+
+  BeefPlus.addEventListener("click", () => {
+    BeefMeatballswithTomatoSouceCounter =
+      BeefMeatballswithTomatoSouceCounter + 1;
+    console.log(BeefMeatballswithTomatoSouceCounter);
+    BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
+  });
+
+  BeefMinus.addEventListener("click", () => {
+    if (BeefMeatballswithTomatoSouceCounter > 0) {
+      BeefMeatballswithTomatoSouceCounter =
+        BeefMeatballswithTomatoSouceCounter - 1;
+      console.log(BeefMeatballswithTomatoSouceCounter);
+      BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
+    }
+  });
+
+  RoastedPlus.addEventListener("click", () => {
+    RoastedChorizoCounter = RoastedChorizoCounter + 1;
+    console.log(RoastedChorizoCounter);
+    RoastedNumber.textContent = RoastedChorizoCounter;
+  });
+
+  RoastedMinus.addEventListener("click", () => {
+    if (RoastedChorizoCounter > 0) {
+      RoastedChorizoCounter = RoastedChorizoCounter - 1;
+      console.log(RoastedChorizoCounter);
+      RoastedNumber.textContent = RoastedChorizoCounter;
+    }
+  });
+
+  console.log(
+    "LemonandChilliChicken(Mild)__minus".split("(").join("").split(")").join("")
+  );
+  console.log(
+    "Beef Meatballs with Tomato Souce"
+      .split(" ")
+      .join("")
+      .split("(")
+      .join("")
+      .split(")")
+      .join("")
+      .concat("__minus")
+  );
+
+  LemonPlus.addEventListener("click", () => {
+    LemonandChilliChickenCounter = LemonandChilliChickenCounter + 1;
+    console.log(LemonandChilliChickenCounter);
+    LemonNumber.textContent = LemonandChilliChickenCounter;
+  });
+
+  LemonMinus.addEventListener("click", () => {
+    if (LemonandChilliChickenCounter > 0) {
+      LemonandChilliChickenCounter = LemonandChilliChickenCounter - 1;
+      console.log(LemonandChilliChickenCounter);
+      LemonNumber.textContent = LemonandChilliChickenCounter;
+    }
+  });
+
+  ExtraProteinList.addEventListener("click", (event) => {
+    console.log(event.target);
+  });
 }
 
 /* bu section içindeki herhangi bir item'a tıklanırsa selectItem fonksiyonu

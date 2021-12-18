@@ -128,7 +128,7 @@
   display: block;
   margin: 0 auto;
   margin-top: 2rem;
-  width: 15%;
+  width: 20%;
 }
 
 .shop {
@@ -219,7 +219,7 @@
   text-align: center;
   font-style: normal;
   font-weight: 600;
-  font-size: 90%;
+  font-size: 100%;
   /* 1.1rem */
 }
 
@@ -233,7 +233,7 @@
 .shop__productSection--cardPrice {
   text-align: center;
   font-weight: bold;
-  font-size: 100%;
+  font-size: 150%;
   /* 1.5rem */
 }
 
@@ -501,7 +501,7 @@
 }
 
 .customizeSection {
-  background-color: red;
+  background-color: white;
   -webkit-clip-path: polygon(50% 10%, 69% 0, 100% 0, 100% 78%, 100% 100%, 0 100%, 0 78%, 0 0, 32% 0);
           clip-path: polygon(50% 10%, 69% 0, 100% 0, 100% 78%, 100% 100%, 0 100%, 0 78%, 0 0, 32% 0);
   width: 100%;
@@ -518,7 +518,7 @@
 }
 
 .customizeSection__closeIcon {
-  color: blue;
+  color: black;
   font-size: 10rem;
   position: absolute;
   -webkit-transition: all 2s;
@@ -528,6 +528,185 @@
   -webkit-transform: translateY(-300%) translate(-50%, -50%);
           transform: translateY(-300%) translate(-50%, -50%);
   z-index: 9999;
+}
+
+.IngridientsDiv,
+.ExtraProteinDiv {
+  font-size: 3rem;
+  margin-top: 1rem;
+  -webkit-transition: all 2s;
+  transition: all 2s;
+  margin-bottom: 11rem;
+}
+
+.IngridientsDiv__IngridientsList, .IngridientsDiv__ExtraProteinList,
+.ExtraProteinDiv__IngridientsList,
+.ExtraProteinDiv__ExtraProteinList {
+  list-style: none;
+  margin: 0 auto;
+  margin-top: 3rem;
+  width: 85%;
+}
+
+.IngridientsDiv__IngridientsListItem, .IngridientsDiv__ExtraProteinListItem,
+.ExtraProteinDiv__IngridientsListItem,
+.ExtraProteinDiv__ExtraProteinListItem {
+  font-size: 2rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  -webkit-box-shadow: 0px 6.72603px 67.2603px rgba(32, 35, 38, 0.15);
+          box-shadow: 0px 6.72603px 67.2603px rgba(32, 35, 38, 0.15);
+  border-radius: 30.2671px;
+  text-align: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.IngridientsDiv__IngridientsListItem--btn,
+.ExtraProteinDiv__IngridientsListItem--btn {
+  background-image: url(../images/Button.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 0.1px solid #ccc;
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.IngridientsDiv__IngridientsListItem--btn.empty,
+.ExtraProteinDiv__IngridientsListItem--btn.empty {
+  background-image: url(../images/emptyBtn.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 0.1px solid #ccc;
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.IngridientsDiv__CountBtns,
+.ExtraProteinDiv__CountBtns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #ff5722;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-right: 4rem;
+}
+
+.IngridientsDiv__CountBtns *,
+.ExtraProteinDiv__CountBtns * {
+  margin-right: 20%;
+  font-weight: 700;
+  font-size: 1.7rem;
+}
+
+.IngridientsDiv__CountBtns--minus,
+.ExtraProteinDiv__CountBtns--minus {
+  background-color: #fff4e4;
+  padding: 10%;
+  border-radius: 50%;
+}
+
+.IngridientsDiv__CountBtns--plus,
+.ExtraProteinDiv__CountBtns--plus {
+  background-color: #fff4e4;
+  padding: 10%;
+  border-radius: 50%;
+}
+
+.IngridientsDiv__Text,
+.ExtraProteinDiv__Text {
+  margin-right: auto;
+}
+
+.IngridientsDiv__Price,
+.ExtraProteinDiv__Price {
+  color: #8a959e;
+  font-size: 1.8rem;
+}
+
+.MainItemDiv {
+  margin-top: 10rem;
+}
+
+.MainItemDiv__ItemParag {
+  color: #8a959e;
+  width: 100%;
+  font-size: 1.2rem;
+  /* 0.8rem */
+  text-align: center;
+}
+
+.MainItemDiv__ItemPrice {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.MainItemDiv__RemoveHeading {
+  font-weight: 600;
+  font-size: 2rem;
+  color: #ff5722;
+}
+
+.MainItemDiv__RemoveParag {
+  color: #8a959e;
+  font-size: 1.2rem;
+}
+
+.MainItemDiv__BtnsDiv {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 1;
+}
+
+.MainItemDiv__BackBtn, .MainItemDiv__NextBtn {
+  font-size: 2.2rem;
+  text-align: center;
+  font-weight: 600;
+  padding: 1.5rem 3rem;
+  outline: none;
+  color: #202326;
+  background-color: #cbcfd3;
+  border: 2px solid #e5e5e5;
+  border-radius: 1.5rem;
+  z-index: 999;
+}
+
+.MainItemDiv__AddBasketBtn {
+  font-size: 2.2rem;
+  outline: none;
+  text-align: center;
+  font-weight: 500;
+  z-index: 999;
+  padding: 2rem 5rem;
+  outline: none;
+  color: #fffff0;
+  background-color: #202326;
+  border: 2px solid #e5e5e5;
+  border-radius: 35px;
 }
 
 @media (max-width: 785px) {
