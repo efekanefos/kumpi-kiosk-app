@@ -385,21 +385,36 @@
 }
 
 .IngridientsDiv,
-.ExtraProteinDiv {
+.ExtraProteinDiv,
+.ExtraSaladDiv,
+.ExtraSauceDiv,
+.ExtraDealDiv,
+.DrinkDiv {
   font-size: 3rem;
   margin-top: 1rem;
   transition: all 2s;
   margin-bottom: 11rem;
   &__IngridientsList,
-  &__ExtraProteinList {
+  &__ExtraProteinList,
+  &__ExtraSaladList,
+  &__ExtraSauceList,
+  &__ExtraDealList,
+  &__DrinkList {
     list-style: none;
     margin: 0 auto;
     margin-top: 3rem;
-    width: 85%;
+    width: 95%;
+  }
+  &__DrinkList {
+    margin-top: 2rem;
+    padding-bottom: 4rem;
   }
 
   &__IngridientsListItem,
-  &__ExtraProteinListItem {
+  &__ExtraProteinListItem,
+  &__ExtraSaladListItem,
+  &__ExtraSauceListItem,
+  &__ExtraDealListItem {
     font-size: 2rem;
     padding: 1.5rem;
     margin-bottom: 1rem;
@@ -410,9 +425,30 @@
     align-items: center;
     justify-content: flex-start;
   }
+  &__DrinkListItem {
+    font-size: 2rem;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1.5rem;
+    padding-bottom: 0rem;
+  }
 
-  &__IngridientsListItem--btn {
+  &__IngridientsListItem--btn,
+  &__DrinkListItem--btn {
     background-image: url(../images/Button.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 0.1px solid #ccc;
+    display: inline-block;
+    margin-right: 2rem;
+  }
+  &__DrinkListItem--btn {
+    background-image: url(../images/emptyBtn.png);
     background-repeat: no-repeat;
     background-position: center center;
     width: 2rem;
@@ -424,6 +460,17 @@
   }
   &__IngridientsListItem--btn.empty {
     background-image: url(../images/emptyBtn.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 0.1px solid #ccc;
+    display: inline-block;
+    margin-right: 2rem;
+  }
+  &__DrinkListItem--btn.active {
+    background-image: url(../images/Button.png);
     background-repeat: no-repeat;
     background-position: center center;
     width: 2rem;
@@ -462,6 +509,32 @@
     color: #8a959e;
     font-size: 1.8rem;
   }
+  &__DrinkHeading {
+    font-size: 2rem;
+    color: #202326;
+    font-weight: 600;
+    text-align: left;
+    padding-top: 2rem; /* 2 */
+  }
+  &__DrinkParag {
+    font-size: 1.2rem;
+    color: #8a959e;
+    font-weight: 400;
+    text-align: left;
+  }
+  &__DrinkHeading,
+  &__DrinkParag {
+    padding-left: 3rem;
+  }
+}
+
+.DrinkDiv {
+  background-color: #fff;
+  box-shadow: 0px 6.72603px 67.2603px rgba(32, 35, 38, 0.15);
+  border-radius: 30.2671px;
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 1.5rem;
 }
 
 .MainItemDiv {

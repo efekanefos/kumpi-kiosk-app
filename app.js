@@ -272,19 +272,13 @@ function selectItem(event) {
 
   /* seçilen yeni Item'in bilgilerini çektiğimiz ana yapı */
   let newItem = event.target.parentNode.children;
-  /*
-  console.log("newItem", newItem);
-  itemArray.push(newItem);
-  console.log("itemArray", itemArray);
-  */
 
   /* seçilen item'ın fiyat verisini alıp float'a çevirip array içine push
   ettiğimiz kısım */
   let newItemPrice = parseFloat(
     event.target.parentNode.children[3].textContent.slice(1, -1)
   );
-  newArr.push(newItemPrice);
-  //console.log(newArr);
+  console.log(newArr);
 
   /* reduce metodu ile toplam fiyat bilgisini elde ediyoruz. */
   //console.log(newArr.reduce(getSum, 0));
@@ -304,6 +298,7 @@ let itemArray = [];
 
 function addBasket(event) {
   let productCount = 1;
+
   /* add Basket butonunun cartSection kısmını gizlemesi */
   cartSection.style.transform = "translateY(100%)";
   cartSection__closeIcon.style.transform = "translateY(-300%)";
@@ -431,6 +426,18 @@ function addBasket(event) {
     }
   });
   basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+
+  /* Sadece Itemlara tıklandığında bile sepete ekleme problemi çözümü */
+
+  let newPriceBasket = parseFloat(
+    event.target.parentNode.nextElementSibling.nextElementSibling.children[3].textContent
+      .split("₤")
+      .join("")
+  );
+
+  newArr.push(newPriceBasket);
+  basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+  menu__cart__itemCount.textContent = newArr.length;
 }
 
 /* basket kısmını kapatmamızı sağlayan closeIcon fonskiyonu*/
@@ -600,21 +607,81 @@ function addCustomize(event) {
   BtnsDiv.appendChild(NextBtn);
 
   let MainItemDiv__NextBtnDOM = document.querySelector(".MainItemDiv__NextBtn");
+  let MainItemDiv__AddBasketBtnDOM = document.querySelector(
+    ".MainItemDiv__AddBasketBtn"
+  );
 
   MainItemDiv__NextBtnDOM.addEventListener("click", function () {
-    IngridientsDiv.style.transform = "translateY(200%)";
-    ExtraProteinDiv.style.transform = "translateY(-150%)";
-    RemoveHeading.textContent = `Add Extra Protein`;
-    RemoveParag.textContent = `Choose up to 3`;
+    switch (RemoveHeading.innerText) {
+      case `Remove Elements`:
+        IngridientsDiv.style.transform = "translateY(200%)";
+        ExtraProteinDiv.style.transform = "translateY(-150%)"; /* -150 */
+        ExtraSaladDiv.style.transform = "translateY(0%)"; /* -275 */
+        ExtraSauceDiv.style.transform = "translateY(0%)";
+        RemoveHeading.textContent = `Add Extra Protein`;
+        RemoveParag.textContent = `Choose up to 3`;
+        break;
+      case `Add Extra Protein`:
+        IngridientsDiv.style.transform = "translateY(200%)";
+        ExtraProteinDiv.style.transform = "translateY(0%)";
+        ExtraSaladDiv.style.transform = "translateY(-275%)";
+        ExtraSauceDiv.style.transform = "translateY(0%)";
+        RemoveHeading.textContent = `Add Extra Salads and Vegetables`;
+        RemoveParag.textContent = `Choose up to 3`;
+        break;
+      case `Add Extra Salads and Vegetables`:
+        IngridientsDiv.style.transform = "translateY(200%)";
+        ExtraProteinDiv.style.transform = "translateY(0%)";
+        ExtraSaladDiv.style.transform = "translateY(0%)";
+        ExtraSauceDiv.style.transform = "translateY(-375%)";
+        RemoveHeading.textContent = `Add Extra Sauce`;
+        RemoveParag.textContent = `Choose up to 2`;
+        break;
+      case `Add Extra Sauce`:
+        IngridientsDiv.style.transform = "translateY(200%)";
+        ExtraProteinDiv.style.transform = "translateY(0%)";
+        ExtraSaladDiv.style.transform = "translateY(0%)";
+        ExtraSauceDiv.style.transform = "translateY(0%)";
+        ExtraDealDiv.style.transform = "translateY(-220rem)"; /* -3700% */
+        RemoveHeading.textContent = `Make Deal with Drink and Brownie`;
+        RemoveParag.textContent = `Choose up to 1`;
+        MainItemDiv__NextBtnDOM.style.visibility = "hidden";
+        MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${newItemPriceFloat}`;
+        break;
+      default:
+      // code block
+    }
   });
 
   let MainItemDiv__BackBtnDOM = document.querySelector(".MainItemDiv__BackBtn");
 
   MainItemDiv__BackBtnDOM.addEventListener("click", function () {
-    IngridientsDiv.style.transform = "translateY(0%)";
-    ExtraProteinDiv.style.transform = "translateY(0%)";
-    RemoveHeading.textContent = `Remove Elements`;
-    RemoveParag.textContent = `Choose what you remove`;
+    switch (RemoveHeading.innerText) {
+      case `Add Extra Protein`:
+        IngridientsDiv.style.transform = "translateY(0%)";
+        ExtraProteinDiv.style.transform = "translateY(0%)";
+        ExtraSaladDiv.style.transform = "translateY(0%)";
+        RemoveHeading.textContent = `Remove Elements`;
+        RemoveParag.textContent = `Choose what you remove`;
+        break;
+      case `Add Extra Salads and Vegetables`:
+        IngridientsDiv.style.transform = "translateY(200%)";
+        ExtraProteinDiv.style.transform = "translateY(-150%)";
+        ExtraSaladDiv.style.transform = "translateY(0%)";
+        RemoveHeading.textContent = `Add Extra Protein`;
+        RemoveParag.textContent = `Choose up to 3`;
+        break;
+      case `Add Extra Sauce`:
+        IngridientsDiv.style.transform = "translateY(200%)";
+        ExtraProteinDiv.style.transform = "translateY(0%)";
+        ExtraSaladDiv.style.transform = "translateY(-275%)";
+        ExtraSauceDiv.style.transform = "translateY(0%)";
+        RemoveHeading.textContent = `Add Extra Sauce`;
+        RemoveParag.textContent = `Choose up to 2`;
+        break;
+      default:
+      // code block
+    }
   });
 
   /* Çıkarilabilir malzeme listesi */
@@ -684,6 +751,9 @@ function addCustomize(event) {
     `;
   }).join("");
   ExtraProteinList.innerHTML = ExtraProteinItems;
+
+  /* BeefMeatballswithTomatoSouce */
+
   let BeefNumber = document.querySelector(
     "#BeefMeatballswithTomatoSouce__number"
   );
@@ -692,11 +762,13 @@ function addCustomize(event) {
     "#BeefMeatballswithTomatoSouce__minus"
   );
 
+  /* RoastedChorizo */
+
   let RoastedNumber = document.querySelector("#RoastedChorizo__number");
   let RoastedPlus = document.querySelector("#RoastedChorizo__plus");
   let RoastedMinus = document.querySelector("#RoastedChorizo__minus");
 
-  //LemonandChilliChicken(Mild)__minus
+  /* LemonandChilliChickenMild */
 
   let LemonNumber = document.querySelector(
     "#LemonandChilliChickenMild__number"
@@ -704,10 +776,29 @@ function addCustomize(event) {
   let LemonPlus = document.querySelector("#LemonandChilliChickenMild__plus");
   let LemonMinus = document.querySelector("#LemonandChilliChickenMild__minus");
 
+  /* CrispyChicken */
+
+  let CrispyNumber = document.querySelector("#CrispyChicken__number");
+  let CrispyPlus = document.querySelector("#CrispyChicken__plus");
+  let CrispyMinus = document.querySelector("#CrispyChicken__minus");
+
+  /* GoldenHalloumiVegetarian */
+
+  let GoldenNumber = document.querySelector(
+    "#GoldenHalloumiVegetarian__number"
+  );
+  let GoldenPlus = document.querySelector("#GoldenHalloumiVegetarian__plus");
+  let GoldenMinus = document.querySelector("#GoldenHalloumiVegetarian__minus");
+
+  /* Falafel */
+
+  let FalafelNumber = document.querySelector("#FalafelVegetarian__number");
+  let FalafelPlus = document.querySelector("#FalafelVegetarian__plus");
+  let FalafelMinus = document.querySelector("#FalafelVegetarian__minus");
+
   BeefPlus.addEventListener("click", () => {
     BeefMeatballswithTomatoSouceCounter =
       BeefMeatballswithTomatoSouceCounter + 1;
-    console.log(BeefMeatballswithTomatoSouceCounter);
     BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
   });
 
@@ -715,56 +806,575 @@ function addCustomize(event) {
     if (BeefMeatballswithTomatoSouceCounter > 0) {
       BeefMeatballswithTomatoSouceCounter =
         BeefMeatballswithTomatoSouceCounter - 1;
-      console.log(BeefMeatballswithTomatoSouceCounter);
       BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
     }
   });
 
   RoastedPlus.addEventListener("click", () => {
     RoastedChorizoCounter = RoastedChorizoCounter + 1;
-    console.log(RoastedChorizoCounter);
     RoastedNumber.textContent = RoastedChorizoCounter;
   });
 
   RoastedMinus.addEventListener("click", () => {
     if (RoastedChorizoCounter > 0) {
       RoastedChorizoCounter = RoastedChorizoCounter - 1;
-      console.log(RoastedChorizoCounter);
       RoastedNumber.textContent = RoastedChorizoCounter;
     }
   });
 
-  console.log(
-    "LemonandChilliChicken(Mild)__minus".split("(").join("").split(")").join("")
-  );
-  console.log(
-    "Beef Meatballs with Tomato Souce"
-      .split(" ")
-      .join("")
-      .split("(")
-      .join("")
-      .split(")")
-      .join("")
-      .concat("__minus")
-  );
-
   LemonPlus.addEventListener("click", () => {
     LemonandChilliChickenCounter = LemonandChilliChickenCounter + 1;
-    console.log(LemonandChilliChickenCounter);
     LemonNumber.textContent = LemonandChilliChickenCounter;
   });
 
   LemonMinus.addEventListener("click", () => {
     if (LemonandChilliChickenCounter > 0) {
       LemonandChilliChickenCounter = LemonandChilliChickenCounter - 1;
-      console.log(LemonandChilliChickenCounter);
       LemonNumber.textContent = LemonandChilliChickenCounter;
     }
   });
 
-  ExtraProteinList.addEventListener("click", (event) => {
-    console.log(event.target);
+  CrispyPlus.addEventListener("click", () => {
+    CrispyChickenCounter = CrispyChickenCounter + 1;
+    CrispyNumber.textContent = CrispyChickenCounter;
   });
+
+  CrispyMinus.addEventListener("click", () => {
+    if (CrispyChickenCounter > 0) {
+      CrispyChickenCounter = CrispyChickenCounter - 1;
+      CrispyNumber.textContent = CrispyChickenCounter;
+    }
+  });
+
+  GoldenPlus.addEventListener("click", () => {
+    GoldenHalloumiVegetarianCounter = GoldenHalloumiVegetarianCounter + 1;
+    GoldenNumber.textContent = GoldenHalloumiVegetarianCounter;
+  });
+
+  GoldenMinus.addEventListener("click", () => {
+    if (GoldenHalloumiVegetarianCounter > 0) {
+      GoldenHalloumiVegetarianCounter = GoldenHalloumiVegetarianCounter - 1;
+      GoldenNumber.textContent = GoldenHalloumiVegetarianCounter;
+    }
+  });
+
+  FalafelPlus.addEventListener("click", () => {
+    FalafelCounter = FalafelCounter + 1;
+    FalafelNumber.textContent = FalafelCounter;
+  });
+
+  FalafelMinus.addEventListener("click", () => {
+    if (FalafelCounter > 0) {
+      FalafelCounter = FalafelCounter - 1;
+      FalafelNumber.textContent = FalafelCounter;
+    }
+  });
+
+  /* Add Extra Salads and Vegetables Array */
+  let ExtraSaladArray = [
+    "Charred Sweetcorn ",
+    "Chopped Pickles",
+    "Roasted Red Peppers",
+    "Kimchi (Mild)",
+    "Black Olives",
+    "Smashed Avocado",
+  ];
+
+  let CharredSweetcornCounter = 0;
+  let ChoppedPicklesCounter = 0;
+  let RoastedRedPeppersCounter = 0;
+  let KimchiMildCounter = 0;
+  let BlackOlivesCounter = 0;
+  let SmashedAvocadoCounter = 0;
+
+  /* Add Extra Salads and Vegetables listesi div'i */
+  let ExtraSaladDiv = document.createElement("div");
+  ExtraSaladDiv.classList.add("ExtraSaladDiv");
+  MainItemDiv.appendChild(ExtraSaladDiv);
+
+  /* Add Extra Salads and Vegetables listesinin kendisi */
+  let ExtraSaladList = document.createElement("ul");
+  ExtraSaladList.classList.add("ExtraSaladDiv__ExtraSaladList");
+  ExtraSaladDiv.appendChild(ExtraSaladList);
+
+  /* liste elemanlarının liste içerisine eklenmesi */
+  let ExtraSaladItems = ExtraSaladArray.map(function (item) {
+    return `
+    <li class="ExtraSaladDiv__ExtraSaladListItem">
+    <div class="ExtraSaladDiv__CountBtns">
+      <i id=${item
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat(
+          "__minus"
+        )} class="ExtraSaladDiv__CountBtns--minus fas fa-minus"></i>
+      <span id=${item
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat("__number")} class="ExtraSaladDiv__CountBtns--number">0</span>
+      <i id=${item
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat(
+          "__plus"
+        )} class="ExtraSaladDiv__CountBtns--plus fas fa-plus"></i>
+    </div>
+    <span class="ExtraSaladDiv__Text">${item}</span>
+    <span class="ExtraSaladDiv__Price">+&#8356;2.50</span>
+    </li>
+    `;
+  }).join("");
+  ExtraSaladList.innerHTML = ExtraSaladItems;
+
+  /* CharredSweetcorn */
+
+  let CharredSweetcornNumber = document.querySelector(
+    "#CharredSweetcorn__number"
+  );
+  let CharredSweetcornPlus = document.querySelector("#CharredSweetcorn__plus");
+  let CharredSweetcornMinus = document.querySelector(
+    "#CharredSweetcorn__minus"
+  );
+
+  CharredSweetcornPlus.addEventListener("click", () => {
+    CharredSweetcornCounter = CharredSweetcornCounter + 1;
+    CharredSweetcornNumber.textContent = CharredSweetcornCounter;
+  });
+
+  CharredSweetcornMinus.addEventListener("click", () => {
+    if (CharredSweetcornCounter > 0) {
+      CharredSweetcornCounter = CharredSweetcornCounter - 1;
+      CharredSweetcornNumber.textContent = CharredSweetcornCounter;
+    }
+  });
+
+  /* ChoppedPickles */
+
+  let ChoppedPicklesNumber = document.querySelector("#ChoppedPickles__number");
+  let ChoppedPicklesPlus = document.querySelector("#ChoppedPickles__plus");
+  let ChoppedPicklesMinus = document.querySelector("#ChoppedPickles__minus");
+
+  ChoppedPicklesPlus.addEventListener("click", () => {
+    ChoppedPicklesCounter = ChoppedPicklesCounter + 1;
+    ChoppedPicklesNumber.textContent = ChoppedPicklesCounter;
+  });
+
+  ChoppedPicklesMinus.addEventListener("click", () => {
+    if (ChoppedPicklesCounter > 0) {
+      ChoppedPicklesCounter = ChoppedPicklesCounter - 1;
+      ChoppedPicklesNumber.textContent = ChoppedPicklesCounter;
+    }
+  });
+
+  /* RoastedRedPeppers */
+
+  let RoastedRedPeppersNumber = document.querySelector(
+    "#RoastedRedPeppers__number"
+  );
+  let RoastedRedPeppersPlus = document.querySelector(
+    "#RoastedRedPeppers__plus"
+  );
+  let RoastedRedPeppersMinus = document.querySelector(
+    "#RoastedRedPeppers__minus"
+  );
+
+  RoastedRedPeppersPlus.addEventListener("click", () => {
+    RoastedRedPeppersCounter = RoastedRedPeppersCounter + 1;
+    RoastedRedPeppersNumber.textContent = RoastedRedPeppersCounter;
+  });
+
+  RoastedRedPeppersMinus.addEventListener("click", () => {
+    if (RoastedRedPeppersCounter > 0) {
+      RoastedRedPeppersCounter = RoastedRedPeppersCounter - 1;
+      RoastedRedPeppersNumber.textContent = RoastedRedPeppersCounter;
+    }
+  });
+
+  /* KimchiMild */
+
+  let KimchiMildNumber = document.querySelector("#KimchiMild__number");
+  let KimchiMildPlus = document.querySelector("#KimchiMild__plus");
+  let KimchiMildMinus = document.querySelector("#KimchiMild__minus");
+
+  KimchiMildPlus.addEventListener("click", () => {
+    KimchiMildCounter = KimchiMildCounter + 1;
+    KimchiMildNumber.textContent = KimchiMildCounter;
+  });
+
+  KimchiMildMinus.addEventListener("click", () => {
+    if (KimchiMildCounter > 0) {
+      KimchiMildCounter = KimchiMildCounter - 1;
+      KimchiMildNumber.textContent = KimchiMildCounter;
+    }
+  });
+
+  /* BlackOlives */
+
+  let BlackOlivesNumber = document.querySelector("#BlackOlives__number");
+  let BlackOlivesPlus = document.querySelector("#BlackOlives__plus");
+  let BlackOlivesMinus = document.querySelector("#BlackOlives__minus");
+
+  BlackOlivesPlus.addEventListener("click", () => {
+    BlackOlivesCounter = BlackOlivesCounter + 1;
+    BlackOlivesNumber.textContent = BlackOlivesCounter;
+  });
+
+  BlackOlivesMinus.addEventListener("click", () => {
+    if (BlackOlivesCounter > 0) {
+      BlackOlivesCounter = BlackOlivesCounter - 1;
+      BlackOlivesNumber.textContent = BlackOlivesCounter;
+    }
+  });
+
+  /* SmashedAvocado */
+
+  let SmashedAvocadoNumber = document.querySelector("#SmashedAvocado__number");
+  let SmashedAvocadoPlus = document.querySelector("#SmashedAvocado__plus");
+  let SmashedAvocadoMinus = document.querySelector("#SmashedAvocado__minus");
+
+  SmashedAvocadoPlus.addEventListener("click", () => {
+    SmashedAvocadoCounter = SmashedAvocadoCounter + 1;
+    SmashedAvocadoNumber.textContent = SmashedAvocadoCounter;
+  });
+
+  SmashedAvocadoMinus.addEventListener("click", () => {
+    if (SmashedAvocadoCounter > 0) {
+      SmashedAvocadoCounter = SmashedAvocadoCounter - 1;
+      SmashedAvocadoNumber.textContent = SmashedAvocadoCounter;
+    }
+  });
+
+  /* Add Extra Sauce Array */
+  let ExtraSauceArray = [
+    "Garlic Sauce",
+    "Mayonnaise",
+    "Sour Cream",
+    "Smoky BBQ",
+    "Tomato Ketchup",
+    "Sriracha Hot Sauce Fermented Hot Sauce (Mild)",
+  ];
+
+  let GarlicSauceCounter = 0;
+  let MayonnaiseCounter = 0;
+  let SourCreamCounter = 0;
+  let SmokyBBQCounter = 0;
+  let TomatoKetchupCounter = 0;
+  let SrirachaHotSauceFermentedHotSauceMildCounter = 0;
+
+  /* Add Extra Sauce listesi div'i */
+  let ExtraSauceDiv = document.createElement("div");
+  ExtraSauceDiv.classList.add("ExtraSauceDiv");
+  MainItemDiv.appendChild(ExtraSauceDiv);
+
+  /* Add Extra Sauce listesinin kendisi */
+  let ExtraSauceList = document.createElement("ul");
+  ExtraSauceList.classList.add("ExtraSauceDiv__ExtraSauceList");
+  ExtraSauceDiv.appendChild(ExtraSauceList);
+
+  /* liste elemanlarının liste içerisine eklenmesi */
+  let ExtraSauceItems = ExtraSauceArray.map(function (item) {
+    return `
+    <li class="ExtraSauceDiv__ExtraSauceListItem">
+    <div class="ExtraSauceDiv__CountBtns">
+      <i id=${item
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat(
+          "__minus"
+        )} class="ExtraSauceDiv__CountBtns--minus fas fa-minus"></i>
+      <span id=${item
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat("__number")} class="ExtraSauceDiv__CountBtns--number">0</span>
+      <i id=${item
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat(
+          "__plus"
+        )} class="ExtraSauceDiv__CountBtns--plus fas fa-plus"></i>
+    </div>
+    <span class="ExtraSauceDiv__Text">${item}</span>
+    <span class="ExtraSauceDiv__Price">+&#8356;2.50</span>
+    </li>
+    `;
+  }).join("");
+  ExtraSauceList.innerHTML = ExtraSauceItems;
+
+  /* GarlicSauce */
+
+  let GarlicSauceNumber = document.querySelector("#GarlicSauce__number");
+  let GarlicSaucePlus = document.querySelector("#GarlicSauce__plus");
+  let GarlicSauceMinus = document.querySelector("#GarlicSauce__minus");
+
+  GarlicSaucePlus.addEventListener("click", () => {
+    GarlicSauceCounter = GarlicSauceCounter + 1;
+    GarlicSauceNumber.textContent = GarlicSauceCounter;
+  });
+
+  GarlicSauceMinus.addEventListener("click", () => {
+    if (GarlicSauceCounter > 0) {
+      GarlicSauceCounter = GarlicSauceCounter - 1;
+      GarlicSauceNumber.textContent = GarlicSauceCounter;
+    }
+  });
+
+  /* Mayonnaise */
+
+  let MayonnaiseNumber = document.querySelector("#Mayonnaise__number");
+  let MayonnaisePlus = document.querySelector("#Mayonnaise__plus");
+  let MayonnaiseMinus = document.querySelector("#Mayonnaise__minus");
+
+  MayonnaisePlus.addEventListener("click", () => {
+    MayonnaiseCounter = MayonnaiseCounter + 1;
+    MayonnaiseNumber.textContent = MayonnaiseCounter;
+  });
+
+  MayonnaiseMinus.addEventListener("click", () => {
+    if (MayonnaiseCounter > 0) {
+      MayonnaiseCounter = MayonnaiseCounter - 1;
+      MayonnaiseNumber.textContent = MayonnaiseCounter;
+    }
+  });
+
+  /* SourCream */
+
+  let SourCreamNumber = document.querySelector("#SourCream__number");
+  let SourCreamPlus = document.querySelector("#SourCream__plus");
+  let SourCreamMinus = document.querySelector("#SourCream__minus");
+
+  SourCreamPlus.addEventListener("click", () => {
+    SourCreamCounter = SourCreamCounter + 1;
+    SourCreamNumber.textContent = SourCreamCounter;
+  });
+
+  SourCreamMinus.addEventListener("click", () => {
+    if (SourCreamCounter > 0) {
+      SourCreamCounter = SourCreamCounter - 1;
+      SourCreamNumber.textContent = SourCreamCounter;
+    }
+  });
+
+  /* SmokyBBQ */
+
+  let SmokyBBQNumber = document.querySelector("#SmokyBBQ__number");
+  let SmokyBBQPlus = document.querySelector("#SmokyBBQ__plus");
+  let SmokyBBQMinus = document.querySelector("#SmokyBBQ__minus");
+
+  SmokyBBQPlus.addEventListener("click", () => {
+    SmokyBBQCounter = SmokyBBQCounter + 1;
+    SmokyBBQNumber.textContent = SmokyBBQCounter;
+  });
+
+  SmokyBBQMinus.addEventListener("click", () => {
+    if (SmokyBBQCounter > 0) {
+      SmokyBBQCounter = SmokyBBQCounter - 1;
+      SmokyBBQNumber.textContent = SmokyBBQCounter;
+    }
+  });
+
+  /* TomatoKetchup */
+
+  let TomatoKetchupNumber = document.querySelector("#TomatoKetchup__number");
+  let TomatoKetchupPlus = document.querySelector("#TomatoKetchup__plus");
+  let TomatoKetchupMinus = document.querySelector("#TomatoKetchup__minus");
+
+  TomatoKetchupPlus.addEventListener("click", () => {
+    TomatoKetchupCounter = TomatoKetchupCounter + 1;
+    TomatoKetchupNumber.textContent = TomatoKetchupCounter;
+  });
+
+  TomatoKetchupMinus.addEventListener("click", () => {
+    if (TomatoKetchupCounter > 0) {
+      TomatoKetchupCounter = TomatoKetchupCounter - 1;
+      TomatoKetchupNumber.textContent = TomatoKetchupCounter;
+    }
+  });
+
+  /* SrirachaHotSauceFermentedHotSauceMild */
+
+  let SrirachaHotSauceFermentedHotSauceMildNumber = document.querySelector(
+    "#SrirachaHotSauceFermentedHotSauceMild__number"
+  );
+  let SrirachaHotSauceFermentedHotSauceMildPlus = document.querySelector(
+    "#SrirachaHotSauceFermentedHotSauceMild__plus"
+  );
+  let SrirachaHotSauceFermentedHotSauceMildMinus = document.querySelector(
+    "#SrirachaHotSauceFermentedHotSauceMild__minus"
+  );
+
+  SrirachaHotSauceFermentedHotSauceMildPlus.addEventListener("click", () => {
+    SrirachaHotSauceFermentedHotSauceMildCounter =
+      SrirachaHotSauceFermentedHotSauceMildCounter + 1;
+    SrirachaHotSauceFermentedHotSauceMildNumber.textContent =
+      SrirachaHotSauceFermentedHotSauceMildCounter;
+  });
+
+  SrirachaHotSauceFermentedHotSauceMildMinus.addEventListener("click", () => {
+    if (SrirachaHotSauceFermentedHotSauceMildCounter > 0) {
+      SrirachaHotSauceFermentedHotSauceMildCounter =
+        SrirachaHotSauceFermentedHotSauceMildCounter - 1;
+      SrirachaHotSauceFermentedHotSauceMildNumber.textContent =
+        SrirachaHotSauceFermentedHotSauceMildCounter;
+    }
+  });
+
+  /* Make Deal with Drink and Brownie Array */
+  let ExtraDealArray = [
+    { name: "Make Deal with Drink and Brownie", price: 3.95 },
+  ];
+
+  let MakeDealwithDrinkandBrownieCounter = 0;
+
+  /* Add Extra Deal listesi div'i */
+  let ExtraDealDiv = document.createElement("div");
+  ExtraDealDiv.classList.add("ExtraDealDiv");
+  MainItemDiv.appendChild(ExtraDealDiv);
+
+  /* Add Extra Deal listesinin kendisi */
+  let ExtraDealList = document.createElement("ul");
+  ExtraDealList.classList.add("ExtraDealDiv__ExtraDealList");
+  ExtraDealDiv.appendChild(ExtraDealList);
+
+  /* liste elemanlarının liste içerisine eklenmesi */
+  let ExtraDealItems = ExtraDealArray.map(function (item) {
+    return `
+    <li class="ExtraDealDiv__ExtraDealListItem">
+    <div class="ExtraDealDiv__CountBtns">
+      <i id=${item.name
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat(
+          "__minus"
+        )} class="ExtraDealDiv__CountBtns--minus fas fa-minus"></i>
+      <span id=${item.name
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat("__number")} class="ExtraDealDiv__CountBtns--number">0</span>
+      <i id=${item.name
+        .split(" ")
+        .join("")
+        .split("(")
+        .join("")
+        .split(")")
+        .join("")
+        .concat(
+          "__plus"
+        )} class="ExtraDealDiv__CountBtns--plus fas fa-plus"></i>
+    </div>
+    <span class="ExtraDealDiv__Text">${item.name}</span>
+    <span class="ExtraDealDiv__Price">+&#8356;${item.price}</span>
+    </li>
+    `;
+  }).join("");
+  ExtraDealList.innerHTML = ExtraDealItems;
+
+  /* MakeDealwithDrinkandBrownie */
+
+  let MakeDealwithDrinkandBrownieNumber = document.querySelector(
+    "#MakeDealwithDrinkandBrownie__number"
+  );
+  let MakeDealwithDrinkandBrowniePlus = document.querySelector(
+    "#MakeDealwithDrinkandBrownie__plus"
+  );
+  let MakeDealwithDrinkandBrownieMinus = document.querySelector(
+    "#MakeDealwithDrinkandBrownie__minus"
+  );
+
+  MakeDealwithDrinkandBrowniePlus.addEventListener("click", () => {
+    MakeDealwithDrinkandBrownieCounter = MakeDealwithDrinkandBrownieCounter + 1;
+    MakeDealwithDrinkandBrownieNumber.textContent =
+      MakeDealwithDrinkandBrownieCounter;
+  });
+
+  MakeDealwithDrinkandBrownieMinus.addEventListener("click", () => {
+    if (MakeDealwithDrinkandBrownieCounter > 0) {
+      MakeDealwithDrinkandBrownieCounter =
+        MakeDealwithDrinkandBrownieCounter - 1;
+      MakeDealwithDrinkandBrownieNumber.textContent =
+        MakeDealwithDrinkandBrownieCounter;
+    }
+  });
+
+  let DrinkArray = [
+    "San Pellegrino Lemonade",
+    "San Pellegrino Blood Orange",
+    "Coca Cola",
+    "Diet Coca Cola",
+    "Still Water",
+    "Sparkling Water",
+  ];
+
+  let DrinkDiv = document.createElement("div");
+  DrinkDiv.classList.add("DrinkDiv");
+  ExtraDealDiv.appendChild(DrinkDiv);
+
+  let DrinkHeading = document.createElement("h1");
+  DrinkHeading.classList.add("DrinkDiv__DrinkHeading");
+  DrinkHeading.textContent = `Choice of Drink`;
+  DrinkDiv.appendChild(DrinkHeading);
+
+  let DrinkParag = document.createElement("p");
+  DrinkParag.classList.add("DrinkDiv__DrinkParag");
+  DrinkParag.textContent = `Required`;
+  DrinkDiv.appendChild(DrinkParag);
+
+  /* listenin kendisi */
+  let DrinkList = document.createElement("ul");
+  DrinkList.classList.add("DrinkDiv__DrinkList");
+  DrinkDiv.appendChild(DrinkList);
+
+  /* liste elemanlarının liste içerisine eklenmesi */
+  let DrinkItems = DrinkArray.map(function (item) {
+    return `
+    <li class="DrinkDiv__DrinkListItem">
+    <div id="${item}" class="DrinkDiv__DrinkListItem--btn"></div>
+    ${item}</li>
+    `;
+  }).join("");
+  DrinkList.innerHTML = DrinkItems;
+
+  const DrinklistDOM = document.querySelector(".DrinkDiv__DrinkList");
+
+  DrinklistDOM.addEventListener("click", activeFunctionDrink);
+
+  function activeFunctionDrink(event) {
+    document.querySelector(".active").classList.remove("active");
+    event.target.classList.add("active");
+    let lastDrink = event.target.parentNode.innerText;
+    console.log(lastDrink);
+  }
 }
 
 /* bu section içindeki herhangi bir item'a tıklanırsa selectItem fonksiyonu
