@@ -1575,31 +1575,69 @@ function addCustomize(event) {
     customizeSection.firstElementChild.remove();
     BtnsDiv.style.display = "flex";
 
-    BeefMeatballswithTomatoSouceCounter = 0;
-    RoastedChorizoCounter = 0;
-    LemonandChilliChickenCounter = 0;
-    CrispyChickenCounter = 0;
-    GoldenHalloumiVegetarianCounter = 0;
-    FalafelCounter = 0;
+    let ExtraProteinCounters = [
+      {
+        counter: BeefMeatballswithTomatoSouceCounter,
+        name: "Beef Meatballs with Tomato Souce",
+        number: BeefNumber,
+      },
+      {
+        counter: RoastedChorizoCounter,
+        name: "Roasted Chorizo",
+        number: RoastedNumber,
+      },
+      {
+        counter: LemonandChilliChickenCounter,
+        name: "Lemon and Chilli Chicken",
+        number: LemonNumber,
+      },
+      {
+        counter: CrispyChickenCounter,
+        name: "Crispy Chicken",
+        number: CrispyNumber,
+      },
+      {
+        counter: GoldenHalloumiVegetarianCounter,
+        name: "Golden Halloumi Vegetarian",
+        number: GoldenNumber,
+      },
+      { counter: FalafelCounter, name: "Falafel", number: FalafelNumber },
+    ];
 
-    BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
-    RoastedNumber.textContent = RoastedChorizoCounter;
-    LemonNumber.textContent = LemonandChilliChickenCounter;
-    CrispyNumber.textContent = CrispyChickenCounter;
-    GoldenNumber.textContent = GoldenHalloumiVegetarianCounter;
-    FalafelNumber.textContent = FalafelCounter;
+    let ExtraProteinBasketArray = [];
+
+    ExtraProteinCounters.forEach(function (item) {
+      if (item.counter > 0) {
+        ExtraProteinBasketArray.push(item.name);
+      } else {
+      }
+    });
+    console.log("Extra", ExtraProteinBasketArray);
+
+    ExtraProteinCounters.forEach(function (item) {
+      item.counter = 0;
+      console.log(item.counter);
+    });
+
+    ExtraProteinCounters.forEach(function (item) {
+      item.number.textContent = item.counter;
+      /* BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter; */
+    });
+
     /*IngridientsArray */
     itemParag.innerText = IngridientsArray.join(" ");
 
     itemParag.innerHTML = `
-    <p>${(itemParag.innerText = IngridientsArray.join(" "))}</p>
-    <h1>Add Extra Protein (£${ExtraProteinTotalPrice})</h1> 
-      <h1>Add Extra Salads and Vegetables (£${ExtraSaladTotalPrice})</h1>
-      <h1>Add Extra Sauce (£${ExtraSauceTotalPrice})</h1>
-      <h1>Make it a Meal Deal  (£${
+    <p class="customizeSection__basketParag">${(itemParag.innerText =
+      IngridientsArray.join(" "))}</p>
+    <h1 class="customizeSection__basketHeading" >Add Extra Protein (£${ExtraProteinTotalPrice})</h1>
+    <p>${ExtraProteinBasketArray.join(", ")}</p>
+      <h1 class="customizeSection__basketHeading">Add Extra Salads and Vegetables (£${ExtraSaladTotalPrice})</h1>
+      <h1 class="customizeSection__basketHeading">Add Extra Sauce (£${ExtraSauceTotalPrice})</h1>
+      <h1 class="customizeSection__basketHeading">Make it a Meal Deal  (£${
         MakeDealwithDrinkandBrownieCounter * 3.95
       })</h1>
-      <p>Meal Deal with Drink and Brownie, Choice of Drink, ${lastDrinkDom}}</p> 
+      <p class="customizeSection__basketParag">Meal Deal with Drink and Brownie, Choice of Drink, ${lastDrinkDom}}</p> 
     `;
   });
 }
