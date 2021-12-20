@@ -450,6 +450,7 @@ customizeSection__closeIcon.addEventListener("click", function (event) {
   customizeSection.style.transform = "translateY(100%)";
   customizeSection__closeIcon.style.transform = "translateY(-300%)";
   customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
+  cartSection__Btns.style.transform = "translateY(0%)";
 
   function resetList() {
     /* customize kısmı kaybolurken önceden oluşturulmuş olan malzeme listesini resetler */
@@ -751,6 +752,15 @@ function addCustomize(event) {
     `;
   }).join("");
   ExtraProteinList.innerHTML = ExtraProteinItems;
+
+  /* 
+  BeefNumber
+  RoastedNumber
+  LemonNumber
+  CrispyNumber
+  GoldenNumber
+  FalafelNumber
+  */
 
   /* BeefMeatballswithTomatoSouce */
 
@@ -1369,12 +1379,229 @@ function addCustomize(event) {
 
   DrinklistDOM.addEventListener("click", activeFunctionDrink);
 
+  let lastDrinkDom;
+
   function activeFunctionDrink(event) {
-    document.querySelector(".active").classList.remove("active");
-    event.target.classList.add("active");
-    let lastDrink = event.target.parentNode.innerText;
+    console.log(document.querySelector(".active"));
+    if (document.querySelector(".active") === null) {
+      event.target.classList.add("active");
+      document.querySelector(".active").classList.remove("active");
+      event.target.classList.add("active");
+      let lastDrink = event.target.parentNode.innerText;
+      lastDrinkDom = lastDrink;
+    } else {
+      document.querySelector(".active").classList.remove("active");
+      event.target.classList.add("active");
+      let lastDrink = event.target.parentNode.innerText;
+      lastDrinkDom = lastDrink;
+    }
+
+    /*
     console.log(lastDrink);
+    
+    */
   }
+
+  checkOutDOM = document.querySelector(".MainItemDiv__AddBasketBtn");
+  checkOutDOM.addEventListener("click", function (event) {
+    let ExtraProteinTotalPrice =
+      BeefMeatballswithTomatoSouceCounter * 2.5 +
+      RoastedChorizoCounter * 2.5 +
+      LemonandChilliChickenCounter * 2.5 +
+      CrispyChickenCounter * 2.5 +
+      GoldenHalloumiVegetarianCounter * 2.5 +
+      FalafelCounter * 2.5;
+
+    let ExtraSaladTotalPrice =
+      CharredSweetcornCounter * 0.75 +
+      ChoppedPicklesCounter * 0.75 +
+      RoastedRedPeppersCounter * 0.75 +
+      KimchiMildCounter * 0.95 +
+      BlackOlivesCounter * 0.95 +
+      SmashedAvocadoCounter * 1.25;
+
+    let ExtraSauceTotalPrice =
+      GarlicSauceCounter * 0.75 +
+      MayonnaiseCounter * 0.75 +
+      SourCreamCounter * 0.75 +
+      SmokyBBQCounter * 0.75 +
+      TomatoKetchupCounter * 0.75 +
+      SrirachaHotSauceFermentedHotSauceMildCounter * 0.75;
+
+    newItemPriceFloat =
+      newItemPriceFloat +
+      MakeDealwithDrinkandBrownieCounter * 3.95 +
+      ExtraProteinTotalPrice +
+      ExtraSaladTotalPrice +
+      ExtraSauceTotalPrice;
+
+    console.log(newArr);
+    customizeSection.style.transform = "translateY(100%)";
+    customizeSection__closeIcon.style.transform = "translateY(-300%)";
+    customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
+    cartSection__Btns.style.transform = "translateY(0%)";
+
+    /* Ana Div */
+    let itemCard = document.createElement("div");
+    itemCard.classList.add("basket__itemList--itemCard");
+    basket__itemList.appendChild(itemCard);
+
+    /* span */
+    let divv = document.createElement("div");
+    divv.classList.add("basket__itemList--divv");
+    itemCard.appendChild(divv);
+
+    /* Img */
+
+    let itemImg = document.createElement("img");
+    itemImg.classList.add("basket__itemList--itemImg");
+    itemImg.src = newItemSrc;
+    divv.appendChild(itemImg);
+
+    /* Heading */
+
+    let itemHeading = document.createElement("h1");
+    itemHeading.classList.add("basket__itemList--itemHeading");
+    itemHeading.innerText = newItemName;
+    divv.appendChild(itemHeading);
+
+    /* Parag */
+
+    let itemParag = document.createElement("p");
+    itemParag.classList.add("basket__itemList--itemParag");
+    itemParag.innerText = newItemParag;
+    divv.appendChild(itemParag);
+
+    /* Price */
+
+    let itemPrice = document.createElement("p");
+    itemPrice.classList.add("basket__itemList--itemPrice");
+    itemPrice.innerText = newItemPriceFloat;
+    itemCard.appendChild(itemPrice);
+
+    /* Counter Div */
+
+    let itemCounterDiv = document.createElement("div");
+    itemCounterDiv.classList.add("basket__itemList--counterDiv");
+    itemCard.appendChild(itemCounterDiv);
+
+    /* Counter Minus Btn */
+    let itemCounterMinusBtn = document.createElement("i");
+    itemCounterMinusBtn.classList.add("basket__itemList--counterMinusBtn");
+    itemCounterMinusBtn.classList.add("fas", "fa-minus");
+    itemCounterDiv.appendChild(itemCounterMinusBtn);
+
+    /* Count Number */
+    let itemCounterNumber = document.createElement("div");
+    itemCounterNumber.classList.add("basket__itemList--counterNumber");
+    itemCounterNumber.innerText = 1;
+    itemCounterDiv.appendChild(itemCounterNumber);
+
+    /* Counter Plus Btn */
+    let itemCounterPlusBtn = document.createElement("i");
+    itemCounterPlusBtn.classList.add("basket__itemList--counterPlusBtn");
+    itemCounterPlusBtn.classList.add("fas", "fa-plus");
+    itemCounterDiv.appendChild(itemCounterPlusBtn);
+
+    productCount = 1;
+
+    /* plus */
+    itemCounterPlusBtn.addEventListener("click", function (event) {
+      let newItemPrice = newItemPriceFloat;
+
+      productCount = productCount + 1;
+      event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
+      console.log(productCount);
+
+      newArr.push(newItemPrice);
+      console.log(newArr);
+      basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+      menu__cart__itemCount.textContent = newArr.length;
+    });
+
+    /* minus */
+    itemCounterMinusBtn.addEventListener("click", function (event) {
+      let newItemPrice = newItemPriceFloat;
+
+      if (productCount > 1) {
+        //newArr.pop(newItemPrice);
+        //console.log(newArr.indexOf(newItemPrice));
+        let lastItem = newArr.indexOf(newItemPrice);
+        basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+
+        if (lastItem > -1) {
+          newArr.splice(lastItem, 1);
+        }
+        productCount = productCount - 1;
+        event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
+        console.log(productCount);
+
+        //console.log(newArr);
+        basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+        menu__cart__itemCount.textContent = newArr.length;
+      } else {
+        let lastItem = newArr.indexOf(newItemPrice);
+        if (lastItem > -1) {
+          newArr.splice(lastItem, 1);
+        }
+        event.target.parentNode.parentNode.style.display = "none";
+        basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+        menu__cart__itemCount.textContent = newArr.length;
+      }
+      basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+    });
+    /* Sadece Itemlara tıklandığında bile sepete ekleme problemi çözümü */
+
+    newArr.push(newItemPriceFloat);
+    basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+    menu__cart__itemCount.textContent = newArr.length;
+
+    /* basket kısmının görünür hale getirilmesi */
+    basket.style.transform = "translateX(0%)";
+
+    /* her addBaket butonuna basıldığında sepetteki item sayısının artması */
+    itemCount++;
+
+    /* ui tarafında bu sayının güncellenmesi */
+    menu__cart__itemCount.textContent = newArr.length;
+
+    IngridientsDiv.style.transform = "translateY(0%)";
+    ExtraProteinDiv.style.transform = "translateY(0%)";
+    ExtraSaladDiv.style.transform = "translateY(0%)";
+    ExtraSauceDiv.style.transform = "translateY(0%)";
+    RemoveHeading.textContent = `Remove Elements`;
+    RemoveParag.textContent = `Choose what you remove`;
+
+    customizeSection.firstElementChild.remove();
+    BtnsDiv.style.display = "flex";
+
+    BeefMeatballswithTomatoSouceCounter = 0;
+    RoastedChorizoCounter = 0;
+    LemonandChilliChickenCounter = 0;
+    CrispyChickenCounter = 0;
+    GoldenHalloumiVegetarianCounter = 0;
+    FalafelCounter = 0;
+
+    BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
+    RoastedNumber.textContent = RoastedChorizoCounter;
+    LemonNumber.textContent = LemonandChilliChickenCounter;
+    CrispyNumber.textContent = CrispyChickenCounter;
+    GoldenNumber.textContent = GoldenHalloumiVegetarianCounter;
+    FalafelNumber.textContent = FalafelCounter;
+    /*IngridientsArray */
+    itemParag.innerText = IngridientsArray.join(" ");
+
+    itemParag.innerHTML = `
+    <p>${(itemParag.innerText = IngridientsArray.join(" "))}</p>
+    <h1>Add Extra Protein (£${ExtraProteinTotalPrice})</h1> 
+      <h1>Add Extra Salads and Vegetables (£${ExtraSaladTotalPrice})</h1>
+      <h1>Add Extra Sauce (£${ExtraSauceTotalPrice})</h1>
+      <h1>Make it a Meal Deal  (£${
+        MakeDealwithDrinkandBrownieCounter * 3.95
+      })</h1>
+      <p>Meal Deal with Drink and Brownie, Choice of Drink, ${lastDrinkDom}}</p> 
+    `;
+  });
 }
 
 /* bu section içindeki herhangi bir item'a tıklanırsa selectItem fonksiyonu

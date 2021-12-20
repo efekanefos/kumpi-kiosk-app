@@ -518,7 +518,7 @@
 }
 
 .customizeSection__closeIcon {
-  color: black;
+  color: #fff;
   font-size: 10rem;
   position: absolute;
   -webkit-transition: all 2s;
