@@ -231,6 +231,7 @@ const customizeSection__closeIcon = document.querySelector(
 const cartSection__Btns = document.querySelector(".cartSection__Btns");
 
 const shop = document.querySelector(".shop");
+const menu__heading = document.querySelector(".menu__heading");
 
 /* Fiyatların sıralandığı Array */
 let newArr = [];
@@ -256,6 +257,8 @@ cartSection__closeIcon.addEventListener("click", function () {
   cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
   cartSection__leftBtn.style.transform = "translateX(-300%)";
   cartSection__rightBtn.style.transform = "translateX(300%)";
+
+  menu__heading.textContent = `Kumpi Menu`;
 });
 
 /* reducer fonksiyonunun ne yapması gerektiğini belirten toplama fonk. */
@@ -271,6 +274,7 @@ function selectItem(event) {
   cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
   cartSection__leftBtn.style.transform = "translateX(0%)";
   cartSection__rightBtn.style.transform = "translateX(0%)";
+  cartSection__Btns.style.transform = "translateY(0%)";
 
   /* seçilen yeni Item'in bilgilerini çektiğimiz ana yapı */
   let newItem = event.target.parentNode.children;
@@ -301,12 +305,16 @@ let itemArray = [];
 function addBasket(event) {
   let productCount = 1;
 
+  menu__heading.textContent = `Basket`;
+
   /* add Basket butonunun cartSection kısmını gizlemesi */
   cartSection.style.transform = "translateY(100%)";
   cartSection__closeIcon.style.transform = "translateY(-300%)";
   cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
   cartSection__leftBtn.style.transform = "translateX(-300%)";
   cartSection__rightBtn.style.transform = "translateX(300%)";
+  cartSection__Btns.style.transform = "translateY(300%)";
+  /* cartSection__Btns aşağı insin diye */
 
   /* basket kısmının görünür hale getirilmesi */
   basket.style.transform = "translateX(0%)";
@@ -459,6 +467,7 @@ function addBasket(event) {
 /* basket kısmını kapatmamızı sağlayan closeIcon fonskiyonu*/
 basket__closeIcon.addEventListener("click", function () {
   basket.style.transform = "translateX(150%)";
+  menu__heading.textContent = `Kumpi Menu`;
 });
 
 /* customize kısmının kapanmasını sağlayan x ikonunun fonksiyonu */
@@ -467,6 +476,8 @@ customizeSection__closeIcon.addEventListener("click", function (event) {
   customizeSection__closeIcon.style.transform = "translateY(-300%)";
   customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
   cartSection__Btns.style.transform = "translateY(0%)";
+
+  menu__heading.textContent = `Kumpi Menu`;
 
   function resetList() {
     /* customize kısmı kaybolurken önceden oluşturulmuş olan malzeme listesini resetler */
@@ -477,6 +488,7 @@ customizeSection__closeIcon.addEventListener("click", function (event) {
 });
 
 function addCustomize(event) {
+  menu__heading.textContent = `Customize`;
   /* customize kısmının belirmesi */
   customizeSection.style.transform = "translateY(0%)";
   customizeSection__closeIcon.style.transform = "translateY(0%)";
@@ -1408,6 +1420,7 @@ function addCustomize(event) {
 
   checkOutDOM = document.querySelector(".MainItemDiv__AddBasketBtn");
   checkOutDOM.addEventListener("click", function (event) {
+    menu__heading.textContent = `Basket`;
     let ExtraProteinTotalPrice =
       BeefMeatballswithTomatoSouceCounter * 2.5 +
       RoastedChorizoCounter * 2.5 +
@@ -1443,7 +1456,7 @@ function addCustomize(event) {
     customizeSection.style.transform = "translateY(100%)";
     customizeSection__closeIcon.style.transform = "translateY(-300%)";
     customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
-    cartSection__Btns.style.transform = "translateY(0%)";
+    cartSection__Btns.style.transform = "translateY(300%)";
 
     /* Ana Div */
     let itemCard = document.createElement("div");
@@ -1622,7 +1635,77 @@ function addCustomize(event) {
       { counter: FalafelCounter, name: "Falafel", number: FalafelNumber },
     ];
 
+    let ExtraSaladCounters = [
+      {
+        counter: CharredSweetcornCounter,
+        name: "Charred Sweetcorn",
+        number: CharredSweetcornNumber,
+      },
+      {
+        counter: ChoppedPicklesCounter,
+        name: "Chopped Pickles",
+        number: ChoppedPicklesNumber,
+      },
+      {
+        counter: RoastedRedPeppersCounter,
+        name: "Roasted Red Peppers",
+        number: RoastedRedPeppersNumber,
+      },
+      {
+        counter: KimchiMildCounter,
+        name: "Kimchi (Mild)",
+        number: KimchiMildNumber,
+      },
+      {
+        counter: BlackOlivesCounter,
+        name: "Black Olives",
+        number: BlackOlivesNumber,
+      },
+      {
+        counter: SmashedAvocadoCounter,
+        name: "Smashed Avocado",
+        number: SmashedAvocadoNumber,
+      },
+    ];
+
+    let ExtraSauceCounters = [
+      {
+        counter: GarlicSauceCounter,
+        name: "Garlic Sauce",
+        number: GarlicSauceNumber,
+      },
+      {
+        counter: MayonnaiseCounter,
+        name: "Mayonnaise",
+        number: MayonnaiseNumber,
+      },
+      {
+        counter: SourCreamCounter,
+        name: "Sour Cream",
+        number: SourCreamNumber,
+      },
+      {
+        counter: SmokyBBQCounter,
+        name: "Smoky BBQ",
+        number: SmokyBBQNumber,
+      },
+      {
+        counter: TomatoKetchupCounter,
+        name: "Tomato Ketchup",
+        number: TomatoKetchupNumber,
+      },
+      {
+        counter: SrirachaHotSauceFermentedHotSauceMildCounter,
+        name: "Sriracha Hot Sauce Fermented Hot Sauce (Mild)",
+        number: SrirachaHotSauceFermentedHotSauceMildNumber,
+      },
+    ];
+
     let ExtraProteinBasketArray = [];
+    let ExtraSaladBasketArray = [];
+    let ExtraSauceBasketArray = [];
+
+    /* PROTEIN SECTION */
 
     ExtraProteinCounters.forEach(function (item) {
       if (item.counter > 0) {
@@ -1642,6 +1725,46 @@ function addCustomize(event) {
       /* BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter; */
     });
 
+    /* SALAD SECTION */
+
+    ExtraSaladCounters.forEach(function (item) {
+      if (item.counter > 0) {
+        ExtraSaladBasketArray.push(item.name);
+      } else {
+      }
+    });
+    console.log("Extra", ExtraSaladBasketArray);
+
+    ExtraSaladCounters.forEach(function (item) {
+      item.counter = 0;
+      console.log(item.counter);
+    });
+
+    ExtraSaladCounters.forEach(function (item) {
+      item.number.textContent = item.counter;
+      /* BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter; */
+    });
+
+    /* SAUCE SECTION */
+
+    ExtraSauceCounters.forEach(function (item) {
+      if (item.counter > 0) {
+        ExtraSauceBasketArray.push(item.name);
+      } else {
+      }
+    });
+    console.log("Extra", ExtraSauceBasketArray);
+
+    ExtraSauceCounters.forEach(function (item) {
+      item.counter = 0;
+      console.log(item.counter);
+    });
+
+    ExtraSauceCounters.forEach(function (item) {
+      item.number.textContent = item.counter;
+      /* BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter; */
+    });
+
     /*IngridientsArray */
     itemParag.innerText = IngridientsArray.join(" ");
 
@@ -1651,14 +1774,85 @@ function addCustomize(event) {
     <h1 class="customizeSection__basketHeading" >Add Extra Protein (£${ExtraProteinTotalPrice})</h1>
     <p>${ExtraProteinBasketArray.join(", ")}</p>
       <h1 class="customizeSection__basketHeading">Add Extra Salads and Vegetables (£${ExtraSaladTotalPrice})</h1>
+      <p>${ExtraSaladBasketArray.join(", ")}</p>
       <h1 class="customizeSection__basketHeading">Add Extra Sauce (£${ExtraSauceTotalPrice})</h1>
+      <p>${ExtraSauceBasketArray.join(", ")}</p>
       <h1 class="customizeSection__basketHeading">Make it a Meal Deal  (£${
         MakeDealwithDrinkandBrownieCounter * 3.95
       })</h1>
       <p class="customizeSection__basketParag">Meal Deal with Drink and Brownie, Choice of Drink, ${lastDrinkDom}}</p> 
     `;
+
+    console.log(basket__itemList);
   });
 }
+
+const checkoutBtnDom = document.querySelector(".basket__itemList--checkout");
+const menuCartDom = document.querySelector(".menu__cart");
+
+/* pazar arabası ikonu ile basket kısmını görünür hale getirme */
+menuCartDom.addEventListener("click", function () {
+  document.querySelector(".basket").style.transform = "translateX(0%)";
+});
+
+/* basket kısmındaki checkout butonuna basıldığında olması gerekenler fonksiyonu */
+checkoutBtnDom.addEventListener("click", function (e) {
+  menu__heading.textContent = `Checkout`;
+
+  document
+    .querySelectorAll(".basket__itemList--itemCard")
+    .forEach(function (item) {
+      item.classList.add("checkout");
+    });
+  document
+    .querySelectorAll(".basket__itemList--itemImg")
+    .forEach(function (item) {
+      item.classList.add("checkout");
+    });
+  document.querySelectorAll(".basket__itemList--divv").forEach(function (item) {
+    item.classList.add("checkout");
+  });
+
+  document.querySelector(".shop__menu").style.display = "none";
+  document.querySelector(".shop__products").style.display = "none";
+  menuCartDom.innerHTML = `<h3>Back</h3>`;
+  basket.style.transform = "translateX(150%)";
+  menuCartDom.addEventListener("click", function () {
+    menu__heading.textContent = `Kumpi Menu`;
+    document.querySelector(".shop__menu").style.display = "block";
+
+    document.querySelector(".shop__products").style.display = "block";
+
+    shop.classList.remove("checkout");
+
+    document.querySelector(".basket").appendChild(basket__itemList);
+
+    document
+      .querySelectorAll(".basket__itemList--itemCard")
+      .forEach(function (item) {
+        item.classList.remove("checkout");
+      });
+    document
+      .querySelectorAll(".basket__itemList--itemImg")
+      .forEach(function (item) {
+        item.classList.remove("checkout");
+      });
+    document
+      .querySelectorAll(".basket__itemList--divv")
+      .forEach(function (item) {
+        item.classList.remove("checkout");
+      });
+
+    menuCartDom.innerHTML = `
+    <div class="menu__cart">
+          <i class="menu__cart--icon fas fa-shopping-cart"></i>
+          <span class="menu__cart--itemCount"> 0 </span>
+        </div>
+    `;
+  });
+  shop.classList.add("checkout");
+  shop.appendChild(basket__itemList);
+});
 
 /* bu section içindeki herhangi bir item'a tıklanırsa selectItem fonksiyonu
 devreye girsin */
