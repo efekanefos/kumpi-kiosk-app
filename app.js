@@ -230,6 +230,8 @@ const customizeSection__closeIcon = document.querySelector(
 );
 const cartSection__Btns = document.querySelector(".cartSection__Btns");
 
+const shop = document.querySelector(".shop");
+
 /* Fiyatların sıralandığı Array */
 let newArr = [];
 
@@ -391,7 +393,10 @@ function addBasket(event) {
 
     newArr.push(newItemPrice);
     console.log(newArr);
-    basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+    basket__itemList__totalPrice.innerText = `₤${(
+      Math.round(newArr.reduce(getSum, 0) * 100) / 100
+    ).toFixed(2)}`;
+
     menu__cart__itemCount.textContent = newArr.length;
   });
 
@@ -405,6 +410,9 @@ function addBasket(event) {
       //newArr.pop(newItemPrice);
       //console.log(newArr.indexOf(newItemPrice));
       let lastItem = newArr.indexOf(newItemPrice);
+      basket__itemList__totalPrice.innerText = `₤${(
+        Math.round(newArr.reduce(getSum, 0) * 100) / 100
+      ).toFixed(2)}`;
       if (lastItem > -1) {
         newArr.splice(lastItem, 1);
       }
@@ -413,19 +421,27 @@ function addBasket(event) {
       console.log(productCount);
 
       //console.log(newArr);
-      basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+
       menu__cart__itemCount.textContent = newArr.length;
+      basket__itemList__totalPrice.innerText = `₤${(
+        Math.round(newArr.reduce(getSum, 0) * 100) / 100
+      ).toFixed(2)}`;
     } else {
       let lastItem = newArr.indexOf(newItemPrice);
-      if (lastItem > -1) {
-        newArr.splice(lastItem, 1);
-      }
+
+      newArr.splice(lastItem, 1);
+
       event.target.parentNode.parentNode.style.display = "none";
-      basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+
+      basket__itemList__totalPrice.innerText = `₤${(
+        Math.round(newArr.reduce(getSum, 0) * 100) / 100
+      ).toFixed(2)}`;
       menu__cart__itemCount.textContent = newArr.length;
     }
   });
-  basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+  basket__itemList__totalPrice.innerText = `₤${(
+    Math.round(newArr.reduce(getSum, 0) * 100) / 100
+  ).toFixed(2)}`;
 
   /* Sadece Itemlara tıklandığında bile sepete ekleme problemi çözümü */
 
@@ -436,7 +452,7 @@ function addBasket(event) {
   );
 
   newArr.push(newPriceBasket);
-  basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+  basket__itemList__totalPrice.innerText = `₤${newArr.reduce(getSum, 0)}`;
   menu__cart__itemCount.textContent = newArr.length;
 }
 
@@ -647,7 +663,9 @@ function addCustomize(event) {
         RemoveHeading.textContent = `Make Deal with Drink and Brownie`;
         RemoveParag.textContent = `Choose up to 1`;
         MainItemDiv__NextBtnDOM.style.visibility = "hidden";
-        MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${newItemPriceFloat}`;
+        MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+          Math.round(newItemPriceFloat * 100) / 100
+        ).toFixed(2)}`;
         break;
       default:
       // code block
@@ -752,15 +770,6 @@ function addCustomize(event) {
     `;
   }).join("");
   ExtraProteinList.innerHTML = ExtraProteinItems;
-
-  /* 
-  BeefNumber
-  RoastedNumber
-  LemonNumber
-  CrispyNumber
-  GoldenNumber
-  FalafelNumber
-  */
 
   /* BeefMeatballswithTomatoSouce */
 
@@ -1395,11 +1404,6 @@ function addCustomize(event) {
       let lastDrink = event.target.parentNode.innerText;
       lastDrinkDom = lastDrink;
     }
-
-    /*
-    console.log(lastDrink);
-    
-    */
   }
 
   checkOutDOM = document.querySelector(".MainItemDiv__AddBasketBtn");
@@ -1476,7 +1480,9 @@ function addCustomize(event) {
 
     let itemPrice = document.createElement("p");
     itemPrice.classList.add("basket__itemList--itemPrice");
-    itemPrice.innerText = newItemPriceFloat;
+    itemPrice.innerText = (Math.round(newItemPriceFloat * 100) / 100).toFixed(
+      2
+    );
     itemCard.appendChild(itemPrice);
 
     /* Counter Div */
@@ -1515,7 +1521,9 @@ function addCustomize(event) {
 
       newArr.push(newItemPrice);
       console.log(newArr);
-      basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+      basket__itemList__totalPrice.innerText = `₤${(
+        Math.round(newArr.reduce(getSum, 0) * 100) / 100
+      ).toFixed(2)}`;
       menu__cart__itemCount.textContent = newArr.length;
     });
 
@@ -1527,7 +1535,9 @@ function addCustomize(event) {
         //newArr.pop(newItemPrice);
         //console.log(newArr.indexOf(newItemPrice));
         let lastItem = newArr.indexOf(newItemPrice);
-        basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+        basket__itemList__totalPrice.innerText = `₤${(
+          Math.round(newArr.reduce(getSum, 0) * 100) / 100
+        ).toFixed(2)}`;
 
         if (lastItem > -1) {
           newArr.splice(lastItem, 1);
@@ -1537,7 +1547,9 @@ function addCustomize(event) {
         console.log(productCount);
 
         //console.log(newArr);
-        basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+        basket__itemList__totalPrice.innerText = `₤${(
+          Math.round(newArr.reduce(getSum, 0) * 100) / 100
+        ).toFixed(2)}`;
         menu__cart__itemCount.textContent = newArr.length;
       } else {
         let lastItem = newArr.indexOf(newItemPrice);
@@ -1545,15 +1557,21 @@ function addCustomize(event) {
           newArr.splice(lastItem, 1);
         }
         event.target.parentNode.parentNode.style.display = "none";
-        basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+        basket__itemList__totalPrice.innerText = `₤${(
+          Math.round(newArr.reduce(getSum, 0) * 100) / 100
+        ).toFixed(2)}`;
         menu__cart__itemCount.textContent = newArr.length;
       }
-      basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+      basket__itemList__totalPrice.innerText = `₤${(
+        Math.round(newArr.reduce(getSum, 0) * 100) / 100
+      ).toFixed(2)}`;
     });
     /* Sadece Itemlara tıklandığında bile sepete ekleme problemi çözümü */
 
     newArr.push(newItemPriceFloat);
-    basket__itemList__totalPrice.innerText = `${newArr.reduce(getSum, 0)}`;
+    basket__itemList__totalPrice.innerText = `₤${(
+      Math.round(newArr.reduce(getSum, 0) * 100) / 100
+    ).toFixed(2)}`;
     menu__cart__itemCount.textContent = newArr.length;
 
     /* basket kısmının görünür hale getirilmesi */

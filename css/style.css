@@ -375,7 +375,6 @@
   padding: 5%;
   padding-right: 2%;
   width: 100%;
-  position: relative;
 }
 
 .basket__itemList--itemCard {
@@ -467,7 +466,7 @@
 
 .basket__itemList__checkoutDiv {
   position: absolute;
-  bottom: -100%;
+  bottom: 6rem;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
