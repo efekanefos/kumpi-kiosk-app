@@ -620,6 +620,92 @@
     border-radius: 35px;
   }
 }
+.verticalCardDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.verticalitemImg {
+  margin-top: 0;
+}
+
+.successPayment {
+  position: absolute;
+  bottom: -50%;
+  left: 50%;
+  z-index: 999;
+  transform: scale(0) translate(-50%, -50%);
+  text-align: center;
+  background-color: #fff;
+  width: 85%;
+  padding: 7rem 8rem;
+  margin: 0 auto;
+  box-shadow: 0px 6.64253px 66.4253px rgba(32, 35, 38, 0.15);
+  border-radius: 29.8914px;
+  transition: all 2s;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  &__img {
+    margin-bottom: 3rem;
+  }
+  &__heading-1 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+  &__heading-2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.errorPayment {
+  position: absolute;
+  z-index: 999;
+  bottom: -60%;
+  left: 50%;
+  transform: scale(0) translate(-50%, -50%);
+  text-align: center;
+  background-color: #fff;
+  width: 85%;
+  padding: 7rem 8rem;
+  margin: 0 auto;
+  box-shadow: 0px 6.64253px 66.4253px rgba(32, 35, 38, 0.15);
+  border-radius: 29.8914px;
+  transition: all 2s;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+
+  &__img {
+    margin-bottom: 3rem;
+  }
+  &__heading-1 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+  &__tryAgainBtn,
+  &__cancelOrderBtn {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    background-color: #000;
+    color: #fff;
+    padding: 1.5rem 5rem;
+    font-size: 2rem;
+    outline: none;
+    border: 2px solid #e5e5e5;
+    box-sizing: border-box;
+    border-radius: 42.5px;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    margin-top: 2rem;
+    text-decoration: none;
+  }
+  &__cancelOrderBtn {
+    background-color: #cbcfd3;
+    color: #202326;
+  }
+}
 
 @media (max-width: 785px) {
   .shop {

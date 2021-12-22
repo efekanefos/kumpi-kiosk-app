@@ -389,6 +389,29 @@ function addBasket(event) {
   itemCounterPlusBtn.classList.add("fas", "fa-plus");
   itemCounterDiv.appendChild(itemCounterPlusBtn);
 
+  //* vertical div
+  /*
+  const verticalCardDiv = document.createElement("div");
+  verticalCardDiv.classList.add("verticalCardDiv");
+  itemCard.appendChild(verticalCardDiv);
+
+  let VerticalitemHeading = itemHeading.cloneNode(true);
+  let VerticalitemParag = itemParag.cloneNode(true);
+  let VerticalitemPrice = itemPrice.cloneNode(true);
+  let VerticalitemImg =
+    event.target.parentNode.nextElementSibling.nextElementSibling.children[0].cloneNode(
+      true
+    );
+  VerticalitemImg.classList.add("verticalitemImg");
+  itemCard.appendChild(VerticalitemImg);
+  itemCard.insertBefore(VerticalitemImg, itemCard.firstChild);
+  verticalCardDiv.appendChild(VerticalitemHeading);
+  verticalCardDiv.appendChild(VerticalitemParag);
+  verticalCardDiv.appendChild(VerticalitemPrice);
+  VerticalitemImg.style.display = "none";
+  verticalCardDiv.style.display = "none";
+  */
+
   /* plus */
   itemCounterPlusBtn.addEventListener("click", function (event) {
     let newItemPrice = parseFloat(
@@ -396,6 +419,8 @@ function addBasket(event) {
     );
 
     productCount = productCount + 1;
+    //* İşlem sonrası olması gereken: event.target.parentNode.parentNode.children[3].children[1].innerText;
+
     event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
     console.log(productCount);
 
@@ -1705,7 +1730,7 @@ function addCustomize(event) {
     let ExtraSaladBasketArray = [];
     let ExtraSauceBasketArray = [];
 
-    /* PROTEIN SECTION */
+    //? PROTEIN SECTION
 
     ExtraProteinCounters.forEach(function (item) {
       if (item.counter > 0) {
@@ -1725,7 +1750,7 @@ function addCustomize(event) {
       /* BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter; */
     });
 
-    /* SALAD SECTION */
+    //? SALAD SECTION
 
     ExtraSaladCounters.forEach(function (item) {
       if (item.counter > 0) {
@@ -1745,7 +1770,7 @@ function addCustomize(event) {
       /* BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter; */
     });
 
-    /* SAUCE SECTION */
+    //? SAUCE SECTION
 
     ExtraSauceCounters.forEach(function (item) {
       if (item.counter > 0) {
@@ -1762,10 +1787,10 @@ function addCustomize(event) {
 
     ExtraSauceCounters.forEach(function (item) {
       item.number.textContent = item.counter;
-      /* BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter; */
+      //! BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
     });
 
-    /*IngridientsArray */
+    //*IngridientsArray
     itemParag.innerText = IngridientsArray.join(" ");
 
     itemParag.innerHTML = `
@@ -1790,13 +1815,35 @@ function addCustomize(event) {
 const checkoutBtnDom = document.querySelector(".basket__itemList--checkout");
 const menuCartDom = document.querySelector(".menu__cart");
 
-/* pazar arabası ikonu ile basket kısmını görünür hale getirme */
+//! pazar arabası ikonu ile basket kısmını görünür hale getirme
 menuCartDom.addEventListener("click", function () {
   document.querySelector(".basket").style.transform = "translateX(0%)";
 });
 
+let boolelo = false;
 /* basket kısmındaki checkout butonuna basıldığında olması gerekenler fonksiyonu */
+//* CHECKOUT BUTONU
 checkoutBtnDom.addEventListener("click", function (e) {
+  if (document.querySelector(".menu__heading").textContent === "Checkout") {
+    if (boolelo) {
+      document.querySelector(".menu").style.filter = "brightness(0.5)";
+      document.querySelector(".successPayment").style.filter = "brightness(1)";
+      document.querySelector(".successPayment").style.bottom = "40%";
+      document.querySelector(".successPayment").style.left = "50%";
+      document.querySelector(".successPayment").style.transform =
+        "translate(-50%, -50%)";
+      document.querySelector(".successPayment").style.transform += "scale(1)";
+    } else {
+      document.querySelector(".errorPayment").style.transform += "scale(1)";
+      document.querySelector(".menu").style.filter = "brightness(0.5)";
+      document.querySelector(".errorPayment").style.filter = "brightness(1)";
+      document.querySelector(".errorPayment").style.bottom = "22%";
+      document.querySelector(".errorPayment").style.left = "50%";
+      document.querySelector(".errorPayment").style.transform =
+        "translate(-50%, -50%)";
+    }
+  }
+
   menu__heading.textContent = `Checkout`;
 
   document
@@ -1804,19 +1851,13 @@ checkoutBtnDom.addEventListener("click", function (e) {
     .forEach(function (item) {
       item.classList.add("checkout");
     });
-  document
-    .querySelectorAll(".basket__itemList--itemImg")
-    .forEach(function (item) {
-      item.classList.add("checkout");
-    });
-  document.querySelectorAll(".basket__itemList--divv").forEach(function (item) {
-    item.classList.add("checkout");
-  });
 
   document.querySelector(".shop__menu").style.display = "none";
   document.querySelector(".shop__products").style.display = "none";
   menuCartDom.innerHTML = `<h3>Back</h3>`;
   basket.style.transform = "translateX(150%)";
+
+  //* MENUCARTDOM CHECKOUT'TAN ÇIKMA BUTONU YANİ BACK
   menuCartDom.addEventListener("click", function () {
     menu__heading.textContent = `Kumpi Menu`;
     document.querySelector(".shop__menu").style.display = "block";
@@ -1829,16 +1870,6 @@ checkoutBtnDom.addEventListener("click", function (e) {
 
     document
       .querySelectorAll(".basket__itemList--itemCard")
-      .forEach(function (item) {
-        item.classList.remove("checkout");
-      });
-    document
-      .querySelectorAll(".basket__itemList--itemImg")
-      .forEach(function (item) {
-        item.classList.remove("checkout");
-      });
-    document
-      .querySelectorAll(".basket__itemList--divv")
       .forEach(function (item) {
         item.classList.remove("checkout");
       });
@@ -1863,3 +1894,82 @@ cartSection__rightBtn.addEventListener("click", addBasket);
 
 /* Add Customize(leftBtn) butonuna tıklanırsa addCustomize fonksiyonu çalışsın */
 cartSection__leftBtn.addEventListener("click", addCustomize);
+
+/*
+  document
+    .querySelectorAll(".basket__itemList--itemImg")
+    .forEach(function (item) {
+      item.classList.add("checkout");
+    });
+    */
+//* Price start
+/*
+  document
+    .querySelectorAll(
+      ".basket__itemList--itemCard .basket__itemList--itemPrice"
+    )
+    .forEach(function (item) {
+      item.style.display = "none";
+    });
+  document
+    .querySelectorAll(".verticalCardDiv .basket__itemList--itemPrice")
+    .forEach(function (item) {
+      item.style.display = "block";
+      item.style.position = "unset";
+    });
+    */
+
+//* Price end
+/*
+  document.querySelectorAll(".basket__itemList--divv").forEach(function (item) {
+    item.classList.add("checkout");
+    item.style.display = "none";
+  });
+  document.querySelectorAll(".verticalCardDiv").forEach(function (item) {
+    item.style.display = "flex";
+  });
+  document.querySelectorAll(".verticalitemImg").forEach(function (item) {
+    item.style.display = "block";
+  });
+
+  let verticalCardDiv = document.createElement("div");
+  verticalCardDiv.classList.add("verticalCardDiv");
+  */
+
+/*
+    //*price start
+    document
+      .querySelectorAll(
+        ".basket__itemList--itemCard .basket__itemList--itemPrice"
+      )
+      .forEach(function (item) {
+        item.style.display = "block";
+      });
+    document
+      .querySelectorAll(".verticalCardDiv .basket__itemList--itemPrice")
+      .forEach(function (item) {
+        item.style.display = "block";
+        item.style.position = "absolute";
+      });
+    //*price end
+
+    
+    document
+      .querySelectorAll(".basket__itemList--itemImg")
+      .forEach(function (item) {
+        item.classList.remove("checkout");
+      });
+
+    document
+      .querySelectorAll(".basket__itemList--divv")
+      .forEach(function (item) {
+        item.classList.remove("checkout");
+        item.style.display = "block";
+      });
+    document.querySelectorAll(".verticalCardDiv").forEach(function (item) {
+      item.style.display = "none";
+    });
+    document.querySelectorAll(".verticalitemImg").forEach(function (item) {
+      item.style.display = "none";
+    });
+    */
