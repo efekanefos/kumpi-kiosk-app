@@ -1582,129 +1582,6 @@ function addCustomize(event) {
     );
     itemCard.appendChild(itemPrice);
 
-    //* vertical div
-    /*
-    const verticalCardDiv = document.createElement("div");
-    verticalCardDiv.classList.add("verticalCardDiv");
-    itemCard.appendChild(verticalCardDiv);
-
-    let VerticalitemHeading = itemHeading.cloneNode(true);
-    let VerticalitemParag = itemParag.cloneNode(true);
-    let VerticalitemPrice = itemPrice.cloneNode(true);
-    let VerticalitemImg =
-      event.target.parentNode.nextElementSibling.nextElementSibling.children[0].cloneNode(
-        true
-      );
-    VerticalitemImg.classList.add("verticalitemImg");
-    itemCard.appendChild(VerticalitemImg);
-    itemCard.insertBefore(VerticalitemImg, itemCard.firstChild);
-    verticalCardDiv.appendChild(VerticalitemHeading);
-    verticalCardDiv.appendChild(VerticalitemParag);
-    verticalCardDiv.appendChild(VerticalitemPrice);
-    VerticalitemImg.style.display = "none";
-    verticalCardDiv.style.display = "none";
-    */
-
-    //* vertical div
-
-    /* Counter Div */
-
-    let itemCounterDiv = document.createElement("div");
-    itemCounterDiv.classList.add("basket__itemList--counterDiv");
-    itemCard.appendChild(itemCounterDiv);
-
-    /* Counter Minus Btn */
-    let itemCounterMinusBtn = document.createElement("i");
-    itemCounterMinusBtn.classList.add("basket__itemList--counterMinusBtn");
-    itemCounterMinusBtn.classList.add("fas", "fa-minus");
-    itemCounterDiv.appendChild(itemCounterMinusBtn);
-
-    /* Count Number */
-    let itemCounterNumber = document.createElement("div");
-    itemCounterNumber.classList.add("basket__itemList--counterNumber");
-    itemCounterNumber.innerText = 1;
-    itemCounterDiv.appendChild(itemCounterNumber);
-
-    /* Counter Plus Btn */
-    let itemCounterPlusBtn = document.createElement("i");
-    itemCounterPlusBtn.classList.add("basket__itemList--counterPlusBtn");
-    itemCounterPlusBtn.classList.add("fas", "fa-plus");
-    itemCounterDiv.appendChild(itemCounterPlusBtn);
-
-    productCount = 1;
-
-    /* plus */
-    itemCounterPlusBtn.addEventListener("click", function (event) {
-      let newItemPrice = newItemPriceFloat;
-
-      productCount = productCount + 1;
-      event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
-      console.log(productCount);
-
-      newArr.push(newItemPrice);
-      console.log(newArr);
-      basket__itemList__totalPrice.innerText = `₤${(
-        Math.round(newArr.reduce(getSum, 0) * 100) / 100
-      ).toFixed(2)}`;
-      menu__cart__itemCount.textContent = newArr.length;
-    });
-
-    /* minus */
-    itemCounterMinusBtn.addEventListener("click", function (event) {
-      let newItemPrice = newItemPriceFloat;
-
-      if (productCount > 1) {
-        //newArr.pop(newItemPrice);
-        //console.log(newArr.indexOf(newItemPrice));
-        let lastItem = newArr.indexOf(newItemPrice);
-        basket__itemList__totalPrice.innerText = `₤${(
-          Math.round(newArr.reduce(getSum, 0) * 100) / 100
-        ).toFixed(2)}`;
-
-        if (lastItem > -1) {
-          newArr.splice(lastItem, 1);
-        }
-        productCount = productCount - 1;
-        event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
-        console.log(productCount);
-
-        //console.log(newArr);
-        basket__itemList__totalPrice.innerText = `₤${(
-          Math.round(newArr.reduce(getSum, 0) * 100) / 100
-        ).toFixed(2)}`;
-        menu__cart__itemCount.textContent = newArr.length;
-      } else {
-        let lastItem = newArr.indexOf(newItemPrice);
-        if (lastItem > -1) {
-          newArr.splice(lastItem, 1);
-        }
-        event.target.parentNode.parentNode.style.display = "none";
-        basket__itemList__totalPrice.innerText = `₤${(
-          Math.round(newArr.reduce(getSum, 0) * 100) / 100
-        ).toFixed(2)}`;
-        menu__cart__itemCount.textContent = newArr.length;
-      }
-      basket__itemList__totalPrice.innerText = `₤${(
-        Math.round(newArr.reduce(getSum, 0) * 100) / 100
-      ).toFixed(2)}`;
-    });
-    /* Sadece Itemlara tıklandığında bile sepete ekleme problemi çözümü */
-
-    newArr.push(newItemPriceFloat);
-    basket__itemList__totalPrice.innerText = `₤${(
-      Math.round(newArr.reduce(getSum, 0) * 100) / 100
-    ).toFixed(2)}`;
-    menu__cart__itemCount.textContent = newArr.length;
-
-    /* basket kısmının görünür hale getirilmesi */
-    basket.style.transform = "translateX(0%)";
-
-    /* her addBaket butonuna basıldığında sepetteki item sayısının artması */
-    itemCount++;
-
-    /* ui tarafında bu sayının güncellenmesi */
-    menu__cart__itemCount.textContent = newArr.length;
-
     IngridientsDiv.style.transform = "translateY(0%)";
     ExtraProteinDiv.style.transform = "translateY(0%)";
     ExtraSaladDiv.style.transform = "translateY(0%)";
@@ -1893,6 +1770,126 @@ function addCustomize(event) {
     `;
 
     console.log(basket__itemList);
+
+    //* vertical div
+
+    const verticalCardDiv = document.createElement("div");
+    verticalCardDiv.classList.add("verticalCardDiv");
+    itemCard.appendChild(verticalCardDiv);
+
+    let VerticalitemHeading = itemHeading.cloneNode(true);
+    let VerticalitemParag = itemParag.cloneNode(true);
+    let VerticalitemPrice = itemPrice.cloneNode(true);
+    let VerticalitemImg =
+      event.target.parentNode.parentNode.children[0].cloneNode(true);
+    VerticalitemImg.classList.add("verticalitemImg");
+    itemCard.appendChild(VerticalitemImg);
+    itemCard.insertBefore(VerticalitemImg, itemCard.firstChild);
+    verticalCardDiv.appendChild(VerticalitemHeading);
+    verticalCardDiv.appendChild(VerticalitemParag);
+    verticalCardDiv.appendChild(VerticalitemPrice);
+    VerticalitemImg.style.display = "none";
+    verticalCardDiv.style.display = "none";
+
+    //* vertical div
+
+    /* Counter Div */
+
+    let itemCounterDiv = document.createElement("div");
+    itemCounterDiv.classList.add("basket__itemList--counterDiv");
+    itemCard.appendChild(itemCounterDiv);
+
+    /* Counter Minus Btn */
+    let itemCounterMinusBtn = document.createElement("i");
+    itemCounterMinusBtn.classList.add("basket__itemList--counterMinusBtn");
+    itemCounterMinusBtn.classList.add("fas", "fa-minus");
+    itemCounterDiv.appendChild(itemCounterMinusBtn);
+
+    /* Count Number */
+    let itemCounterNumber = document.createElement("div");
+    itemCounterNumber.classList.add("basket__itemList--counterNumber");
+    itemCounterNumber.innerText = 1;
+    itemCounterDiv.appendChild(itemCounterNumber);
+
+    /* Counter Plus Btn */
+    let itemCounterPlusBtn = document.createElement("i");
+    itemCounterPlusBtn.classList.add("basket__itemList--counterPlusBtn");
+    itemCounterPlusBtn.classList.add("fas", "fa-plus");
+    itemCounterDiv.appendChild(itemCounterPlusBtn);
+
+    productCount = 1;
+
+    /* plus */
+    itemCounterPlusBtn.addEventListener("click", function (event) {
+      let newItemPrice = newItemPriceFloat;
+
+      productCount = productCount + 1;
+      event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
+      console.log(productCount);
+
+      newArr.push(newItemPrice);
+      console.log(newArr);
+      basket__itemList__totalPrice.innerText = `₤${(
+        Math.round(newArr.reduce(getSum, 0) * 100) / 100
+      ).toFixed(2)}`;
+      menu__cart__itemCount.textContent = newArr.length;
+    });
+
+    /* minus */
+    itemCounterMinusBtn.addEventListener("click", function (event) {
+      let newItemPrice = newItemPriceFloat;
+
+      if (productCount > 1) {
+        //newArr.pop(newItemPrice);
+        //console.log(newArr.indexOf(newItemPrice));
+        let lastItem = newArr.indexOf(newItemPrice);
+        basket__itemList__totalPrice.innerText = `₤${(
+          Math.round(newArr.reduce(getSum, 0) * 100) / 100
+        ).toFixed(2)}`;
+
+        if (lastItem > -1) {
+          newArr.splice(lastItem, 1);
+        }
+        productCount = productCount - 1;
+        event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
+        console.log(productCount);
+
+        //console.log(newArr);
+        basket__itemList__totalPrice.innerText = `₤${(
+          Math.round(newArr.reduce(getSum, 0) * 100) / 100
+        ).toFixed(2)}`;
+        menu__cart__itemCount.textContent = newArr.length;
+      } else {
+        let lastItem = newArr.indexOf(newItemPrice);
+        if (lastItem > -1) {
+          newArr.splice(lastItem, 1);
+        }
+        event.target.parentNode.parentNode.style.display = "none";
+        basket__itemList__totalPrice.innerText = `₤${(
+          Math.round(newArr.reduce(getSum, 0) * 100) / 100
+        ).toFixed(2)}`;
+        menu__cart__itemCount.textContent = newArr.length;
+      }
+      basket__itemList__totalPrice.innerText = `₤${(
+        Math.round(newArr.reduce(getSum, 0) * 100) / 100
+      ).toFixed(2)}`;
+    });
+    /* Sadece Itemlara tıklandığında bile sepete ekleme problemi çözümü */
+
+    newArr.push(newItemPriceFloat);
+    basket__itemList__totalPrice.innerText = `₤${(
+      Math.round(newArr.reduce(getSum, 0) * 100) / 100
+    ).toFixed(2)}`;
+    menu__cart__itemCount.textContent = newArr.length;
+
+    /* basket kısmının görünür hale getirilmesi */
+    basket.style.transform = "translateX(0%)";
+
+    /* her addBaket butonuna basıldığında sepetteki item sayısının artması */
+    itemCount++;
+
+    /* ui tarafında bu sayının güncellenmesi */
+    menu__cart__itemCount.textContent = newArr.length;
   });
 }
 
