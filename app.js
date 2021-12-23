@@ -395,6 +395,30 @@ function addBasket(event) {
   itemPrice.innerText = `${event.target.parentNode.nextElementSibling.nextElementSibling.children[3].textContent}`;
   itemCard.appendChild(itemPrice);
 
+  //* vertical div
+
+  const verticalCardDiv = document.createElement("div");
+  verticalCardDiv.classList.add("verticalCardDiv");
+  itemCard.appendChild(verticalCardDiv);
+
+  let VerticalitemHeading = itemHeading.cloneNode(true);
+  let VerticalitemParag = itemParag.cloneNode(true);
+  let VerticalitemPrice = itemPrice.cloneNode(true);
+  let VerticalitemImg =
+    event.target.parentNode.nextElementSibling.nextElementSibling.children[0].cloneNode(
+      true
+    );
+  VerticalitemImg.classList.add("verticalitemImg");
+  itemCard.appendChild(VerticalitemImg);
+  itemCard.insertBefore(VerticalitemImg, itemCard.firstChild);
+  verticalCardDiv.appendChild(VerticalitemHeading);
+  verticalCardDiv.appendChild(VerticalitemParag);
+  verticalCardDiv.appendChild(VerticalitemPrice);
+  VerticalitemImg.style.display = "none";
+  verticalCardDiv.style.display = "none";
+
+  //* vertical div
+
   /* Counter Div */
 
   let itemCounterDiv = document.createElement("div");
@@ -419,54 +443,57 @@ function addBasket(event) {
   itemCounterPlusBtn.classList.add("fas", "fa-plus");
   itemCounterDiv.appendChild(itemCounterPlusBtn);
 
-  //* vertical div
-  /*
-  const verticalCardDiv = document.createElement("div");
-  verticalCardDiv.classList.add("verticalCardDiv");
-  itemCard.appendChild(verticalCardDiv);
-
-  let VerticalitemHeading = itemHeading.cloneNode(true);
-  let VerticalitemParag = itemParag.cloneNode(true);
-  let VerticalitemPrice = itemPrice.cloneNode(true);
-  let VerticalitemImg =
-    event.target.parentNode.nextElementSibling.nextElementSibling.children[0].cloneNode(
-      true
-    );
-  VerticalitemImg.classList.add("verticalitemImg");
-  itemCard.appendChild(VerticalitemImg);
-  itemCard.insertBefore(VerticalitemImg, itemCard.firstChild);
-  verticalCardDiv.appendChild(VerticalitemHeading);
-  verticalCardDiv.appendChild(VerticalitemParag);
-  verticalCardDiv.appendChild(VerticalitemPrice);
-  VerticalitemImg.style.display = "none";
-  verticalCardDiv.style.display = "none";
-  */
-
   /* plus */
   itemCounterPlusBtn.addEventListener("click", function (event) {
-    let newItemPrice = parseFloat(
-      event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
-    );
+    if (document.querySelector(".menu__heading").textContent === "Checkout") {
+      let newItemPrice = parseFloat(
+        event.target.parentNode.parentNode.children[2].textContent.slice(1, 5)
+      );
+      console.log(newItemPrice);
 
-    productCount = productCount + 1;
-    //* İşlem sonrası olması gereken: event.target.parentNode.parentNode.children[3].children[1].innerText;
+      //* eski hali event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
+      productCount = productCount + 1;
+      //* İşlem sonrası olması gereken: event.target.parentNode.parentNode.children[3].children[1].innerText;
+      let counterItemCount =
+        event.target.parentNode.parentNode.children[4].children[1];
+      event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
+      console.log(productCount);
 
-    event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
-    console.log(productCount);
+      newArr.push(newItemPrice);
+      console.log(newArr);
+      basket__itemList__totalPrice.innerText = `₤${(
+        Math.round(newArr.reduce(getSum, 0) * 100) / 100
+      ).toFixed(2)}`;
 
-    newArr.push(newItemPrice);
-    console.log(newArr);
-    basket__itemList__totalPrice.innerText = `₤${(
-      Math.round(newArr.reduce(getSum, 0) * 100) / 100
-    ).toFixed(2)}`;
+      menu__cart__itemCount.textContent = newArr.length;
+    } else {
+      let newItemPrice = parseFloat(
+        event.target.parentNode.parentNode.children[2].textContent.slice(1, 5)
+      );
+      console.log(newItemPrice);
 
-    menu__cart__itemCount.textContent = newArr.length;
+      //* eski hali event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
+      productCount = productCount + 1;
+      //* İşlem sonrası olması gereken: event.target.parentNode.parentNode.children[3].children[1].innerText;
+      let counterItemCount =
+        event.target.parentNode.parentNode.children[4].children[1];
+      event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
+      console.log(productCount);
+
+      newArr.push(newItemPrice);
+      console.log(newArr);
+      basket__itemList__totalPrice.innerText = `₤${(
+        Math.round(newArr.reduce(getSum, 0) * 100) / 100
+      ).toFixed(2)}`;
+
+      menu__cart__itemCount.textContent = newArr.length;
+    }
   });
 
   /* minus */
   itemCounterMinusBtn.addEventListener("click", function (event) {
     let newItemPrice = parseFloat(
-      event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
+      event.target.parentNode.parentNode.children[2].textContent.slice(1, 5)
     );
 
     if (productCount > 1) {
@@ -480,10 +507,8 @@ function addBasket(event) {
         newArr.splice(lastItem, 1);
       }
       productCount = productCount - 1;
-      event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
+      event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
       console.log(productCount);
-
-      //console.log(newArr);
 
       menu__cart__itemCount.textContent = newArr.length;
       basket__itemList__totalPrice.innerText = `₤${(
@@ -1557,6 +1582,31 @@ function addCustomize(event) {
     );
     itemCard.appendChild(itemPrice);
 
+    //* vertical div
+    /*
+    const verticalCardDiv = document.createElement("div");
+    verticalCardDiv.classList.add("verticalCardDiv");
+    itemCard.appendChild(verticalCardDiv);
+
+    let VerticalitemHeading = itemHeading.cloneNode(true);
+    let VerticalitemParag = itemParag.cloneNode(true);
+    let VerticalitemPrice = itemPrice.cloneNode(true);
+    let VerticalitemImg =
+      event.target.parentNode.nextElementSibling.nextElementSibling.children[0].cloneNode(
+        true
+      );
+    VerticalitemImg.classList.add("verticalitemImg");
+    itemCard.appendChild(VerticalitemImg);
+    itemCard.insertBefore(VerticalitemImg, itemCard.firstChild);
+    verticalCardDiv.appendChild(VerticalitemHeading);
+    verticalCardDiv.appendChild(VerticalitemParag);
+    verticalCardDiv.appendChild(VerticalitemPrice);
+    VerticalitemImg.style.display = "none";
+    verticalCardDiv.style.display = "none";
+    */
+
+    //* vertical div
+
     /* Counter Div */
 
     let itemCounterDiv = document.createElement("div");
@@ -1854,14 +1904,14 @@ menuCartDom.addEventListener("click", function () {
   document.querySelector(".basket").style.transform = "translateX(0%)";
 });
 
-let boolelo = true;
+let paymentStatus = true;
 /* basket kısmındaki checkout butonuna basıldığında olması gerekenler fonksiyonu */
 //* CHECKOUT BUTONU
 checkoutBtnDom.addEventListener("click", function (e) {
   document.querySelector(".basket__itemList").classList.add("checkout");
 
   if (document.querySelector(".menu__heading").textContent === "Checkout") {
-    if (boolelo) {
+    if (paymentStatus) {
       document.querySelector(".menu").style.filter = "brightness(0.5)";
       document.querySelector(".successPayment").style.filter = "brightness(1)";
       document.querySelector(".successPayment").style.bottom = "40%";
@@ -1880,14 +1930,47 @@ checkoutBtnDom.addEventListener("click", function (e) {
     }
   }
 
+  checkoutBtnDom;
+  checkoutBtnDom.textContent = `Make Payment`;
+  checkoutBtnDom;
+  checkoutBtnDom.style.backgroundColor = "#202326";
+  checkoutBtnDom;
+  checkoutBtnDom.style.color = "#fff";
   menu__heading.textContent = `Checkout`;
-
+  checkoutBtnDom.style.padding = "1.5rem 13rem";
+  document.querySelector(".basket__itemList__checkoutDiv").style.width = "100%";
+  //* vertical start
   document
     .querySelectorAll(".basket__itemList--itemCard")
     .forEach(function (item) {
       item.classList.add("checkout");
     });
 
+  document
+    .querySelectorAll(
+      ".basket__itemList--itemCard .basket__itemList--itemPrice"
+    )
+    .forEach(function (item) {
+      item.style.display = "none";
+    });
+  document
+    .querySelectorAll(".verticalCardDiv .basket__itemList--itemPrice")
+    .forEach(function (item) {
+      item.style.display = "block";
+      item.style.position = "unset";
+    });
+
+  document.querySelectorAll(".basket__itemList--divv").forEach(function (item) {
+    item.classList.add("checkout");
+    item.style.display = "none";
+  });
+  document.querySelectorAll(".verticalCardDiv").forEach(function (item) {
+    item.style.display = "flex";
+  });
+  document.querySelectorAll(".verticalitemImg").forEach(function (item) {
+    item.style.display = "block";
+  });
+  //* vertical end
   document.querySelector(".shop__menu").style.display = "none";
   document.querySelector(".shop__products").style.display = "none";
   menuCartDom.innerHTML = `<h3>Back</h3>`;
@@ -1895,6 +1978,55 @@ checkoutBtnDom.addEventListener("click", function (e) {
 
   //* MENUCARTDOM CHECKOUT'TAN ÇIKMA BUTONU YANİ BACK
   menuCartDom.addEventListener("click", function () {
+    //* vertical start
+    document
+      .querySelectorAll(".basket__itemList--itemCard")
+      .forEach(function (item) {
+        item.classList.remove("checkout");
+      });
+
+    document
+      .querySelectorAll(
+        ".basket__itemList--itemCard .basket__itemList--itemPrice"
+      )
+      .forEach(function (item) {
+        item.style.display = "block";
+      });
+    document
+      .querySelectorAll(".verticalCardDiv .basket__itemList--itemPrice")
+      .forEach(function (item) {
+        item.style.display = "block";
+        item.style.position = "absolute";
+      });
+
+    document
+      .querySelectorAll(".basket__itemList--itemImg")
+      .forEach(function (item) {
+        item.classList.remove("checkout");
+      });
+
+    document
+      .querySelectorAll(".basket__itemList--divv")
+      .forEach(function (item) {
+        item.classList.remove("checkout");
+        item.style.display = "block";
+      });
+    document.querySelectorAll(".verticalCardDiv").forEach(function (item) {
+      item.style.display = "none";
+    });
+    document.querySelectorAll(".verticalitemImg").forEach(function (item) {
+      item.style.display = "none";
+    });
+
+    //* vertical end
+    checkoutBtnDom;
+    checkoutBtnDom.textContent = `Checkout`;
+    checkoutBtnDom;
+    checkoutBtnDom.style.backgroundColor = "#CBCFD3";
+    checkoutBtnDom;
+    checkoutBtnDom.style.color = "#202326";
+    checkoutBtnDom.style.padding = "1.8rem 12rem";
+
     document.querySelector(".basket__itemList").classList.remove("checkout");
 
     menu__heading.textContent = `Kumpi Menu`;
@@ -1906,12 +2038,6 @@ checkoutBtnDom.addEventListener("click", function (e) {
     shop.classList.remove("checkout");
 
     document.querySelector(".basket").appendChild(basket__itemList);
-
-    document
-      .querySelectorAll(".basket__itemList--itemCard")
-      .forEach(function (item) {
-        item.classList.remove("checkout");
-      });
 
     menuCartDom.innerHTML = `
     <div class="menu__cart">
