@@ -5,11 +5,13 @@ const list = document.querySelector(".shop__menuList");
 list.addEventListener("click", activeFunction);
 
 function activeFunction(event) {
+  //* .active class'ına sahip olan elementi bul ve ondaki active class'ını sil!
   document.querySelector(".active").classList.remove("active");
+  //* üzerine tıklanmış olan elemente .active class'ını ekle!
   event.target.classList.add("active");
 }
 
-/* Products */
+//? Ürünlerin bilgilerini içeren Array'in başlangıcı
 
 const meals = [
   {
@@ -210,33 +212,59 @@ const meals = [
   },
 ];
 
+//? Ürünlerin bilgilerini içeren Array'in sonu
+
 const shop__productSection = document.querySelector(".shop__productSection");
+
 const cartSection = document.querySelector(".cartSection");
+
 const cartSection__closeIcon = document.querySelector(
   ".cartSection__closeIcon"
 );
+
 const basket__closeIcon = document.querySelector(".basket__closeIcon");
+//* Sepet kısmının tamamının tekrar sağ tarafa kayıp kaybolmasını sağlayan DOM elementi
+
 const cartSection__leftBtn = document.querySelector(".cartSection__leftBtn");
+//* Ürünlerden birine tıkladığımızda Customize yazan ve customize penceresini açan butonun DOM elementi
+
 const cartSection__rightBtn = document.querySelector(".cartSection__rightBtn");
+//* Ürünlerden birine tıkladığımızda Add to Basket yazan ve sepete ekleyen butonun DOM elementi
+
 const basket = document.querySelector(".basket");
+//* Ürünlerin sıralandığı sağ taraftan beliren beyaz section'ın tamamı olan DOM elementi
+
 const menu__cart__itemCount = document.querySelector(".menu__cart--itemCount");
+//* Toplamda kaç ürün sipariş edildiğini belirten ikon üzerindeki span elementinin DOM elementi
+
 const basket__itemList = document.querySelector(".basket__itemList");
+//* Basket penceresine eklenen ürünleri card yapısında içerisinde barındıran DOM elementi
+
 const basket__itemList__totalPrice = document.querySelector(
   ".basket__itemList--totalPrice"
 );
+//* Basket penceresinin en alt kısmında, checkout butonu üzerinde bulunan toplam ürün ücretini belirten DOM elementi
+
 const customizeSection = document.querySelector(".customizeSection");
+//* Ürünleri customize etmemizi sağlayan pencerenin DOM elementi
+
 const customizeSection__closeIcon = document.querySelector(
   ".customizeSection__closeIcon"
 );
+//* Ürünü customize ettiğimiz pencerenin kapanmasını sağlayan x ikonunun DOM elementi
+
 const cartSection__Btns = document.querySelector(".cartSection__Btns");
+//* Ürünlerden herhangi birine tıkladığımızda gelen penceredaki butonları kapsayan DOM elementi
 
 const shop = document.querySelector(".shop");
+//* Kumpi Logosunun altıdaki ürünler ve ürün çeşit listesinin tamamını kapsayan DOM elementi
+
 const menu__heading = document.querySelector(".menu__heading");
+//* Kumpi Menu yazan başlığım DOM elementi
 
-/* Fiyatların sıralandığı Array */
 let newArr = [];
+//? Her yeni ürün eklendiğinde toplam fiyatın hesaplanması için eklenen ürünlerin fiyatlarının toplandığı Array
 
-/* yemeklerin ui üzerinde dizilmesi */
 shop__productSection.innerHTML = meals
   .map(function (item) {
     return `
@@ -249,15 +277,17 @@ shop__productSection.innerHTML = meals
   `;
   })
   .join("");
+//! Ürünler Arrayîndeki verileri kullanarak grid yapısında ürünlerimizi sıraladık.
 
-/* x ikonunun cartSection kısmını gizlemesi */
+//? Ürüne tıkladığımızda gelen seçim ekranın kapanmasını sağlayan ikonun fonksiyonu
 cartSection__closeIcon.addEventListener("click", function () {
   cartSection.style.transform = "translateY(100%)";
+  //* Section'ın kaybolması
   cartSection__closeIcon.style.transform = "translateY(-300%)";
   cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
+  //* X ikonun kaybolması
   cartSection__leftBtn.style.transform = "translateX(-300%)";
   cartSection__rightBtn.style.transform = "translateX(300%)";
-
   menu__heading.textContent = `Kumpi Menu`;
 });
 
@@ -298,7 +328,7 @@ function selectItem(event) {
   `;
 }
 
-/* sepetteki item sayısını ınteger cinsine çavirip siteden başta alıyoruz. */
+/* sepetteki item sayısını integer cinsine çavirip siteden başta alıyoruz. */
 let itemCount = parseInt(menu__cart__itemCount.innerText);
 let itemArray = [];
 
@@ -500,7 +530,7 @@ customizeSection__closeIcon.addEventListener("click", function (event) {
   customizeSection.style.transform = "translateY(100%)";
   customizeSection__closeIcon.style.transform = "translateY(-300%)";
   customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
-  cartSection__Btns.style.transform = "translateY(0%)";
+  cartSection__Btns.style.transform = "translateY(300%)";
 
   menu__heading.textContent = `Kumpi Menu`;
 
@@ -708,7 +738,12 @@ function addCustomize(event) {
       // code block
     }
   });
-
+  //event.target.parentNode.nextElementSibling.nextElementSibling.children[3].textContent
+  /* 
+  MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+          Math.round(newItemPriceFloat * 100) / 100
+        ).toFixed(2)}`;
+  */
   let MainItemDiv__BackBtnDOM = document.querySelector(".MainItemDiv__BackBtn");
 
   MainItemDiv__BackBtnDOM.addEventListener("click", function () {
@@ -736,7 +771,6 @@ function addCustomize(event) {
         RemoveParag.textContent = `Choose up to 2`;
         break;
       default:
-      // code block
     }
   });
 
@@ -1820,10 +1854,12 @@ menuCartDom.addEventListener("click", function () {
   document.querySelector(".basket").style.transform = "translateX(0%)";
 });
 
-let boolelo = false;
+let boolelo = true;
 /* basket kısmındaki checkout butonuna basıldığında olması gerekenler fonksiyonu */
 //* CHECKOUT BUTONU
 checkoutBtnDom.addEventListener("click", function (e) {
+  document.querySelector(".basket__itemList").classList.add("checkout");
+
   if (document.querySelector(".menu__heading").textContent === "Checkout") {
     if (boolelo) {
       document.querySelector(".menu").style.filter = "brightness(0.5)";
@@ -1859,7 +1895,10 @@ checkoutBtnDom.addEventListener("click", function (e) {
 
   //* MENUCARTDOM CHECKOUT'TAN ÇIKMA BUTONU YANİ BACK
   menuCartDom.addEventListener("click", function () {
+    document.querySelector(".basket__itemList").classList.remove("checkout");
+
     menu__heading.textContent = `Kumpi Menu`;
+
     document.querySelector(".shop__menu").style.display = "block";
 
     document.querySelector(".shop__products").style.display = "block";

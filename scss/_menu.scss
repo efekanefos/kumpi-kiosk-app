@@ -7,18 +7,18 @@
 .menu {
   font-family: "Poppins", sans-serif;
   background-color: #e5e5e5;
-  min-height: 100vh;
   position: relative;
   overflow: hidden;
-
+  width: 1080px;
+  height: 1920px;
+  margin: 0 auto;
   &__header {
     background-color: white;
-    min-height: 7vh;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 3rem;
+    padding: 2rem 3rem;
     box-shadow: 0px 6px 31px rgba(8, 37, 85, 0.122);
   }
 
@@ -78,8 +78,9 @@
     align-items: center;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 78vh;
+    max-height: 24.6%;
     padding: 1rem;
+    grid-gap: 0rem;
     margin-top: 1rem;
     padding-top: 0rem;
   }
@@ -87,7 +88,7 @@
     list-style: none;
   }
   &__menuListItem {
-    font-size: 150%; /* 28px */
+    font-size: 1.5rem;
     margin-top: 1rem;
     padding: 0.5rem;
     padding-left: 1.8rem;
@@ -112,7 +113,11 @@
   }
   &__productSection--card {
     padding: 1rem;
-    padding-top: 0;
+    height: 19rem;
+    padding-bottom: 1.5rem;
+    margin: 1rem;
+    margin-top: 0;
+    border: 1px solid #c3c3c3;
   }
   &__productSection--image {
     display: block;
@@ -125,17 +130,17 @@
     text-align: center;
     font-style: normal;
     font-weight: 600;
-    font-size: 100%; /* 1.1rem */
+    font-size: 1.1rem; /* 1.1rem  100%*/
   }
   &__productSection--cardParag {
     color: #8a959e;
-    font-size: 60%; /* 0.8rem */
+    font-size: 0.8rem; /* 0.8rem  60%*/
     text-align: center;
   }
   &__productSection--cardPrice {
     text-align: center;
     font-weight: bold;
-    font-size: 150%; /* 1.5rem */
+    font-size: 1.5rem; /* 1.5rem 150%*/
   }
 }
 .shop.checkout {
@@ -257,20 +262,19 @@
 }
 
 .basket__itemList {
-  padding: 5%;
-  padding-right: 2%;
+  padding: 3rem;
   width: 100%;
-
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 60%;
   &--itemCard {
     width: 100%;
     display: flex;
     align-items: flex-start;
     position: relative;
-    margin-top: 10%;
+    margin-bottom: 2rem;
   }
-  &--itemCard:first-child {
-    margin-top: 0% !important;
-  }
+
   &--itemCard.checkout {
     background-color: #fff;
     box-shadow: 0px 6.64253px 66.4253px rgba(32, 35, 38, 0.15);
@@ -278,6 +282,7 @@
     padding: 1rem;
     align-items: center;
   }
+
   &--divv {
     display: flex;
     flex-direction: column;
@@ -368,6 +373,10 @@
     text-align: center;
     text-decoration: none;
   }
+}
+.basket__itemList.checkout {
+  max-height: 65rem;
+  padding-top: 0.5rem;
 }
 .customizeSection {
   background-color: white;
@@ -710,7 +719,7 @@
 @media (max-width: 785px) {
   .shop {
     &__menuListItem {
-      font-size: 90%; /* 28px */
+      font-size: 90%; /* 28px 90%*/
       line-height: 3rem;
     }
     &__menuListItem::before {
@@ -721,19 +730,167 @@
   }
   .menu {
     &__heading {
-      font-size: 120%; /* 3rem */
+      font-size: 1.5rem; /* 3rem 120%*/
       font-weight: 600;
     }
     &__cart--icon {
-      font-size: 100%; /* 2rem */
+      font-size: 1rem; /* 2rem 100%*/
       border: 4px solid black;
       padding: 0.8rem 0.7rem; /* padding: 0.8rem 0.7rem; */
       border-radius: 10px;
     }
     &__cart--itemCount {
-      font-size: 70%; /* 1.2rem */
+      font-size: 0.8rem; /* 1.2rem 70%*/
       line-height: 0.5rem;
-      padding: 15%; /* 0.8rem */
+      padding: 0.5rem; /* 0.8rem 15%*/
+    }
+  }
+  .cartSection {
+    width: 100%;
+    height: 75%;
+    position: absolute;
+    bottom: 0rem;
+    left: 0;
+    transform: translateY(100%); /* 100 */
+    text-align: center;
+    transition: all 2s;
+    &__closeIcon {
+      color: #fff;
+      font-size: 5rem;
+      position: absolute;
+      transition: all 2s;
+      top: 25%;
+      left: 50%;
+      transform: translateY(-300%) translate(-50%, -50%);
+      z-index: 9999;
+    }
+    &__Btns {
+      display: grid;
+      width: 100%;
+      position: absolute;
+      bottom: 0%;
+      left: 0;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 5rem;
+      padding: 5rem;
+      padding-top: 0rem;
+      text-align: center;
+      z-index: 99;
+    }
+    &__leftBtn,
+    &__rightBtn {
+      padding: 2rem 6rem; /* 2rem 6rem */
+      font-size: 2rem; /* 2rem*/
+      border-radius: 42.5px;
+      text-decoration: none;
+      font-family: "Poppins", sans-serif;
+      font-weight: 500;
+    }
+    &__leftBtn {
+      background-color: #ffc72c;
+      color: #000;
+      transform: translateX(-300%);
+      transition: all 2s;
+    }
+    &__rightBtn {
+      background-color: #000000;
+      color: #fff;
+      transform: translateX(300%);
+      transition: all 2s;
+    }
+    &__Img {
+      display: block;
+      width: 60%;
+      margin: 0 auto;
+      margin-top: 25%;
+    }
+
+    &__Heading {
+      font-size: 1.5rem;
+      margin-top: 2%;
+      margin-bottom: 2%;
+    }
+
+    &__Ingridients {
+      font-size: 1rem;
+      color: #8a959e;
+      width: 70%;
+      margin: 0 auto;
+    }
+    &__Price {
+      font-size: 2rem;
+      font-weight: 700;
     }
   }
 }
+
+/*
+.cartSection {
+    background-color: #fff;
+    clip-path: polygon(
+      50% 10%,
+      69% 0,
+      100% 0,
+      100% 78%,
+      100% 100%,
+      0 100%,
+      0 78%,
+      0 0,
+      32% 0
+    );
+    width: 100%;
+    height: 80%;
+    position: absolute;
+    bottom: 0rem;
+    left: 0;
+    transform: translateY(0%);
+    text-align: center;
+    transition: all 2s;
+    &__closeIcon {
+      color: #fff;
+      font-size: 10rem;
+      position: absolute;
+      transition: all 2s;
+      top: 20%;
+      left: 50%;
+      transform: translateY(0%) translate(-50%, -50%);
+      z-index: 9999;
+    }
+    &__Btns {
+      display: grid;
+      width: 100%;
+      position: absolute;
+      bottom: 0%;
+      left: 0;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 2rem;
+      padding: 5rem;
+      padding-top: 0rem;
+      text-align: center;
+      z-index: 99;
+    }
+    &__leftBtn,
+    &__rightBtn {
+      width: 100%;
+      padding: 1rem 5rem; 
+      font-size: 1rem; 
+      border-radius: 42.5px;
+      text-decoration: none;
+      font-family: "Poppins", sans-serif;
+      font-weight: 500;
+    }
+    &__leftBtn {
+      background-color: #ffc72c;
+      color: #000;
+      transform: translateX(0%);
+      transition: all 2s;
+    }
+    &__rightBtn {
+      background-color: #000000;
+      color: #fff;
+      transform: translateX(0%);
+      transition: all 2s;
+    }
+    
+  }
+*/
