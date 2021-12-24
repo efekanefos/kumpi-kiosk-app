@@ -314,7 +314,6 @@ function selectItem(event) {
   let newItemPrice = parseFloat(
     event.target.parentNode.children[3].textContent.slice(1, -1)
   );
-  console.log(newArr);
 
   /* reduce metodu ile toplam fiyat bilgisini elde ediyoruz. */
   //console.log(newArr.reduce(getSum, 0));
@@ -449,7 +448,6 @@ function addBasket(event) {
       let newItemPrice = parseFloat(
         event.target.parentNode.parentNode.children[2].textContent.slice(1, 5)
       );
-      console.log(newItemPrice);
 
       //* eski hali event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
       productCount = productCount + 1;
@@ -457,7 +455,6 @@ function addBasket(event) {
       let counterItemCount =
         event.target.parentNode.parentNode.children[4].children[1];
       event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
-      console.log(productCount);
 
       newArr.push(newItemPrice);
       console.log(newArr);
@@ -470,7 +467,6 @@ function addBasket(event) {
       let newItemPrice = parseFloat(
         event.target.parentNode.parentNode.children[2].textContent.slice(1, 5)
       );
-      console.log(newItemPrice);
 
       //* eski hali event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
       productCount = productCount + 1;
@@ -478,14 +474,12 @@ function addBasket(event) {
       let counterItemCount =
         event.target.parentNode.parentNode.children[4].children[1];
       event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
-      console.log(productCount);
 
       newArr.push(newItemPrice);
-      console.log(newArr);
+
       basket__itemList__totalPrice.innerText = `₤${(
         Math.round(newArr.reduce(getSum, 0) * 100) / 100
       ).toFixed(2)}`;
-
       menu__cart__itemCount.textContent = newArr.length;
     }
   });
@@ -503,30 +497,28 @@ function addBasket(event) {
       basket__itemList__totalPrice.innerText = `₤${(
         Math.round(newArr.reduce(getSum, 0) * 100) / 100
       ).toFixed(2)}`;
+
       if (lastItem > -1) {
         newArr.splice(lastItem, 1);
       }
+
       productCount = productCount - 1;
       event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
-      console.log(productCount);
-
       menu__cart__itemCount.textContent = newArr.length;
       basket__itemList__totalPrice.innerText = `₤${(
         Math.round(newArr.reduce(getSum, 0) * 100) / 100
       ).toFixed(2)}`;
     } else {
       let lastItem = newArr.indexOf(newItemPrice);
-
       newArr.splice(lastItem, 1);
-
       event.target.parentNode.parentNode.style.display = "none";
-
       basket__itemList__totalPrice.innerText = `₤${(
         Math.round(newArr.reduce(getSum, 0) * 100) / 100
       ).toFixed(2)}`;
       menu__cart__itemCount.textContent = newArr.length;
     }
   });
+
   basket__itemList__totalPrice.innerText = `₤${(
     Math.round(newArr.reduce(getSum, 0) * 100) / 100
   ).toFixed(2)}`;
@@ -751,7 +743,7 @@ function addCustomize(event) {
         ExtraProteinDiv.style.transform = "translateY(0%)";
         ExtraSaladDiv.style.transform = "translateY(0%)";
         ExtraSauceDiv.style.transform = "translateY(0%)";
-        ExtraDealDiv.style.transform = "translateY(-220rem)"; /* -3700% */
+        ExtraDealDiv.style.transform = "translateY(-224rem)"; /* -3700% */
         RemoveHeading.textContent = `Make Deal with Drink and Brownie`;
         RemoveParag.textContent = `Choose up to 1`;
         MainItemDiv__NextBtnDOM.style.visibility = "hidden";
@@ -1824,7 +1816,8 @@ function addCustomize(event) {
       let newItemPrice = newItemPriceFloat;
 
       productCount = productCount + 1;
-      event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
+
+      event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
       console.log(productCount);
 
       newArr.push(newItemPrice);
@@ -1851,7 +1844,8 @@ function addCustomize(event) {
           newArr.splice(lastItem, 1);
         }
         productCount = productCount - 1;
-        event.target.parentNode.parentNode.children[2].children[1].innerText = `${productCount}`;
+
+        event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
         console.log(productCount);
 
         //console.log(newArr);
@@ -1905,6 +1899,9 @@ let paymentStatus = true;
 /* basket kısmındaki checkout butonuna basıldığında olması gerekenler fonksiyonu */
 //* CHECKOUT BUTONU
 checkoutBtnDom.addEventListener("click", function (e) {
+  menuCartDom.style.display = "none";
+  document.querySelector(".checkoutCloseBtnDiv").style.display = "flex";
+
   document.querySelector(".basket__itemList").classList.add("checkout");
 
   if (document.querySelector(".menu__heading").textContent === "Checkout") {
@@ -1970,79 +1967,76 @@ checkoutBtnDom.addEventListener("click", function (e) {
   //* vertical end
   document.querySelector(".shop__menu").style.display = "none";
   document.querySelector(".shop__products").style.display = "none";
-  menuCartDom.innerHTML = `<h3>Back</h3>`;
   basket.style.transform = "translateX(150%)";
 
   //* MENUCARTDOM CHECKOUT'TAN ÇIKMA BUTONU YANİ BACK
-  menuCartDom.addEventListener("click", function () {
-    //* vertical start
-    document
-      .querySelectorAll(".basket__itemList--itemCard")
-      .forEach(function (item) {
-        item.classList.remove("checkout");
+  document
+    .querySelector(".checkoutCloseBtnDiv")
+    .addEventListener("click", function () {
+      menuCartDom.style.display = "flex";
+      document.querySelector(".checkoutCloseBtnDiv").style.display = "none";
+
+      //* vertical start
+      document
+        .querySelectorAll(".basket__itemList--itemCard")
+        .forEach(function (item) {
+          item.classList.remove("checkout");
+        });
+
+      document
+        .querySelectorAll(
+          ".basket__itemList--itemCard .basket__itemList--itemPrice"
+        )
+        .forEach(function (item) {
+          item.style.display = "block";
+        });
+      document
+        .querySelectorAll(".verticalCardDiv .basket__itemList--itemPrice")
+        .forEach(function (item) {
+          item.style.display = "block";
+          item.style.position = "absolute";
+        });
+
+      document
+        .querySelectorAll(".basket__itemList--itemImg")
+        .forEach(function (item) {
+          item.classList.remove("checkout");
+        });
+
+      document
+        .querySelectorAll(".basket__itemList--divv")
+        .forEach(function (item) {
+          item.classList.remove("checkout");
+          item.style.display = "block";
+        });
+      document.querySelectorAll(".verticalCardDiv").forEach(function (item) {
+        item.style.display = "none";
+      });
+      document.querySelectorAll(".verticalitemImg").forEach(function (item) {
+        item.style.display = "none";
       });
 
-    document
-      .querySelectorAll(
-        ".basket__itemList--itemCard .basket__itemList--itemPrice"
-      )
-      .forEach(function (item) {
-        item.style.display = "block";
-      });
-    document
-      .querySelectorAll(".verticalCardDiv .basket__itemList--itemPrice")
-      .forEach(function (item) {
-        item.style.display = "block";
-        item.style.position = "absolute";
-      });
+      //* vertical end
+      checkoutBtnDom;
+      checkoutBtnDom.textContent = `Checkout`;
+      checkoutBtnDom;
+      checkoutBtnDom.style.backgroundColor = "#CBCFD3";
+      checkoutBtnDom;
+      checkoutBtnDom.style.color = "#202326";
+      checkoutBtnDom.style.padding = "1.8rem 12rem";
 
-    document
-      .querySelectorAll(".basket__itemList--itemImg")
-      .forEach(function (item) {
-        item.classList.remove("checkout");
-      });
+      document.querySelector(".basket__itemList").classList.remove("checkout");
 
-    document
-      .querySelectorAll(".basket__itemList--divv")
-      .forEach(function (item) {
-        item.classList.remove("checkout");
-        item.style.display = "block";
-      });
-    document.querySelectorAll(".verticalCardDiv").forEach(function (item) {
-      item.style.display = "none";
+      menu__heading.textContent = `Kumpi Menu`;
+
+      document.querySelector(".shop__menu").style.display = "block";
+
+      document.querySelector(".shop__products").style.display = "block";
+
+      shop.classList.remove("checkout");
+
+      document.querySelector(".basket").appendChild(basket__itemList);
     });
-    document.querySelectorAll(".verticalitemImg").forEach(function (item) {
-      item.style.display = "none";
-    });
-
-    //* vertical end
-    checkoutBtnDom;
-    checkoutBtnDom.textContent = `Checkout`;
-    checkoutBtnDom;
-    checkoutBtnDom.style.backgroundColor = "#CBCFD3";
-    checkoutBtnDom;
-    checkoutBtnDom.style.color = "#202326";
-    checkoutBtnDom.style.padding = "1.8rem 12rem";
-
-    document.querySelector(".basket__itemList").classList.remove("checkout");
-
-    menu__heading.textContent = `Kumpi Menu`;
-
-    document.querySelector(".shop__menu").style.display = "block";
-
-    document.querySelector(".shop__products").style.display = "block";
-
-    shop.classList.remove("checkout");
-
-    document.querySelector(".basket").appendChild(basket__itemList);
-
-    menuCartDom.innerHTML = `
-    <div class="menu__cart">
-          <i class="menu__cart--icon fas fa-shopping-cart"></i>
-          <span class="menu__cart--itemCount"> 0 </span>
-        </div>
-    `;
-  });
   shop.classList.add("checkout");
   shop.appendChild(basket__itemList);
 });
@@ -2056,82 +2050,3 @@ cartSection__rightBtn.addEventListener("click", addBasket);
 
 /* Add Customize(leftBtn) butonuna tıklanırsa addCustomize fonksiyonu çalışsın */
 cartSection__leftBtn.addEventListener("click", addCustomize);
-
-/*
-  document
-    .querySelectorAll(".basket__itemList--itemImg")
-    .forEach(function (item) {
-      item.classList.add("checkout");
-    });
-    */
-//* Price start
-/*
-  document
-    .querySelectorAll(
-      ".basket__itemList--itemCard .basket__itemList--itemPrice"
-    )
-    .forEach(function (item) {
-      item.style.display = "none";
-    });
-  document
-    .querySelectorAll(".verticalCardDiv .basket__itemList--itemPrice")
-    .forEach(function (item) {
-      item.style.display = "block";
-      item.style.position = "unset";
-    });
-    */
-
-//* Price end
-/*
-  document.querySelectorAll(".basket__itemList--divv").forEach(function (item) {
-    item.classList.add("checkout");
-    item.style.display = "none";
-  });
-  document.querySelectorAll(".verticalCardDiv").forEach(function (item) {
-    item.style.display = "flex";
-  });
-  document.querySelectorAll(".verticalitemImg").forEach(function (item) {
-    item.style.display = "block";
-  });
-
-  let verticalCardDiv = document.createElement("div");
-  verticalCardDiv.classList.add("verticalCardDiv");
-  */
-
-/*
-    //*price start
-    document
-      .querySelectorAll(
-        ".basket__itemList--itemCard .basket__itemList--itemPrice"
-      )
-      .forEach(function (item) {
-        item.style.display = "block";
-      });
-    document
-      .querySelectorAll(".verticalCardDiv .basket__itemList--itemPrice")
-      .forEach(function (item) {
-        item.style.display = "block";
-        item.style.position = "absolute";
-      });
-    //*price end
-
-    
-    document
-      .querySelectorAll(".basket__itemList--itemImg")
-      .forEach(function (item) {
-        item.classList.remove("checkout");
-      });
-
-    document
-      .querySelectorAll(".basket__itemList--divv")
-      .forEach(function (item) {
-        item.classList.remove("checkout");
-        item.style.display = "block";
-      });
-    document.querySelectorAll(".verticalCardDiv").forEach(function (item) {
-      item.style.display = "none";
-    });
-    document.querySelectorAll(".verticalitemImg").forEach(function (item) {
-      item.style.display = "none";
-    });
-    */

@@ -166,12 +166,12 @@
   left: 0;
   transform: translateY(100%); /* 100 */
   text-align: center;
-  transition: all 2s;
+  transition: all 0.5s;
   &__closeIcon {
     color: #fff;
     font-size: 10rem;
     position: absolute;
-    transition: all 2s;
+    transition: all 0.5s;
     top: 20%;
     left: 50%;
     transform: translateY(-300%) translate(-50%, -50%);
@@ -203,13 +203,13 @@
     background-color: #ffc72c;
     color: #000;
     transform: translateX(-300%);
-    transition: all 2s;
+    transition: all 0.5s;
   }
   &__rightBtn {
     background-color: #000000;
     color: #fff;
     transform: translateX(300%);
-    transition: all 2s;
+    transition: all 0.5s;
   }
   &__Img {
     display: block;
@@ -243,7 +243,7 @@
   top: 7%;
   right: 0;
   transform: translateX(150%);
-  transition: all 2s;
+  transition: all 0.5s;
   background-color: white;
   &__closeIcon {
     color: black;
@@ -277,8 +277,7 @@
   &--itemCard.checkout {
     background-color: #fff;
     box-shadow: 0px 6.64253px 66.4253px rgba(32, 35, 38, 0.15);
-    border-radius: 29.8914px;
-    padding: 1rem;
+    padding: 1.5rem;
     align-items: center;
   }
 
@@ -397,12 +396,12 @@
   left: 0;
   transform: translateY(100%); /* 100 */
   text-align: center;
-  transition: all 2s;
+  transition: all 0.5s;
   &__closeIcon {
     color: #fff;
     font-size: 10rem;
     position: absolute;
-    transition: all 2s;
+    transition: all 0.5s;
     top: 20%;
     left: 50%;
     transform: translateY(-300%) translate(-50%, -50%);
@@ -428,7 +427,7 @@
 .DrinkDiv {
   font-size: 3rem;
   margin-top: 1rem;
-  transition: all 2s;
+  transition: all 0.5s;
   margin-bottom: 11rem;
   &__IngridientsList,
   &__ExtraProteinList,
@@ -455,7 +454,7 @@
     padding: 1.5rem;
     margin-bottom: 1rem;
     box-shadow: 0px 6.72603px 67.2603px rgba(32, 35, 38, 0.15);
-    border-radius: 30.2671px;
+    //border-radius: 30.2671px;
     text-align: left;
     display: flex;
     align-items: center;
@@ -567,7 +566,7 @@
 .DrinkDiv {
   background-color: #fff;
   box-shadow: 0px 6.72603px 67.2603px rgba(32, 35, 38, 0.15);
-  border-radius: 30.2671px;
+  //border-radius: 30.2671px;
   width: 95%;
   margin: 0 auto;
   margin-top: 1.5rem;
@@ -633,9 +632,15 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  width: 100%;
+  width: 75%;
+  padding-left: 2rem;
+  margin-top: -0.4rem;
 }
 .verticalitemImg {
   margin-top: 0;
+  display: flex;
+  align-self: flex-start;
 }
 
 .successPayment {
@@ -651,7 +656,7 @@
   margin: 0 auto;
   box-shadow: 0px 6.64253px 66.4253px rgba(32, 35, 38, 0.15);
   border-radius: 29.8914px;
-  transition: all 2s;
+  transition: all 0.5s;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   &__img {
@@ -680,7 +685,7 @@
   margin: 0 auto;
   box-shadow: 0px 6.64253px 66.4253px rgba(32, 35, 38, 0.15);
   border-radius: 29.8914px;
-  transition: all 2s;
+  transition: all 0.5s;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
 
@@ -712,6 +717,19 @@
   &__cancelOrderBtn {
     background-color: #cbcfd3;
     color: #202326;
+  }
+}
+
+.checkoutCloseBtnDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  display: none;
+  &__closeIcon {
+    font-size: 2.5rem;
+  }
+  &__closeHeading {
+    font-size: 1.2rem;
   }
 }
 
@@ -752,12 +770,12 @@
     left: 0;
     transform: translateY(100%); /* 100 */
     text-align: center;
-    transition: all 2s;
+    transition: all 0.5s;
     &__closeIcon {
       color: #fff;
       font-size: 5rem;
       position: absolute;
-      transition: all 2s;
+      transition: all 0.5s;
       top: 25%;
       left: 50%;
       transform: translateY(-300%) translate(-50%, -50%);
@@ -789,13 +807,13 @@
       background-color: #ffc72c;
       color: #000;
       transform: translateX(-300%);
-      transition: all 2s;
+      transition: all 0.5s;
     }
     &__rightBtn {
       background-color: #000000;
       color: #fff;
       transform: translateX(300%);
-      transition: all 2s;
+      transition: all 0.5s;
     }
     &__Img {
       display: block;
