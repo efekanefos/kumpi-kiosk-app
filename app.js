@@ -1912,14 +1912,15 @@ function addCustomize(event) {
 const checkoutBtnDom = document.querySelector(".basket__itemList--checkout");
 const menuCartDom = document.querySelector(".menu__cart");
 
-//! pazar arabası ikonu ile basket kısmını görünür hale getirme
+//! PAZAR ARABASI İKONUNA BASILMASIYLA BASKET KISMININ GÖRÜNÜR HALE GELMESİ
 menuCartDom.addEventListener("click", function () {
   document.querySelector(".basket").style.transform = "translateX(0%)";
 });
 
-let paymentStatus = true;
-/* basket kısmındaki checkout butonuna basıldığında olması gerekenler fonksiyonu */
-//* CHECKOUT BUTONU
+let paymentStatus = false;
+//! ÖDEMENİN YAPILIP YAPILAMADIĞINI BELİRTEN BOOLEAN CİNSİNDEN DEĞERE SAHİP DEĞİŞKEN
+
+//! BASKET KISMINDAKİ CHECKOUT BUTONUNA BASILDIĞINDA GERÇEKLEŞECEKLER
 checkoutBtnDom.addEventListener("click", function (e) {
   menuCartDom.style.display = "none";
   document.querySelector(".checkoutCloseBtnDiv").style.display = "flex";
@@ -1946,16 +1947,43 @@ checkoutBtnDom.addEventListener("click", function (e) {
     }
   }
 
-  checkoutBtnDom;
+  //! Ödeme Başarılı div'ine tıklanırsa ortadan kaybolsun
+  document
+    .querySelector(".successPayment")
+    .addEventListener("click", function () {
+      document.querySelector(".menu").style.filter = "brightness(1)";
+      document.querySelector(".successPayment").style.bottom = "-50%";
+      document.querySelector(".successPayment").style.left = "50%";
+      document.querySelector(".successPayment").style.transform =
+        "translate(-50%, -50%)";
+      document.querySelector(".successPayment").style.transform += "scale(0)";
+    });
+
+  //! Ödeme Başarısız div'ine tıklanırsa ortadan kaybolsun
+  document
+    .querySelector(".errorPayment")
+    .addEventListener("click", function () {
+      document.querySelector(".menu").style.filter = "brightness(1)";
+      document.querySelector(".errorPayment").style.bottom = "-60%";
+      document.querySelector(".errorPayment").style.left = "50%";
+      document.querySelector(".errorPayment").style.transform =
+        "translate(-50%, -50%)";
+      document.querySelector(".errorPayment").style.transform += "scale(0)";
+    });
+
+  //! Checkout kısmına geçildiğinde Make Payment butonunun oluşması için gereken style eklemeleri
   checkoutBtnDom.textContent = `Make Payment`;
-  checkoutBtnDom;
   checkoutBtnDom.style.backgroundColor = "#202326";
-  checkoutBtnDom;
   checkoutBtnDom.style.color = "#fff";
   menu__heading.textContent = `Checkout`;
   checkoutBtnDom.style.padding = "1.5rem 13rem";
+
+  //! butonun genişliğinin artması için içerisinde olan div'in genişliğini 100% haline getirdik.
   document.querySelector(".basket__itemList__checkoutDiv").style.width = "100%";
-  //* vertical start
+
+  //? Vertical Div'in Görünür hale gelmesi ve eski div düzeninin görünmez hale
+  //? gelmesi için gerekenler Start
+
   document
     .querySelectorAll(".basket__itemList--itemCard")
     .forEach(function (item) {
@@ -1986,19 +2014,24 @@ checkoutBtnDom.addEventListener("click", function (e) {
   document.querySelectorAll(".verticalitemImg").forEach(function (item) {
     item.style.display = "block";
   });
-  //* vertical end
+
+  //? Vertical Div End
+
+  //! Ürünlerin ödeme kısmında görüntülenmesi için Ana sayfadaki elemanları yok ettik ve yerlerine
+  //! sepetten getirdiğimiz ürünleri yerleştirdik.
   document.querySelector(".shop__menu").style.display = "none";
   document.querySelector(".shop__products").style.display = "none";
   basket.style.transform = "translateX(150%)";
 
-  //* MENUCARTDOM CHECKOUT'TAN ÇIKMA BUTONU YANİ BACK
+  //! Ödeme kısmından Ana Sayfaya ulaşmamızı sağlayan CLOSE butonu
   document
     .querySelector(".checkoutCloseBtnDiv")
     .addEventListener("click", function () {
       menuCartDom.style.display = "flex";
       document.querySelector(".checkoutCloseBtnDiv").style.display = "none";
 
-      //* vertical start
+      //? Vertical Div'den eski düzene geçilmesi için gereken değişiklikler Start
+
       document
         .querySelectorAll(".basket__itemList--itemCard")
         .forEach(function (item) {
@@ -2038,25 +2071,17 @@ checkoutBtnDom.addEventListener("click", function (e) {
         item.style.display = "none";
       });
 
-      //* vertical end
-      checkoutBtnDom;
+      //? Vertical Div'den eski düzene geçilmesi için gereken değişiklikler End
+
       checkoutBtnDom.textContent = `Checkout`;
-      checkoutBtnDom;
       checkoutBtnDom.style.backgroundColor = "#CBCFD3";
-      checkoutBtnDom;
       checkoutBtnDom.style.color = "#202326";
       checkoutBtnDom.style.padding = "1.8rem 12rem";
-
       document.querySelector(".basket__itemList").classList.remove("checkout");
-
       menu__heading.textContent = `Kumpi Menu`;
-
       document.querySelector(".shop__menu").style.display = "block";
-
       document.querySelector(".shop__products").style.display = "block";
-
       shop.classList.remove("checkout");
-
       document.querySelector(".basket").appendChild(basket__itemList);
     });
   shop.classList.add("checkout");
