@@ -297,34 +297,46 @@ function getSum(total, num) {
 }
 
 /* Bir Item seçildiğinde tekrarlanan fonk. */
+
 function selectItem(event) {
-  /* cartSection kısmını ve x ikonunu ortaya çıkarma */
-  cartSection.style.transform = "translateY(0%)";
-  cartSection__closeIcon.style.transform = "translateY(0%)";
-  cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
-  cartSection__leftBtn.style.transform = "translateX(0%)";
-  cartSection__rightBtn.style.transform = "translateX(0%)";
-  cartSection__Btns.style.transform = "translateY(0%)";
+  if (
+    event.target.parentNode.children[1] != undefined ||
+    event.target.parentNode.children[2] != undefined ||
+    event.target.parentNode.children[3] != undefined ||
+    event.target.parentNode.children[0].src != undefined
+  ) {
+    /* cartSection kısmını ve x ikonunu ortaya çıkarma */
+    console.log(event.target.parentNode.children[0].src);
+    console.log(event.target.parentNode.children[1]);
+    console.log(event.target.parentNode.children[2]);
+    console.log(event.target.parentNode.children[3]);
+    cartSection.style.transform = "translateY(0%)";
+    cartSection__closeIcon.style.transform = "translateY(0%)";
+    cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
+    cartSection__leftBtn.style.transform = "translateX(0%)";
+    cartSection__rightBtn.style.transform = "translateX(0%)";
+    cartSection__Btns.style.transform = "translateY(0%)";
 
-  /* seçilen yeni Item'in bilgilerini çektiğimiz ana yapı */
-  let newItem = event.target.parentNode.children;
+    /* seçilen yeni Item'in bilgilerini çektiğimiz ana yapı */
+    let newItem = event.target.parentNode.children;
 
-  /* seçilen item'ın fiyat verisini alıp float'a çevirip array içine push
-  ettiğimiz kısım */
-  let newItemPrice = parseFloat(
-    event.target.parentNode.children[3].textContent.slice(1, -1)
-  );
+    /* seçilen item'ın fiyat verisini alıp float'a çevirip array içine push
+ettiğimiz kısım */
+    let newItemPrice = parseFloat(
+      event.target.parentNode.children[3].textContent.slice(1, -1)
+    );
 
-  /* reduce metodu ile toplam fiyat bilgisini elde ediyoruz. */
-  //console.log(newArr.reduce(getSum, 0));
+    /* reduce metodu ile toplam fiyat bilgisini elde ediyoruz. */
+    //console.log(newArr.reduce(getSum, 0));
 
-  /* seçilen item'ın verilerini cartSection üzerinde display ediyoruz. */
-  cartSection.innerHTML = `
-  <img class="cartSection__Img" src="${event.target.parentNode.children[0].src}"/>
-  <h1 class="cartSection__Heading">${event.target.parentNode.children[1].textContent}</h1>
-  <p class="cartSection__Ingridients">${event.target.parentNode.children[2].textContent}</p>
-  <h3 class="cartSection__Price">${event.target.parentNode.children[3].textContent}</h3>
-  `;
+    /* seçilen item'ın verilerini cartSection üzerinde display ediyoruz. */
+    cartSection.innerHTML = `
+<img class="cartSection__Img" src="${event.target.parentNode.children[0].src}"/>
+<h1 class="cartSection__Heading">${event.target.parentNode.children[1].textContent}</h1>
+<p class="cartSection__Ingridients">${event.target.parentNode.children[2].textContent}</p>
+<h3 class="cartSection__Price">${event.target.parentNode.children[3].textContent}</h3>
+`;
+  }
 }
 
 /* sepetteki item sayısını integer cinsine çavirip siteden başta alıyoruz. */
@@ -532,7 +544,10 @@ function addBasket(event) {
   );
 
   newArr.push(newPriceBasket);
-  basket__itemList__totalPrice.innerText = `₤${newArr.reduce(getSum, 0)}`;
+  basket__itemList__totalPrice.innerText = `₤${(
+    Math.round(newArr.reduce(getSum, 0) * 100) / 100
+  ).toFixed(2)}`;
+
   menu__cart__itemCount.textContent = newArr.length;
 }
 
@@ -590,7 +605,7 @@ function addCustomize(event) {
   let newItemPriceFloat = parseFloat(
     event.target.parentNode.nextElementSibling.nextElementSibling.children[3].textContent.slice(
       1,
-      -1
+      5
     )
   );
 
@@ -1569,10 +1584,17 @@ function addCustomize(event) {
 
     let itemPrice = document.createElement("p");
     itemPrice.classList.add("basket__itemList--itemPrice");
+    itemPrice.innerText =
+      `₤` + (Math.round(newItemPriceFloat * 100) / 100).toFixed(2);
+    itemCard.appendChild(itemPrice);
+
+    //* old one
+    /* 
     itemPrice.innerText = (Math.round(newItemPriceFloat * 100) / 100).toFixed(
       2
     );
     itemCard.appendChild(itemPrice);
+    */
 
     IngridientsDiv.style.transform = "translateY(0%)";
     ExtraProteinDiv.style.transform = "translateY(0%)";

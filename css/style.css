@@ -143,6 +143,7 @@
 
 .shop__menu {
   grid-column: 0 / 1;
+  margin-top: 1rem;
 }
 
 .shop__products {
@@ -162,7 +163,7 @@
           align-items: center;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 24.6%;
+  max-height: 25%;
   padding: 1rem;
   grid-gap: 0rem;
   margin-top: 1rem;
@@ -202,14 +203,16 @@
 }
 
 .shop__productSection--card {
+  pointer-events: none;
   padding: 1rem;
-  height: 19rem;
+  height: 21rem;
   margin: 1rem;
-  margin-top: 0;
   border: 1px solid #c3c3c3;
 }
 
 .shop__productSection--image {
+  pointer-events: all;
+  cursor: pointer;
   display: block;
   margin: 0 auto;
   text-align: center;
@@ -220,21 +223,31 @@
 }
 
 .shop__productSection--cardHeading {
+  pointer-events: all;
+  cursor: pointer;
   text-align: center;
   font-style: normal;
   font-weight: 600;
+  padding-top: 1rem;
   font-size: 1.1rem;
   /* 1.1rem  100%*/
 }
 
 .shop__productSection--cardParag {
+  pointer-events: all;
+  cursor: pointer;
+  height: 5rem;
   color: #8a959e;
   font-size: 0.8rem;
   /* 0.8rem  60%*/
   text-align: center;
+  padding-top: 0.5rem;
 }
 
 .shop__productSection--cardPrice {
+  padding-top: 0.5rem;
+  pointer-events: all;
+  cursor: pointer;
   text-align: center;
   font-weight: bold;
   font-size: 1.5rem;
@@ -351,7 +364,7 @@
   width: 80%;
   height: 100%;
   position: absolute;
-  top: 7%;
+  top: 6.9%;
   right: 0;
   -webkit-transform: translateX(150%);
           transform: translateX(150%);
@@ -998,7 +1011,7 @@
           transform: scale(0) translate(-50%, -50%);
   text-align: center;
   background-color: #fff;
-  width: 85%;
+  width: 38%;
   padding: 7rem 8rem;
   margin: 0 auto;
   -webkit-box-shadow: 0px 6.64253px 66.4253px rgba(32, 35, 38, 0.15);
@@ -1033,7 +1046,7 @@
           transform: scale(0) translate(-50%, -50%);
   text-align: center;
   background-color: #fff;
-  width: 85%;
+  width: 38%;
   padding: 7rem 8rem;
   margin: 0 auto;
   -webkit-box-shadow: 0px 6.64253px 66.4253px rgba(32, 35, 38, 0.15);
