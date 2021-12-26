@@ -749,7 +749,7 @@ function addCustomize(event) {
         IngridientsDiv.style.transform = "translateY(200%)";
         ExtraProteinDiv.style.transform = "translateY(0%)";
         ExtraSaladDiv.style.transform = "translateY(0%)";
-        ExtraSauceDiv.style.transform = "translateY(-375%)";
+        ExtraSauceDiv.style.transform = "translateY(-405%)";
         RemoveHeading.textContent = `Add Extra Sauce`;
         RemoveParag.textContent = `Choose up to 2`;
         break;
@@ -758,7 +758,7 @@ function addCustomize(event) {
         ExtraProteinDiv.style.transform = "translateY(0%)";
         ExtraSaladDiv.style.transform = "translateY(0%)";
         ExtraSauceDiv.style.transform = "translateY(0%)";
-        ExtraDealDiv.style.transform = "translateY(-224rem)"; /* -3700% */
+        ExtraDealDiv.style.transform = "translateY(-216rem)"; /* -3700% */
         RemoveHeading.textContent = `Make Deal with Drink and Brownie`;
         RemoveParag.textContent = `Choose up to 1`;
         MainItemDiv__NextBtnDOM.style.visibility = "hidden";
@@ -767,15 +767,9 @@ function addCustomize(event) {
         ).toFixed(2)}`;
         break;
       default:
-      // code block
     }
   });
-  //event.target.parentNode.nextElementSibling.nextElementSibling.children[3].textContent
-  /* 
-  MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-          Math.round(newItemPriceFloat * 100) / 100
-        ).toFixed(2)}`;
-  */
+
   let MainItemDiv__BackBtnDOM = document.querySelector(".MainItemDiv__BackBtn");
 
   MainItemDiv__BackBtnDOM.addEventListener("click", function () {
@@ -799,8 +793,19 @@ function addCustomize(event) {
         ExtraProteinDiv.style.transform = "translateY(0%)";
         ExtraSaladDiv.style.transform = "translateY(-275%)";
         ExtraSauceDiv.style.transform = "translateY(0%)";
+        RemoveHeading.textContent = `Add Extra Salads and Vegetables`;
+        RemoveParag.textContent = `Choose up to 3`;
+        break;
+
+      case `Make Deal with Drink and Brownie`:
+        IngridientsDiv.style.transform = "translateY(200%)";
+        ExtraProteinDiv.style.transform = "translateY(0%)";
+        ExtraSaladDiv.style.transform = "translateY(0%)";
+        ExtraSauceDiv.style.transform = "translateY(-405%)";
+        ExtraDealDiv.style.transform = "translateY(0rem)";
         RemoveHeading.textContent = `Add Extra Sauce`;
         RemoveParag.textContent = `Choose up to 2`;
+        MainItemDiv__NextBtnDOM.style.visibility = "visible";
         break;
       default:
     }
@@ -922,6 +927,10 @@ function addCustomize(event) {
     BeefMeatballswithTomatoSouceCounter =
       BeefMeatballswithTomatoSouceCounter + 1;
     BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
+    newItemPriceFloat = newItemPriceFloat + 2.5;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   BeefMinus.addEventListener("click", () => {
@@ -929,77 +938,121 @@ function addCustomize(event) {
       BeefMeatballswithTomatoSouceCounter =
         BeefMeatballswithTomatoSouceCounter - 1;
       BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
+      newItemPriceFloat = newItemPriceFloat - 2.5;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
   RoastedPlus.addEventListener("click", () => {
     RoastedChorizoCounter = RoastedChorizoCounter + 1;
     RoastedNumber.textContent = RoastedChorizoCounter;
+    newItemPriceFloat = newItemPriceFloat + 2.5;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   RoastedMinus.addEventListener("click", () => {
     if (RoastedChorizoCounter > 0) {
       RoastedChorizoCounter = RoastedChorizoCounter - 1;
       RoastedNumber.textContent = RoastedChorizoCounter;
+      newItemPriceFloat = newItemPriceFloat - 2.5;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
   LemonPlus.addEventListener("click", () => {
     LemonandChilliChickenCounter = LemonandChilliChickenCounter + 1;
     LemonNumber.textContent = LemonandChilliChickenCounter;
+    newItemPriceFloat = newItemPriceFloat + 2.5;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   LemonMinus.addEventListener("click", () => {
     if (LemonandChilliChickenCounter > 0) {
       LemonandChilliChickenCounter = LemonandChilliChickenCounter - 1;
       LemonNumber.textContent = LemonandChilliChickenCounter;
+      newItemPriceFloat = newItemPriceFloat - 2.5;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
   CrispyPlus.addEventListener("click", () => {
     CrispyChickenCounter = CrispyChickenCounter + 1;
     CrispyNumber.textContent = CrispyChickenCounter;
+    newItemPriceFloat = newItemPriceFloat + 2.5;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   CrispyMinus.addEventListener("click", () => {
     if (CrispyChickenCounter > 0) {
       CrispyChickenCounter = CrispyChickenCounter - 1;
       CrispyNumber.textContent = CrispyChickenCounter;
+      newItemPriceFloat = newItemPriceFloat - 2.5;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
   GoldenPlus.addEventListener("click", () => {
     GoldenHalloumiVegetarianCounter = GoldenHalloumiVegetarianCounter + 1;
     GoldenNumber.textContent = GoldenHalloumiVegetarianCounter;
+    newItemPriceFloat = newItemPriceFloat + 2.5;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   GoldenMinus.addEventListener("click", () => {
     if (GoldenHalloumiVegetarianCounter > 0) {
       GoldenHalloumiVegetarianCounter = GoldenHalloumiVegetarianCounter - 1;
       GoldenNumber.textContent = GoldenHalloumiVegetarianCounter;
+      newItemPriceFloat = newItemPriceFloat - 2.5;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
   FalafelPlus.addEventListener("click", () => {
     FalafelCounter = FalafelCounter + 1;
     FalafelNumber.textContent = FalafelCounter;
+    newItemPriceFloat = newItemPriceFloat + 2.5;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   FalafelMinus.addEventListener("click", () => {
     if (FalafelCounter > 0) {
       FalafelCounter = FalafelCounter - 1;
       FalafelNumber.textContent = FalafelCounter;
+      newItemPriceFloat = newItemPriceFloat - 2.5;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
   /* Add Extra Salads and Vegetables Array */
   let ExtraSaladArray = [
-    "Charred Sweetcorn ",
-    "Chopped Pickles",
-    "Roasted Red Peppers",
-    "Kimchi (Mild)",
-    "Black Olives",
-    "Smashed Avocado",
+    { name: "Charred Sweetcorn", price: 0.75 },
+    { name: "Chopped Pickles", price: 0.75 },
+    { name: "Roasted Red Peppers", price: 0.75 },
+    { name: "Kimchi (Mild)", price: 0.95 },
+    { name: "Black Olives", price: 0.95 },
+    { name: "Smashed Avocado", price: 1.25 },
   ];
 
   let CharredSweetcornCounter = 0;
@@ -1024,7 +1077,7 @@ function addCustomize(event) {
     return `
     <li class="ExtraSaladDiv__ExtraSaladListItem">
     <div class="ExtraSaladDiv__CountBtns">
-      <i id=${item
+      <i id=${item.name
         .split(" ")
         .join("")
         .split("(")
@@ -1034,7 +1087,7 @@ function addCustomize(event) {
         .concat(
           "__minus"
         )} class="ExtraSaladDiv__CountBtns--minus fas fa-minus"></i>
-      <span id=${item
+      <span id=${item.name
         .split(" ")
         .join("")
         .split("(")
@@ -1042,7 +1095,7 @@ function addCustomize(event) {
         .split(")")
         .join("")
         .concat("__number")} class="ExtraSaladDiv__CountBtns--number">0</span>
-      <i id=${item
+      <i id=${item.name
         .split(" ")
         .join("")
         .split("(")
@@ -1053,8 +1106,8 @@ function addCustomize(event) {
           "__plus"
         )} class="ExtraSaladDiv__CountBtns--plus fas fa-plus"></i>
     </div>
-    <span class="ExtraSaladDiv__Text">${item}</span>
-    <span class="ExtraSaladDiv__Price">+&#8356;2.50</span>
+    <span class="ExtraSaladDiv__Text">${item.name}</span>
+    <span class="ExtraSaladDiv__Price">+&#8356;${item.price}</span>
     </li>
     `;
   }).join("");
@@ -1073,12 +1126,20 @@ function addCustomize(event) {
   CharredSweetcornPlus.addEventListener("click", () => {
     CharredSweetcornCounter = CharredSweetcornCounter + 1;
     CharredSweetcornNumber.textContent = CharredSweetcornCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   CharredSweetcornMinus.addEventListener("click", () => {
     if (CharredSweetcornCounter > 0) {
       CharredSweetcornCounter = CharredSweetcornCounter - 1;
       CharredSweetcornNumber.textContent = CharredSweetcornCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1091,12 +1152,20 @@ function addCustomize(event) {
   ChoppedPicklesPlus.addEventListener("click", () => {
     ChoppedPicklesCounter = ChoppedPicklesCounter + 1;
     ChoppedPicklesNumber.textContent = ChoppedPicklesCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   ChoppedPicklesMinus.addEventListener("click", () => {
     if (ChoppedPicklesCounter > 0) {
       ChoppedPicklesCounter = ChoppedPicklesCounter - 1;
       ChoppedPicklesNumber.textContent = ChoppedPicklesCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1115,12 +1184,20 @@ function addCustomize(event) {
   RoastedRedPeppersPlus.addEventListener("click", () => {
     RoastedRedPeppersCounter = RoastedRedPeppersCounter + 1;
     RoastedRedPeppersNumber.textContent = RoastedRedPeppersCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   RoastedRedPeppersMinus.addEventListener("click", () => {
     if (RoastedRedPeppersCounter > 0) {
       RoastedRedPeppersCounter = RoastedRedPeppersCounter - 1;
       RoastedRedPeppersNumber.textContent = RoastedRedPeppersCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1133,12 +1210,20 @@ function addCustomize(event) {
   KimchiMildPlus.addEventListener("click", () => {
     KimchiMildCounter = KimchiMildCounter + 1;
     KimchiMildNumber.textContent = KimchiMildCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.95;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   KimchiMildMinus.addEventListener("click", () => {
     if (KimchiMildCounter > 0) {
       KimchiMildCounter = KimchiMildCounter - 1;
       KimchiMildNumber.textContent = KimchiMildCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.95;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1151,12 +1236,20 @@ function addCustomize(event) {
   BlackOlivesPlus.addEventListener("click", () => {
     BlackOlivesCounter = BlackOlivesCounter + 1;
     BlackOlivesNumber.textContent = BlackOlivesCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.95;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   BlackOlivesMinus.addEventListener("click", () => {
     if (BlackOlivesCounter > 0) {
       BlackOlivesCounter = BlackOlivesCounter - 1;
       BlackOlivesNumber.textContent = BlackOlivesCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.95;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1169,12 +1262,20 @@ function addCustomize(event) {
   SmashedAvocadoPlus.addEventListener("click", () => {
     SmashedAvocadoCounter = SmashedAvocadoCounter + 1;
     SmashedAvocadoNumber.textContent = SmashedAvocadoCounter;
+    newItemPriceFloat = newItemPriceFloat + 1.25;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   SmashedAvocadoMinus.addEventListener("click", () => {
     if (SmashedAvocadoCounter > 0) {
       SmashedAvocadoCounter = SmashedAvocadoCounter - 1;
       SmashedAvocadoNumber.textContent = SmashedAvocadoCounter;
+      newItemPriceFloat = newItemPriceFloat - 1.25;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1240,7 +1341,7 @@ function addCustomize(event) {
         )} class="ExtraSauceDiv__CountBtns--plus fas fa-plus"></i>
     </div>
     <span class="ExtraSauceDiv__Text">${item}</span>
-    <span class="ExtraSauceDiv__Price">+&#8356;2.50</span>
+    <span class="ExtraSauceDiv__Price">+&#8356;0.75</span>
     </li>
     `;
   }).join("");
@@ -1255,12 +1356,20 @@ function addCustomize(event) {
   GarlicSaucePlus.addEventListener("click", () => {
     GarlicSauceCounter = GarlicSauceCounter + 1;
     GarlicSauceNumber.textContent = GarlicSauceCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   GarlicSauceMinus.addEventListener("click", () => {
     if (GarlicSauceCounter > 0) {
       GarlicSauceCounter = GarlicSauceCounter - 1;
       GarlicSauceNumber.textContent = GarlicSauceCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1273,12 +1382,20 @@ function addCustomize(event) {
   MayonnaisePlus.addEventListener("click", () => {
     MayonnaiseCounter = MayonnaiseCounter + 1;
     MayonnaiseNumber.textContent = MayonnaiseCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   MayonnaiseMinus.addEventListener("click", () => {
     if (MayonnaiseCounter > 0) {
       MayonnaiseCounter = MayonnaiseCounter - 1;
       MayonnaiseNumber.textContent = MayonnaiseCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1291,12 +1408,20 @@ function addCustomize(event) {
   SourCreamPlus.addEventListener("click", () => {
     SourCreamCounter = SourCreamCounter + 1;
     SourCreamNumber.textContent = SourCreamCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   SourCreamMinus.addEventListener("click", () => {
     if (SourCreamCounter > 0) {
       SourCreamCounter = SourCreamCounter - 1;
       SourCreamNumber.textContent = SourCreamCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1309,12 +1434,20 @@ function addCustomize(event) {
   SmokyBBQPlus.addEventListener("click", () => {
     SmokyBBQCounter = SmokyBBQCounter + 1;
     SmokyBBQNumber.textContent = SmokyBBQCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   SmokyBBQMinus.addEventListener("click", () => {
     if (SmokyBBQCounter > 0) {
       SmokyBBQCounter = SmokyBBQCounter - 1;
       SmokyBBQNumber.textContent = SmokyBBQCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1327,12 +1460,20 @@ function addCustomize(event) {
   TomatoKetchupPlus.addEventListener("click", () => {
     TomatoKetchupCounter = TomatoKetchupCounter + 1;
     TomatoKetchupNumber.textContent = TomatoKetchupCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   TomatoKetchupMinus.addEventListener("click", () => {
     if (TomatoKetchupCounter > 0) {
       TomatoKetchupCounter = TomatoKetchupCounter - 1;
       TomatoKetchupNumber.textContent = TomatoKetchupCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1353,6 +1494,10 @@ function addCustomize(event) {
       SrirachaHotSauceFermentedHotSauceMildCounter + 1;
     SrirachaHotSauceFermentedHotSauceMildNumber.textContent =
       SrirachaHotSauceFermentedHotSauceMildCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   SrirachaHotSauceFermentedHotSauceMildMinus.addEventListener("click", () => {
@@ -1361,6 +1506,10 @@ function addCustomize(event) {
         SrirachaHotSauceFermentedHotSauceMildCounter - 1;
       SrirachaHotSauceFermentedHotSauceMildNumber.textContent =
         SrirachaHotSauceFermentedHotSauceMildCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1438,6 +1587,10 @@ function addCustomize(event) {
     MakeDealwithDrinkandBrownieCounter = MakeDealwithDrinkandBrownieCounter + 1;
     MakeDealwithDrinkandBrownieNumber.textContent =
       MakeDealwithDrinkandBrownieCounter;
+    newItemPriceFloat = newItemPriceFloat + 3.5;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
   });
 
   MakeDealwithDrinkandBrownieMinus.addEventListener("click", () => {
@@ -1446,6 +1599,10 @@ function addCustomize(event) {
         MakeDealwithDrinkandBrownieCounter - 1;
       MakeDealwithDrinkandBrownieNumber.textContent =
         MakeDealwithDrinkandBrownieCounter;
+      newItemPriceFloat = newItemPriceFloat - 3.5;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
     }
   });
 
@@ -1536,14 +1693,6 @@ function addCustomize(event) {
       TomatoKetchupCounter * 0.75 +
       SrirachaHotSauceFermentedHotSauceMildCounter * 0.75;
 
-    newItemPriceFloat =
-      newItemPriceFloat +
-      MakeDealwithDrinkandBrownieCounter * 3.95 +
-      ExtraProteinTotalPrice +
-      ExtraSaladTotalPrice +
-      ExtraSauceTotalPrice;
-
-    console.log(newArr);
     customizeSection.style.transform = "translateY(100%)";
     customizeSection__closeIcon.style.transform = "translateY(-300%)";
     customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
