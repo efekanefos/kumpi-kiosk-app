@@ -442,6 +442,7 @@
   margin-top: 1rem;
   transition: all 0.5s;
   margin-bottom: 11rem;
+  position: relative;
   &__IngridientsList,
   &__ExtraProteinList,
   &__ExtraSaladList,
@@ -452,6 +453,25 @@
     margin: 0 auto;
     margin-top: 3rem;
     width: 95%;
+  }
+
+  &__ExtraProteinList::before,
+  &__ExtraSaladList::before,
+  &__ExtraSauceList::before {
+    display: block;
+    position: absolute;
+    bottom: -8rem;
+    left: 0%;
+    content: "";
+    width: 100%;
+    z-index: 9990;
+    height: 17rem;
+    background: linear-gradient(
+      178.7deg,
+      #ffffff 50%,
+      rgba(255, 255, 255, 0) 98.89%
+    );
+    transform: rotate(-180deg);
   }
   &__DrinkList {
     margin-top: 2rem;
@@ -472,6 +492,13 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+  }
+
+  &__ExtraProteinListItem:last-child,
+  &__ExtraSaladListItem:last-child,
+  &__ExtraSauceListItem:last-child {
+    box-shadow: none;
+    background: #fff;
   }
   &__DrinkListItem {
     font-size: 2rem;
@@ -610,7 +637,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-
+    position: relative;
     z-index: 1;
   }
   &__BackBtn,
@@ -639,6 +666,27 @@
     border: 2px solid #e5e5e5;
     border-radius: 35px;
   }
+  /*
+  &__AddBasketBtn::before {
+    display: block;
+    position: absolute;
+    top: -19rem;
+    left: 0%;
+
+    content: "";
+    width: 100%;
+    z-index: 9990;
+    height: 17rem;
+    background: linear-gradient(
+      178.7deg,
+      white 50%,
+      rgba(255, 255, 255, 0) 98.89%
+    );
+    transform: rotate(-180deg);
+  }
+  /*
+
+  */
 }
 .verticalCardDiv {
   display: flex;

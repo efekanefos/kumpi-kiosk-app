@@ -25,6 +25,10 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  overflow: hidden;
+  width: 1080px;
+  height: 1920px;
+  margin: 0 auto;
 }
 
 .wrapper__logo {
@@ -599,6 +603,7 @@
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
   margin-bottom: 11rem;
+  position: relative;
 }
 
 .IngridientsDiv__IngridientsList, .IngridientsDiv__ExtraProteinList, .IngridientsDiv__ExtraSaladList, .IngridientsDiv__ExtraSauceList, .IngridientsDiv__ExtraDealList, .IngridientsDiv__DrinkList,
@@ -636,6 +641,35 @@
   margin: 0 auto;
   margin-top: 3rem;
   width: 95%;
+}
+
+.IngridientsDiv__ExtraProteinList::before, .IngridientsDiv__ExtraSaladList::before, .IngridientsDiv__ExtraSauceList::before,
+.ExtraProteinDiv__ExtraProteinList::before,
+.ExtraProteinDiv__ExtraSaladList::before,
+.ExtraProteinDiv__ExtraSauceList::before,
+.ExtraSaladDiv__ExtraProteinList::before,
+.ExtraSaladDiv__ExtraSaladList::before,
+.ExtraSaladDiv__ExtraSauceList::before,
+.ExtraSauceDiv__ExtraProteinList::before,
+.ExtraSauceDiv__ExtraSaladList::before,
+.ExtraSauceDiv__ExtraSauceList::before,
+.ExtraDealDiv__ExtraProteinList::before,
+.ExtraDealDiv__ExtraSaladList::before,
+.ExtraDealDiv__ExtraSauceList::before,
+.DrinkDiv__ExtraProteinList::before,
+.DrinkDiv__ExtraSaladList::before,
+.DrinkDiv__ExtraSauceList::before {
+  display: block;
+  position: absolute;
+  bottom: -8rem;
+  left: 0%;
+  content: "";
+  width: 100%;
+  z-index: 9990;
+  height: 17rem;
+  background: linear-gradient(178.7deg, #ffffff 50%, rgba(255, 255, 255, 0) 98.89%);
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
 }
 
 .IngridientsDiv__DrinkList,
@@ -689,6 +723,27 @@
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
+}
+
+.IngridientsDiv__ExtraProteinListItem:last-child, .IngridientsDiv__ExtraSaladListItem:last-child, .IngridientsDiv__ExtraSauceListItem:last-child,
+.ExtraProteinDiv__ExtraProteinListItem:last-child,
+.ExtraProteinDiv__ExtraSaladListItem:last-child,
+.ExtraProteinDiv__ExtraSauceListItem:last-child,
+.ExtraSaladDiv__ExtraProteinListItem:last-child,
+.ExtraSaladDiv__ExtraSaladListItem:last-child,
+.ExtraSaladDiv__ExtraSauceListItem:last-child,
+.ExtraSauceDiv__ExtraProteinListItem:last-child,
+.ExtraSauceDiv__ExtraSaladListItem:last-child,
+.ExtraSauceDiv__ExtraSauceListItem:last-child,
+.ExtraDealDiv__ExtraProteinListItem:last-child,
+.ExtraDealDiv__ExtraSaladListItem:last-child,
+.ExtraDealDiv__ExtraSauceListItem:last-child,
+.DrinkDiv__ExtraProteinListItem:last-child,
+.DrinkDiv__ExtraSaladListItem:last-child,
+.DrinkDiv__ExtraSauceListItem:last-child {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  background: #fff;
 }
 
 .IngridientsDiv__DrinkListItem,
@@ -907,6 +962,27 @@
 
 .MainItemDiv {
   margin-top: 10rem;
+  /*
+  &__AddBasketBtn::before {
+    display: block;
+    position: absolute;
+    top: -19rem;
+    left: 0%;
+
+    content: "";
+    width: 100%;
+    z-index: 9990;
+    height: 17rem;
+    background: linear-gradient(
+      178.7deg,
+      white 50%,
+      rgba(255, 255, 255, 0) 98.89%
+    );
+    transform: rotate(-180deg);
+  }
+  /*
+
+  */
 }
 
 .MainItemDiv__ItemParag {
@@ -942,6 +1018,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: relative;
   z-index: 1;
 }
 

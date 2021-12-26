@@ -566,12 +566,15 @@ customizeSection__closeIcon.addEventListener("click", function (event) {
 
   menu__heading.textContent = `Kumpi Menu`;
 
+  console.log(event.target.parentNode.lastElementChild);
+
   function resetList() {
     /* customize kısmı kaybolurken önceden oluşturulmuş olan malzeme listesini resetler */
     event.target.parentNode.lastElementChild.innerHTML = "";
   }
   /* customize kartı kaybolana kadar silme işini yapmaz sonra yapar */
-  setTimeout(resetList, 2000);
+  //setTimeout(resetList, 2000);
+  resetList();
 });
 
 function addCustomize(event) {
@@ -2066,7 +2069,7 @@ menuCartDom.addEventListener("click", function () {
   document.querySelector(".basket").style.transform = "translateX(0%)";
 });
 
-let paymentStatus = false;
+let paymentStatus = true;
 //! ÖDEMENİN YAPILIP YAPILAMADIĞINI BELİRTEN BOOLEAN CİNSİNDEN DEĞERE SAHİP DEĞİŞKEN
 
 //! BASKET KISMINDAKİ CHECKOUT BUTONUNA BASILDIĞINDA GERÇEKLEŞECEKLER
