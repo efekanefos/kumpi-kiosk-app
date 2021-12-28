@@ -661,6 +661,9 @@ function addCustomize(event) {
     "Garlic",
     "White Sauce",
     "Tabouli",
+    "Garlic2",
+    "White Sauce2",
+    "Tabouli2",
   ];
 
   /* listeyi kapsayan div */
@@ -734,7 +737,7 @@ function addCustomize(event) {
     switch (RemoveHeading.innerText) {
       case `Remove Elements`:
         IngridientsDiv.style.transform = "translateY(200%)";
-        ExtraProteinDiv.style.transform = "translateY(-150%)"; /* -150 */
+        ExtraProteinDiv.style.transform = "translateY(-126%)"; /* -150 */
         ExtraSaladDiv.style.transform = "translateY(0%)"; /* -275 */
         ExtraSauceDiv.style.transform = "translateY(0%)";
         RemoveHeading.textContent = `Add Extra Protein`;
@@ -743,7 +746,7 @@ function addCustomize(event) {
       case `Add Extra Protein`:
         IngridientsDiv.style.transform = "translateY(200%)";
         ExtraProteinDiv.style.transform = "translateY(0%)";
-        ExtraSaladDiv.style.transform = "translateY(-275%)";
+        ExtraSaladDiv.style.transform = "translateY(-240%)"; /* 275 */
         ExtraSauceDiv.style.transform = "translateY(0%)";
         RemoveHeading.textContent = `Add Extra Salads and Vegetables`;
         RemoveParag.textContent = `Choose up to 3`;
@@ -752,7 +755,7 @@ function addCustomize(event) {
         IngridientsDiv.style.transform = "translateY(200%)";
         ExtraProteinDiv.style.transform = "translateY(0%)";
         ExtraSaladDiv.style.transform = "translateY(0%)";
-        ExtraSauceDiv.style.transform = "translateY(-405%)";
+        ExtraSauceDiv.style.transform = "translateY(-353%)";
         RemoveHeading.textContent = `Add Extra Sauce`;
         RemoveParag.textContent = `Choose up to 2`;
         break;
@@ -761,9 +764,10 @@ function addCustomize(event) {
         ExtraProteinDiv.style.transform = "translateY(0%)";
         ExtraSaladDiv.style.transform = "translateY(0%)";
         ExtraSauceDiv.style.transform = "translateY(0%)";
-        ExtraDealDiv.style.transform = "translateY(-216rem)"; /* -3700% */
+        ExtraDealDiv.style.transform = "translateY(-226rem)"; /* -3700% */
         RemoveHeading.textContent = `Make Deal with Drink and Brownie`;
         RemoveParag.textContent = `Choose up to 1`;
+        BtnsDiv.classList.add("effectOff");
         MainItemDiv__NextBtnDOM.style.visibility = "hidden";
         MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
           Math.round(newItemPriceFloat * 100) / 100
@@ -786,7 +790,7 @@ function addCustomize(event) {
         break;
       case `Add Extra Salads and Vegetables`:
         IngridientsDiv.style.transform = "translateY(200%)";
-        ExtraProteinDiv.style.transform = "translateY(-150%)";
+        ExtraProteinDiv.style.transform = "translateY(-128%)";
         ExtraSaladDiv.style.transform = "translateY(0%)";
         RemoveHeading.textContent = `Add Extra Protein`;
         RemoveParag.textContent = `Choose up to 3`;
@@ -794,7 +798,7 @@ function addCustomize(event) {
       case `Add Extra Sauce`:
         IngridientsDiv.style.transform = "translateY(200%)";
         ExtraProteinDiv.style.transform = "translateY(0%)";
-        ExtraSaladDiv.style.transform = "translateY(-275%)";
+        ExtraSaladDiv.style.transform = "translateY(-240%)";
         ExtraSauceDiv.style.transform = "translateY(0%)";
         RemoveHeading.textContent = `Add Extra Salads and Vegetables`;
         RemoveParag.textContent = `Choose up to 3`;
@@ -804,10 +808,11 @@ function addCustomize(event) {
         IngridientsDiv.style.transform = "translateY(200%)";
         ExtraProteinDiv.style.transform = "translateY(0%)";
         ExtraSaladDiv.style.transform = "translateY(0%)";
-        ExtraSauceDiv.style.transform = "translateY(-405%)";
+        ExtraSauceDiv.style.transform = "translateY(-355%)";
         ExtraDealDiv.style.transform = "translateY(0rem)";
         RemoveHeading.textContent = `Add Extra Sauce`;
         RemoveParag.textContent = `Choose up to 2`;
+        BtnsDiv.classList.remove("effectOff");
         MainItemDiv__NextBtnDOM.style.visibility = "visible";
         break;
       default:
@@ -822,6 +827,10 @@ function addCustomize(event) {
     "Crispy Chicken",
     "Golden Halloumi (Vegetarian)",
     "Falafel (Vegetarian)",
+
+    "Falafel2 (Vegetarian)",
+    "Falafel3 (Vegetarian)",
+    "Falafel4 (Vegetarian)",
   ];
 
   let BeefMeatballswithTomatoSouceCounter = 0;
@@ -1056,6 +1065,9 @@ function addCustomize(event) {
     { name: "Kimchi (Mild)", price: 0.95 },
     { name: "Black Olives", price: 0.95 },
     { name: "Smashed Avocado", price: 1.25 },
+    { name: "Smashed Avocado2", price: 1.25 },
+    { name: "Smashed Avocado3", price: 1.25 },
+    { name: "Smashed Avocado4", price: 1.25 },
   ];
 
   let CharredSweetcornCounter = 0;
@@ -1290,6 +1302,9 @@ function addCustomize(event) {
     "Smoky BBQ",
     "Tomato Ketchup",
     "Sriracha Hot Sauce Fermented Hot Sauce (Mild)",
+    "Tomato Ketchup2",
+    "Tomato Ketchup3",
+    "Tomato Ketchup4",
   ];
 
   let GarlicSauceCounter = 0;
@@ -2154,6 +2169,13 @@ checkoutBtnDom.addEventListener("click", function (e) {
     .forEach(function (item) {
       item.style.display = "block";
       item.style.position = "unset";
+      item.style.fontSize = "1.5rem";
+    });
+
+  document
+    .querySelectorAll(".verticalCardDiv .basket__itemList--itemHeading")
+    .forEach(function (item) {
+      item.style.fontSize = "1.2rem";
     });
 
   document.querySelectorAll(".basket__itemList--divv").forEach(function (item) {
@@ -2202,6 +2224,12 @@ checkoutBtnDom.addEventListener("click", function (e) {
         .forEach(function (item) {
           item.style.display = "block";
           item.style.position = "absolute";
+          item.style.fontSize = "1.5rem";
+        });
+      document
+        .querySelectorAll(".verticalCardDiv .basket__itemList--itemHeading")
+        .forEach(function (item) {
+          item.style.fontSize = "1.5rem";
         });
 
       document
