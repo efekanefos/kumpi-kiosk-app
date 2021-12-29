@@ -1669,16 +1669,16 @@ function addCustomize(event) {
   let lastDrinkDom;
 
   function activeFunctionDrink(event) {
-    console.log(document.querySelector(".active"));
-    if (document.querySelector(".active") === null) {
-      event.target.classList.add("active");
-      document.querySelector(".active").classList.remove("active");
-      event.target.classList.add("active");
+    console.log(document.querySelector(".activeDrink"));
+    if (document.querySelector(".activeDrink") === null) {
+      event.target.classList.add("activeDrink");
+      document.querySelector(".activeDrink").classList.remove("activeDrink");
+      event.target.classList.add("activeDrink");
       let lastDrink = event.target.parentNode.innerText;
       lastDrinkDom = lastDrink;
     } else {
-      document.querySelector(".active").classList.remove("active");
-      event.target.classList.add("active");
+      document.querySelector(".activeDrink").classList.remove("activeDrink");
+      event.target.classList.add("activeDrink");
       let lastDrink = event.target.parentNode.innerText;
       lastDrinkDom = lastDrink;
     }
@@ -2084,7 +2084,7 @@ menuCartDom.addEventListener("click", function () {
   document.querySelector(".basket").style.transform = "translateX(0%)";
 });
 
-let paymentStatus = true;
+let paymentStatus = false;
 //! ÖDEMENİN YAPILIP YAPILAMADIĞINI BELİRTEN BOOLEAN CİNSİNDEN DEĞERE SAHİP DEĞİŞKEN
 
 //! BASKET KISMINDAKİ CHECKOUT BUTONUNA BASILDIĞINDA GERÇEKLEŞECEKLER
