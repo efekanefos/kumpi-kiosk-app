@@ -93,27 +93,41 @@
   &__menuListItem {
     font-size: 1.5rem;
     margin-top: 1rem;
-    padding: 0.5rem;
+    cursor: pointer;
     padding-left: 1.8rem;
     position: relative;
     font-weight: normal;
-    line-height: 5rem;
+    line-height: 4rem;
   }
+  /*
   &__menuListItem.active {
     background-color: #ffc72c;
+    width: 100%;
     font-weight: 600;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   }
+  */
   &__menuListItem::before {
     content: "";
     display: inline-block;
     position: absolute;
-    height: 60%;
-    width: 0.5rem;
+    height: 100%;
+    width: 3%;
     background-color: #ffc72c;
-    top: 1.2rem;
+    top: 0;
     left: 0;
+    transition: all 1s;
   }
+
+  &__menuListItem:hover:before {
+    width: 100%;
+  }
+  /*
+  &__listText {
+   
+  }
+  */
+
   &__productSection--card {
     pointer-events: none;
     padding: 1rem;
@@ -282,7 +296,8 @@
   }
 }
 
-.basket__itemList {
+.basket__itemList,
+.checkout__itemList {
   padding: 3rem;
   width: 100%;
   overflow-y: auto;
@@ -393,11 +408,18 @@
     box-sizing: border-box;
     text-align: center;
     text-decoration: none;
+    display: block;
+    width: 37rem;
+    margin: 0px auto;
   }
 }
 .basket__itemList.checkout {
   max-height: 65rem;
   //padding-top: 0.5rem;
+}
+
+.checkout__itemList {
+  max-height: 60rem;
 }
 .customizeSection {
   background-color: white;
@@ -463,11 +485,6 @@
     margin: 0 auto;
     margin-top: 3rem;
     width: 95%;
-    /*
-    overflow-x: hidden;
-    overflow-y: auto;
-    max-height: 80rem;
-    */
   }
 
   &__DrinkList {
@@ -599,26 +616,7 @@
     padding-left: 3rem;
   }
 }
-/*
-.IngridientsDiv,
-.ExtraProteinDiv,
-.ExtraSaladDiv,
-.ExtraSauceDiv,
-.ExtraDealDiv,
-.DrinkDiv {
-  &__ExtraProteinList,
-  &__ExtraSaladList,
-  &__ExtraSauceList {
-    list-style: none;
-    margin: 0 auto;
-    margin-top: 3rem;
-    width: 95%;
-    padding: 2rem;
-    overflow-y: scroll;
-    max-height: 57rem;
-  }
-}
-*/
+
 .IngridientsDiv,
 .ExtraProteinDiv,
 .ExtraSaladDiv,
@@ -740,7 +738,7 @@
   transform: scale(0) translate(-50%, -50%);
   text-align: center;
   background-color: #fff;
-  width: 25%;
+  width: 50rem;
   padding: 7rem 8rem;
   margin: 0 auto;
   box-shadow: 0px 6.64253px 66.4253px rgba(32, 35, 38, 0.15);
@@ -769,7 +767,7 @@
   transform: scale(0) translate(-50%, -50%);
   text-align: center;
   background-color: #fff;
-  width: 25%;
+  width: 50rem;
   padding: 7rem 8rem;
   margin: 0 auto;
   box-shadow: 0px 6.64253px 66.4253px rgba(32, 35, 38, 0.15);
@@ -829,17 +827,31 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
-  border-radius: 0px;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: red;
+  background: #808080;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #b30000;
+  background: #696969;
+}
+
+.preload {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #000 url("../images/preload.gif") no-repeat center center;
+  overflow: hidden;
+  width: 1080px;
+  height: 1920px;
+  margin: 0 auto;
 }

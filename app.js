@@ -1,3 +1,27 @@
+/* preload */
+
+let loader;
+function loadNow(opacity) {
+  if (opacity <= 0) {
+    displayContent();
+  } else {
+    loader.style.opacity = opacity;
+    window.setTimeout(function () {
+      loadNow(opacity - 0.07);
+    }, 70);
+  }
+}
+
+function displayContent() {
+  loader.style.display = "none";
+  document.querySelector(".menu").style.display = "block";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  loader = document.querySelector(".preload");
+  loadNow(2);
+});
+
 /* Menu List */
 
 const list = document.querySelector(".shop__menuList");
@@ -225,12 +249,6 @@ const cartSection__closeIcon = document.querySelector(
 const basket__closeIcon = document.querySelector(".basket__closeIcon");
 //* Sepet kısmının tamamının tekrar sağ tarafa kayıp kaybolmasını sağlayan DOM elementi
 
-const cartSection__leftBtn = document.querySelector(".cartSection__leftBtn");
-//* Ürünlerden birine tıkladığımızda Customize yazan ve customize penceresini açan butonun DOM elementi
-
-const cartSection__rightBtn = document.querySelector(".cartSection__rightBtn");
-//* Ürünlerden birine tıkladığımızda Add to Basket yazan ve sepete ekleyen butonun DOM elementi
-
 const basket = document.querySelector(".basket");
 //* Ürünlerin sıralandığı sağ taraftan beliren beyaz section'ın tamamı olan DOM elementi
 
@@ -310,12 +328,9 @@ function selectItem(event) {
     console.log(event.target.parentNode.children[1]);
     console.log(event.target.parentNode.children[2]);
     console.log(event.target.parentNode.children[3]);
-    cartSection.style.transform = "translateY(0%)";
     cartSection__closeIcon.style.transform = "translateY(0%)";
     cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
-    cartSection__leftBtn.style.transform = "translateX(0%)";
-    cartSection__rightBtn.style.transform = "translateX(0%)";
-    cartSection__Btns.style.transform = "translateY(0%)";
+    cartSection.style.transform = "translateY(0%)";
 
     /* seçilen yeni Item'in bilgilerini çektiğimiz ana yapı */
     let newItem = event.target.parentNode.children;
@@ -335,8 +350,33 @@ ettiğimiz kısım */
 <h1 class="cartSection__Heading">${event.target.parentNode.children[1].textContent}</h1>
 <p class="cartSection__Ingridients">${event.target.parentNode.children[2].textContent}</p>
 <h3 class="cartSection__Price">${event.target.parentNode.children[3].textContent}</h3>
+<div class="cartSection__Btns">
+          <a class="cartSection__leftBtn" href="#">Customize</a>
+          <a class="cartSection__rightBtn" href="#">Add Basket</a>
+        </div>
 `;
   }
+  const cartSection__leftBtn = document.querySelector(".cartSection__leftBtn");
+  //* Ürünlerden birine tıkladığımızda Customize yazan ve customize penceresini açan butonun DOM elementi
+
+  const cartSection__rightBtn = document.querySelector(
+    ".cartSection__rightBtn"
+  );
+  //* Ürünlerden birine tıkladığımızda Add to Basket yazan ve sepete ekleyen butonun DOM elementi
+
+  cartSection__rightBtn.addEventListener("click", addBasket);
+  cartSection__leftBtn.addEventListener("click", addCustomize);
+  cartSection__leftBtn.style.transform = "translateX(0%)";
+  cartSection__rightBtn.style.transform = "translateX(0%)";
+  // Finish doing things after the pause
+  /* Add Basket(rightBtn) butonuna tıklanırsa addBasket fonksiyonu çalışsın */
+  /* Add Customize(leftBtn) butonuna tıklanırsa addCustomize fonksiyonu çalışsın */
+  /*
+  function continueExecution() {
+    
+  }
+  setTimeout(continueExecution, 3000); // Wait ten seconds before continuing
+  */
 }
 
 /* sepetteki item sayısını integer cinsine çavirip siteden başta alıyoruz. */
@@ -352,9 +392,11 @@ function addBasket(event) {
   cartSection.style.transform = "translateY(100%)";
   cartSection__closeIcon.style.transform = "translateY(-300%)";
   cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
+  /*
   cartSection__leftBtn.style.transform = "translateX(-300%)";
   cartSection__rightBtn.style.transform = "translateX(300%)";
   cartSection__Btns.style.transform = "translateY(300%)";
+  */
   /* cartSection__Btns aşağı insin diye */
 
   /* basket kısmının görünür hale getirilmesi */
@@ -380,30 +422,32 @@ function addBasket(event) {
 
   /* Img */
 
+  console.log(event.target.parentNode.parentNode.children[0].src);
   let itemImg = document.createElement("img");
   itemImg.classList.add("basket__itemList--itemImg");
-  itemImg.src = `${event.target.parentNode.nextElementSibling.nextElementSibling.children[0].src}`;
+  //itemImg.src = `${event.target.parentNode.nextElementSibling.nextElementSibling.children[0].src}`;
+  itemImg.src = `${event.target.parentNode.parentNode.children[0].src}`;
   divv.appendChild(itemImg);
 
   /* Heading */
 
   let itemHeading = document.createElement("h1");
   itemHeading.classList.add("basket__itemList--itemHeading");
-  itemHeading.innerText = `${event.target.parentNode.nextElementSibling.nextElementSibling.children[1].textContent}`;
+  itemHeading.innerText = `${event.target.parentNode.parentNode.children[1].textContent}`;
   divv.appendChild(itemHeading);
 
   /* Parag */
 
   let itemParag = document.createElement("p");
   itemParag.classList.add("basket__itemList--itemParag");
-  itemParag.innerText = `${event.target.parentNode.nextElementSibling.nextElementSibling.children[2].textContent}`;
+  itemParag.innerText = `${event.target.parentNode.parentNode.children[2].textContent}`;
   divv.appendChild(itemParag);
 
   /* Price */
 
   let itemPrice = document.createElement("p");
   itemPrice.classList.add("basket__itemList--itemPrice");
-  itemPrice.innerText = `${event.target.parentNode.nextElementSibling.nextElementSibling.children[3].textContent}`;
+  itemPrice.innerText = `${event.target.parentNode.parentNode.children[3].textContent}`;
   itemCard.appendChild(itemPrice);
 
   //* vertical div
@@ -415,10 +459,14 @@ function addBasket(event) {
   let VerticalitemHeading = itemHeading.cloneNode(true);
   let VerticalitemParag = itemParag.cloneNode(true);
   let VerticalitemPrice = itemPrice.cloneNode(true);
+  /*
   let VerticalitemImg =
     event.target.parentNode.nextElementSibling.nextElementSibling.children[0].cloneNode(
       true
     );
+    */
+  let VerticalitemImg =
+    event.target.parentNode.parentNode.children[0].cloneNode(true);
   VerticalitemImg.classList.add("verticalitemImg");
   itemCard.appendChild(VerticalitemImg);
   itemCard.insertBefore(VerticalitemImg, itemCard.firstChild);
@@ -538,7 +586,7 @@ function addBasket(event) {
   /* Sadece Itemlara tıklandığında bile sepete ekleme problemi çözümü */
 
   let newPriceBasket = parseFloat(
-    event.target.parentNode.nextElementSibling.nextElementSibling.children[3].textContent
+    event.target.parentNode.parentNode.children[3].textContent
       .split("₤")
       .join("")
   );
@@ -588,28 +636,19 @@ function addCustomize(event) {
   cartSection.style.transform = "translateY(100%)";
   cartSection__closeIcon.style.transform = "translateY(-300%)";
   cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
+  /*
   cartSection__leftBtn.style.transform = "translateY(300%)";
   cartSection__rightBtn.style.transform = "translateY(300%)";
   cartSection__Btns.style.transform = "translateY(300%)";
-
+  */
   /* seçilen yeni Item'in bilgilerini çektiğimiz ana yapı */
-  let newItemSrc =
-    event.target.parentNode.nextElementSibling.nextElementSibling.children[0]
-      .src;
-  let newItemName =
-    event.target.parentNode.nextElementSibling.nextElementSibling.children[1]
-      .innerText;
-  let newItemParag =
-    event.target.parentNode.nextElementSibling.nextElementSibling.children[2]
-      .innerText;
-  let newItemPrice =
-    event.target.parentNode.nextElementSibling.nextElementSibling.children[3]
-      .innerText;
+  console.log(event.target.parentNode.parentNode.children);
+  let newItemSrc = event.target.parentNode.parentNode.children[0].src;
+  let newItemName = event.target.parentNode.parentNode.children[1].innerText;
+  let newItemParag = event.target.parentNode.parentNode.children[2].innerText;
+  let newItemPrice = event.target.parentNode.parentNode.children[3].innerText;
   let newItemPriceFloat = parseFloat(
-    event.target.parentNode.nextElementSibling.nextElementSibling.children[3].textContent.slice(
-      1,
-      5
-    )
+    event.target.parentNode.parentNode.children[3].textContent.slice(1, 5)
   );
 
   /* Seçilen Item'ın verileri ana div */
@@ -1714,7 +1753,8 @@ function addCustomize(event) {
     customizeSection.style.transform = "translateY(100%)";
     customizeSection__closeIcon.style.transform = "translateY(-300%)";
     customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
-    cartSection__Btns.style.transform = "translateY(300%)";
+
+    //cartSection__Btns.style.transform = "translateY(300%)";
 
     /* Ana Div */
     let itemCard = document.createElement("div");
@@ -2089,10 +2129,13 @@ let paymentStatus = false;
 
 //! BASKET KISMINDAKİ CHECKOUT BUTONUNA BASILDIĞINDA GERÇEKLEŞECEKLER
 checkoutBtnDom.addEventListener("click", function (e) {
+  basket__itemList.classList.replace("basket__itemList", "checkout__itemList");
+
+  checkoutBtnDom.style.width = "45rem";
   menuCartDom.style.display = "none";
   document.querySelector(".checkoutCloseBtnDiv").style.display = "flex";
 
-  document.querySelector(".basket__itemList").classList.add("checkout");
+  document.querySelector(".checkout__itemList").classList.add("checkout");
 
   if (document.querySelector(".menu__heading").textContent === "Checkout") {
     if (paymentStatus) {
@@ -2201,8 +2244,13 @@ checkoutBtnDom.addEventListener("click", function (e) {
   document
     .querySelector(".checkoutCloseBtnDiv")
     .addEventListener("click", function () {
+      basket__itemList.classList.replace(
+        "checkout__itemList",
+        "basket__itemList"
+      );
       menuCartDom.style.display = "flex";
       document.querySelector(".checkoutCloseBtnDiv").style.display = "none";
+      checkoutBtnDom.style.width = "37rem";
 
       //? Vertical Div'den eski düzene geçilmesi için gereken değişiklikler Start
 
@@ -2271,9 +2319,3 @@ checkoutBtnDom.addEventListener("click", function (e) {
 /* bu section içindeki herhangi bir item'a tıklanırsa selectItem fonksiyonu
 devreye girsin */
 shop__productSection.addEventListener("click", selectItem);
-
-/* Add Basket(rightBtn) butonuna tıklanırsa addBasket fonksiyonu çalışsın */
-cartSection__rightBtn.addEventListener("click", addBasket);
-
-/* Add Customize(leftBtn) butonuna tıklanırsa addCustomize fonksiyonu çalışsın */
-cartSection__leftBtn.addEventListener("click", addCustomize);
