@@ -83,7 +83,7 @@
     align-items: center;
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 86rem;
+    max-height: 92rem;
     padding: 1rem;
     grid-gap: 0rem;
     margin-top: 1rem;
@@ -124,11 +124,6 @@
   &__menuListItem:hover:before {
     width: 100%;
   }
-  /*
-  &__listText {
-   
-  }
-  */
 
   &__productSection--card {
     pointer-events: none;
