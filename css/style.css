@@ -150,11 +150,6 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   }
   */
-  /*
-  &__listText {
-   
-  }
-  */
 }
 
 .shop__menu {
@@ -179,7 +174,7 @@
           align-items: center;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 86rem;
+  max-height: 92rem;
   padding: 1rem;
   grid-gap: 0rem;
   margin-top: 1rem;
@@ -987,7 +982,7 @@
   bottom: 9rem;
   height: 12rem;
   left: 1.5rem;
-  width: 92%;
+  width: 94.5%;
   margin: 0 auto;
   z-index: 0;
   background: linear-gradient(178.7deg, white 50%, rgba(255, 255, 255, 0) 98.89%);
@@ -1048,6 +1043,7 @@
           align-items: center;
   position: relative;
   z-index: 1;
+  padding-bottom: 2rem;
 }
 
 .MainItemDiv__BackBtn, .MainItemDiv__NextBtn {

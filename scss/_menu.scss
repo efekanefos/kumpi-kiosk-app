@@ -630,7 +630,7 @@
   bottom: 9rem;
   height: 12rem;
   left: 1.5rem;
-  width: 92%;
+  width: 94.5%;
   margin: 0 auto;
   z-index: 0;
   background: linear-gradient(
@@ -683,6 +683,7 @@
     align-items: center;
     position: relative;
     z-index: 1;
+    padding-bottom: 2rem;
   }
   &__BackBtn,
   &__NextBtn {
