@@ -324,10 +324,7 @@ function selectItem(event) {
     event.target.parentNode.children[0].src != undefined
   ) {
     /* cartSection kısmını ve x ikonunu ortaya çıkarma */
-    console.log(event.target.parentNode.children[0].src);
-    console.log(event.target.parentNode.children[1]);
-    console.log(event.target.parentNode.children[2]);
-    console.log(event.target.parentNode.children[3]);
+
     cartSection__closeIcon.style.transform = "translateY(0%)";
     cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
     cartSection.style.transform = "translateY(0%)";
@@ -422,7 +419,6 @@ function addBasket(event) {
 
   /* Img */
 
-  console.log(event.target.parentNode.parentNode.children[0].src);
   let itemImg = document.createElement("img");
   itemImg.classList.add("basket__itemList--itemImg");
   //itemImg.src = `${event.target.parentNode.nextElementSibling.nextElementSibling.children[0].src}`;
@@ -517,7 +513,7 @@ function addBasket(event) {
       event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
 
       newArr.push(newItemPrice);
-      console.log(newArr);
+
       basket__itemList__totalPrice.innerText = `₤${(
         Math.round(newArr.reduce(getSum, 0) * 100) / 100
       ).toFixed(2)}`;
@@ -610,11 +606,9 @@ customizeSection__closeIcon.addEventListener("click", function (event) {
   customizeSection.style.transform = "translateY(100%)";
   customizeSection__closeIcon.style.transform = "translateY(-300%)";
   customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
-  cartSection__Btns.style.transform = "translateY(300%)";
+  /*cartSection__Btns.style.transform = "translateY(300%)";*/
 
   menu__heading.textContent = `Kumpi Menu`;
-
-  console.log(event.target.parentNode.lastElementChild);
 
   function resetList() {
     /* customize kısmı kaybolurken önceden oluşturulmuş olan malzeme listesini resetler */
@@ -642,7 +636,7 @@ function addCustomize(event) {
   cartSection__Btns.style.transform = "translateY(300%)";
   */
   /* seçilen yeni Item'in bilgilerini çektiğimiz ana yapı */
-  console.log(event.target.parentNode.parentNode.children);
+
   let newItemSrc = event.target.parentNode.parentNode.children[0].src;
   let newItemName = event.target.parentNode.parentNode.children[1].innerText;
   let newItemParag = event.target.parentNode.parentNode.children[2].innerText;
@@ -700,9 +694,9 @@ function addCustomize(event) {
     "Garlic",
     "White Sauce",
     "Tabouli",
-    "Garlic2",
-    "White Sauce2",
-    "Tabouli2",
+    "Lettuce",
+    "Red Sauce",
+    "Pepper",
   ];
 
   /* listeyi kapsayan div */
@@ -730,17 +724,15 @@ function addCustomize(event) {
   customizeFullBtn.forEach((el) => {
     el.addEventListener("click", function (e) {
       el.classList.toggle("empty");
-      console.log(e.target.id);
+
       let newIndexName = e.target.id;
       let lastItem = IngridientsArray.indexOf(newIndexName);
       if (IngridientsArray.includes(newIndexName)) {
         if (lastItem > -1) {
           IngridientsArray.splice(lastItem, 1);
         }
-        console.log(IngridientsArray);
       } else {
         IngridientsArray.push(newIndexName);
-        console.log(IngridientsArray);
       }
     });
   });
@@ -803,7 +795,7 @@ function addCustomize(event) {
         ExtraProteinDiv.style.transform = "translateY(0%)";
         ExtraSaladDiv.style.transform = "translateY(0%)";
         ExtraSauceDiv.style.transform = "translateY(0%)";
-        ExtraDealDiv.style.transform = "translateY(-226rem)"; /* -3700% */
+        ExtraDealDiv.style.transform = "translateY(-228rem)"; /* -3700% */
         RemoveHeading.textContent = `Make Deal with Drink and Brownie`;
         RemoveParag.textContent = `Choose up to 1`;
         BtnsDiv.classList.add("effectOff");
@@ -866,10 +858,9 @@ function addCustomize(event) {
     "Crispy Chicken",
     "Golden Halloumi (Vegetarian)",
     "Falafel (Vegetarian)",
-
-    "Falafel2 (Vegetarian)",
-    "Falafel3 (Vegetarian)",
-    "Falafel4 (Vegetarian)",
+    "Steak",
+    "Ricotta",
+    "Avocado",
   ];
 
   let BeefMeatballswithTomatoSouceCounter = 0;
@@ -878,6 +869,9 @@ function addCustomize(event) {
   let CrispyChickenCounter = 0;
   let GoldenHalloumiVegetarianCounter = 0;
   let FalafelCounter = 0;
+  let SteakCounter = 0;
+  let RicottaCounter = 0;
+  let AvocadoCounter = 0;
 
   /* Extra Protein listesi div'i */
   let ExtraProteinDiv = document.createElement("div");
@@ -973,6 +967,24 @@ function addCustomize(event) {
   let FalafelNumber = document.querySelector("#FalafelVegetarian__number");
   let FalafelPlus = document.querySelector("#FalafelVegetarian__plus");
   let FalafelMinus = document.querySelector("#FalafelVegetarian__minus");
+
+  /* Steak */
+
+  let SteakNumber = document.querySelector("#Steak__number");
+  let SteakPlus = document.querySelector("#Steak__plus");
+  let SteakMinus = document.querySelector("#Steak__minus");
+
+  /* RicottaChorizo */
+
+  let RicottaNumber = document.querySelector("#Ricotta__number");
+  let RicottaPlus = document.querySelector("#Ricotta__plus");
+  let RicottaMinus = document.querySelector("#Ricotta__minus");
+
+  /* Avocado */
+
+  let AvocadoNumber = document.querySelector("#Avocado__number");
+  let AvocadoPlus = document.querySelector("#Avocado__plus");
+  let AvocadoMinus = document.querySelector("#Avocado__minus");
 
   BeefPlus.addEventListener("click", () => {
     BeefMeatballswithTomatoSouceCounter =
@@ -1096,6 +1108,66 @@ function addCustomize(event) {
     }
   });
 
+  SteakPlus.addEventListener("click", () => {
+    SteakCounter = SteakCounter + 1;
+    SteakNumber.textContent = SteakCounter;
+    newItemPriceFloat = newItemPriceFloat + 2.5;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
+  });
+
+  SteakMinus.addEventListener("click", () => {
+    if (SteakCounter > 0) {
+      SteakCounter = SteakCounter - 1;
+      SteakNumber.textContent = SteakCounter;
+      newItemPriceFloat = newItemPriceFloat - 2.5;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
+    }
+  });
+
+  RicottaPlus.addEventListener("click", () => {
+    RicottaCounter = RicottaCounter + 1;
+    RicottaNumber.textContent = RicottaCounter;
+    newItemPriceFloat = newItemPriceFloat + 2.5;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
+  });
+
+  RicottaMinus.addEventListener("click", () => {
+    if (RicottaCounter > 0) {
+      RicottaCounter = RicottaCounter - 1;
+      RicottaNumber.textContent = RicottaCounter;
+      newItemPriceFloat = newItemPriceFloat - 2.5;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
+    }
+  });
+
+  AvocadoPlus.addEventListener("click", () => {
+    AvocadoCounter = AvocadoCounter + 1;
+    AvocadoNumber.textContent = AvocadoCounter;
+    newItemPriceFloat = newItemPriceFloat + 2.5;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
+  });
+
+  AvocadoMinus.addEventListener("click", () => {
+    if (AvocadoCounter > 0) {
+      AvocadoCounter = AvocadoCounter - 1;
+      AvocadoNumber.textContent = AvocadoCounter;
+      newItemPriceFloat = newItemPriceFloat - 2.5;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
+    }
+  });
+
   /* Add Extra Salads and Vegetables Array */
   let ExtraSaladArray = [
     { name: "Charred Sweetcorn", price: 0.75 },
@@ -1104,9 +1176,9 @@ function addCustomize(event) {
     { name: "Kimchi (Mild)", price: 0.95 },
     { name: "Black Olives", price: 0.95 },
     { name: "Smashed Avocado", price: 1.25 },
-    { name: "Smashed Avocado2", price: 1.25 },
-    { name: "Smashed Avocado3", price: 1.25 },
-    { name: "Smashed Avocado4", price: 1.25 },
+    { name: "Seafood", price: 1.25 },
+    { name: "Corn", price: 1.25 },
+    { name: "Tofu", price: 1.25 },
   ];
 
   let CharredSweetcornCounter = 0;
@@ -1115,6 +1187,9 @@ function addCustomize(event) {
   let KimchiMildCounter = 0;
   let BlackOlivesCounter = 0;
   let SmashedAvocadoCounter = 0;
+  let SeafoodCounter = 0;
+  let CornCounter = 0;
+  let TofuCounter = 0;
 
   /* Add Extra Salads and Vegetables listesi div'i */
   let ExtraSaladDiv = document.createElement("div");
@@ -1333,6 +1408,84 @@ function addCustomize(event) {
     }
   });
 
+  /* Seafood */
+
+  let SeafoodNumber = document.querySelector("#Seafood__number");
+  let SeafoodPlus = document.querySelector("#Seafood__plus");
+  let SeafoodMinus = document.querySelector("#Seafood__minus");
+
+  SeafoodPlus.addEventListener("click", () => {
+    SeafoodCounter = SeafoodCounter + 1;
+    SeafoodNumber.textContent = SeafoodCounter;
+    newItemPriceFloat = newItemPriceFloat + 1.25;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
+  });
+
+  SeafoodMinus.addEventListener("click", () => {
+    if (SeafoodCounter > 0) {
+      SeafoodCounter = SeafoodCounter - 1;
+      SeafoodNumber.textContent = SeafoodCounter;
+      newItemPriceFloat = newItemPriceFloat - 1.25;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
+    }
+  });
+
+  /* Corn */
+
+  let CornNumber = document.querySelector("#Corn__number");
+  let CornPlus = document.querySelector("#Corn__plus");
+  let CornMinus = document.querySelector("#Corn__minus");
+
+  CornPlus.addEventListener("click", () => {
+    CornCounter = CornCounter + 1;
+    CornNumber.textContent = CornCounter;
+    newItemPriceFloat = newItemPriceFloat + 1.25;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
+  });
+
+  CornMinus.addEventListener("click", () => {
+    if (CornCounter > 0) {
+      CornCounter = CornCounter - 1;
+      CornNumber.textContent = CornCounter;
+      newItemPriceFloat = newItemPriceFloat - 1.25;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
+    }
+  });
+
+  /* Tofu */
+
+  let TofuNumber = document.querySelector("#Tofu__number");
+  let TofuPlus = document.querySelector("#Tofu__plus");
+  let TofuMinus = document.querySelector("#Tofu__minus");
+
+  TofuPlus.addEventListener("click", () => {
+    TofuCounter = TofuCounter + 1;
+    TofuNumber.textContent = TofuCounter;
+    newItemPriceFloat = newItemPriceFloat + 1.25;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
+  });
+
+  TofuMinus.addEventListener("click", () => {
+    if (TofuCounter > 0) {
+      TofuCounter = TofuCounter - 1;
+      TofuNumber.textContent = TofuCounter;
+      newItemPriceFloat = newItemPriceFloat - 1.25;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
+    }
+  });
+
   /* Add Extra Sauce Array */
   let ExtraSauceArray = [
     "Garlic Sauce",
@@ -1341,9 +1494,9 @@ function addCustomize(event) {
     "Smoky BBQ",
     "Tomato Ketchup",
     "Sriracha Hot Sauce Fermented Hot Sauce (Mild)",
-    "Tomato Ketchup2",
-    "Tomato Ketchup3",
-    "Tomato Ketchup4",
+    "Ranch",
+    "Burger",
+    "Mustard",
   ];
 
   let GarlicSauceCounter = 0;
@@ -1352,6 +1505,9 @@ function addCustomize(event) {
   let SmokyBBQCounter = 0;
   let TomatoKetchupCounter = 0;
   let SrirachaHotSauceFermentedHotSauceMildCounter = 0;
+  let RanchCounter = 0;
+  let BurgerCounter = 0;
+  let MustardCounter = 0;
 
   /* Add Extra Sauce listesi div'i */
   let ExtraSauceDiv = document.createElement("div");
@@ -1570,6 +1726,84 @@ function addCustomize(event) {
     }
   });
 
+  /* Ranch */
+
+  let RanchNumber = document.querySelector("#Ranch__number");
+  let RanchPlus = document.querySelector("#Ranch__plus");
+  let RanchMinus = document.querySelector("#Ranch__minus");
+
+  RanchPlus.addEventListener("click", () => {
+    RanchCounter = RanchCounter + 1;
+    RanchNumber.textContent = RanchCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
+  });
+
+  RanchMinus.addEventListener("click", () => {
+    if (RanchCounter > 0) {
+      RanchCounter = RanchCounter - 1;
+      RanchNumber.textContent = RanchCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
+    }
+  });
+
+  /* Burger */
+
+  let BurgerNumber = document.querySelector("#Burger__number");
+  let BurgerPlus = document.querySelector("#Burger__plus");
+  let BurgerMinus = document.querySelector("#Burger__minus");
+
+  BurgerPlus.addEventListener("click", () => {
+    BurgerCounter = BurgerCounter + 1;
+    BurgerNumber.textContent = BurgerCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
+  });
+
+  BurgerMinus.addEventListener("click", () => {
+    if (BurgerCounter > 0) {
+      BurgerCounter = BurgerCounter - 1;
+      BurgerNumber.textContent = BurgerCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
+    }
+  });
+
+  /* Mustard */
+
+  let MustardNumber = document.querySelector("#Mustard__number");
+  let MustardPlus = document.querySelector("#Mustard__plus");
+  let MustardMinus = document.querySelector("#Mustard__minus");
+
+  MustardPlus.addEventListener("click", () => {
+    MustardCounter = MustardCounter + 1;
+    MustardNumber.textContent = MustardCounter;
+    newItemPriceFloat = newItemPriceFloat + 0.75;
+    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+      Math.round(newItemPriceFloat * 100) / 100
+    ).toFixed(2)}`;
+  });
+
+  MustardMinus.addEventListener("click", () => {
+    if (MustardCounter > 0) {
+      MustardCounter = MustardCounter - 1;
+      MustardNumber.textContent = MustardCounter;
+      newItemPriceFloat = newItemPriceFloat - 0.75;
+      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
+        Math.round(newItemPriceFloat * 100) / 100
+      ).toFixed(2)}`;
+    }
+  });
+
   /* Make Deal with Drink and Brownie Array */
   let ExtraDealArray = [
     { name: "Make Deal with Drink and Brownie", price: 3.95 },
@@ -1708,7 +1942,6 @@ function addCustomize(event) {
   let lastDrinkDom;
 
   function activeFunctionDrink(event) {
-    console.log(document.querySelector(".activeDrink"));
     if (document.querySelector(".activeDrink") === null) {
       event.target.classList.add("activeDrink");
       document.querySelector(".activeDrink").classList.remove("activeDrink");
@@ -1732,7 +1965,10 @@ function addCustomize(event) {
       LemonandChilliChickenCounter * 2.5 +
       CrispyChickenCounter * 2.5 +
       GoldenHalloumiVegetarianCounter * 2.5 +
-      FalafelCounter * 2.5;
+      FalafelCounter * 2.5 +
+      SteakCounter * 2.5 +
+      RicottaCounter * 2.5 +
+      AvocadoCounter * 2.5;
 
     let ExtraSaladTotalPrice =
       CharredSweetcornCounter * 0.75 +
@@ -1740,7 +1976,10 @@ function addCustomize(event) {
       RoastedRedPeppersCounter * 0.75 +
       KimchiMildCounter * 0.95 +
       BlackOlivesCounter * 0.95 +
-      SmashedAvocadoCounter * 1.25;
+      SmashedAvocadoCounter * 1.25 +
+      SeafoodCounter * 1.25 +
+      TofuCounter * 1.25 +
+      CornCounter * 1.25;
 
     let ExtraSauceTotalPrice =
       GarlicSauceCounter * 0.75 +
@@ -1748,7 +1987,10 @@ function addCustomize(event) {
       SourCreamCounter * 0.75 +
       SmokyBBQCounter * 0.75 +
       TomatoKetchupCounter * 0.75 +
-      SrirachaHotSauceFermentedHotSauceMildCounter * 0.75;
+      SrirachaHotSauceFermentedHotSauceMildCounter * 0.75 +
+      RanchCounter * 2.5 +
+      BurgerCounter * 2.5 +
+      MustardCounter * 2.5;
 
     customizeSection.style.transform = "translateY(100%)";
     customizeSection__closeIcon.style.transform = "translateY(-300%)";
@@ -1840,6 +2082,9 @@ function addCustomize(event) {
         number: GoldenNumber,
       },
       { counter: FalafelCounter, name: "Falafel", number: FalafelNumber },
+      { counter: SteakCounter, name: "Steak", number: SteakNumber },
+      { counter: RicottaCounter, name: "Ricotta", number: RicottaNumber },
+      { counter: AvocadoCounter, name: "Avocado", number: AvocadoNumber },
     ];
 
     let ExtraSaladCounters = [
@@ -1873,6 +2118,9 @@ function addCustomize(event) {
         name: "Smashed Avocado",
         number: SmashedAvocadoNumber,
       },
+      { counter: SeafoodCounter, name: "Seafood", number: SeafoodNumber },
+      { counter: TofuCounter, name: "Tofu", number: TofuNumber },
+      { counter: CornCounter, name: "Corn", number: CornNumber },
     ];
 
     let ExtraSauceCounters = [
@@ -1906,6 +2154,9 @@ function addCustomize(event) {
         name: "Sriracha Hot Sauce Fermented Hot Sauce (Mild)",
         number: SrirachaHotSauceFermentedHotSauceMildNumber,
       },
+      { counter: RanchCounter, name: "Ranch", number: RanchNumber },
+      { counter: BurgerCounter, name: "Burger", number: BurgerNumber },
+      { counter: MustardCounter, name: "Mustard", number: MustardNumber },
     ];
 
     let ExtraProteinBasketArray = [];
@@ -1920,11 +2171,9 @@ function addCustomize(event) {
       } else {
       }
     });
-    console.log("Extra", ExtraProteinBasketArray);
 
     ExtraProteinCounters.forEach(function (item) {
       item.counter = 0;
-      console.log(item.counter);
     });
 
     ExtraProteinCounters.forEach(function (item) {
@@ -1940,11 +2189,9 @@ function addCustomize(event) {
       } else {
       }
     });
-    console.log("Extra", ExtraSaladBasketArray);
 
     ExtraSaladCounters.forEach(function (item) {
       item.counter = 0;
-      console.log(item.counter);
     });
 
     ExtraSaladCounters.forEach(function (item) {
@@ -1960,11 +2207,9 @@ function addCustomize(event) {
       } else {
       }
     });
-    console.log("Extra", ExtraSauceBasketArray);
 
     ExtraSauceCounters.forEach(function (item) {
       item.counter = 0;
-      console.log(item.counter);
     });
 
     ExtraSauceCounters.forEach(function (item) {
@@ -1987,10 +2232,10 @@ function addCustomize(event) {
       <h1 class="customizeSection__basketHeading">Make it a Meal Deal  (£${
         MakeDealwithDrinkandBrownieCounter * 3.95
       })</h1>
-      <p class="customizeSection__basketParag">Meal Deal with Drink and Brownie, Choice of Drink, ${lastDrinkDom}}</p> 
+      <p class="customizeSection__basketParag">Meal Deal with Drink and Brownie, Choice of Drink, ${
+        lastDrinkDom !== undefined ? lastDrinkDom : ""
+      }</p> 
     `;
-
-    console.log(basket__itemList);
 
     //* vertical div
 
@@ -2047,10 +2292,9 @@ function addCustomize(event) {
       productCount = productCount + 1;
 
       event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
-      console.log(productCount);
 
       newArr.push(newItemPrice);
-      console.log(newArr);
+
       basket__itemList__totalPrice.innerText = `₤${(
         Math.round(newArr.reduce(getSum, 0) * 100) / 100
       ).toFixed(2)}`;
@@ -2075,7 +2319,6 @@ function addCustomize(event) {
         productCount = productCount - 1;
 
         event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
-        console.log(productCount);
 
         //console.log(newArr);
         basket__itemList__totalPrice.innerText = `₤${(

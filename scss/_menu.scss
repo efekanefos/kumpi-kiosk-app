@@ -101,14 +101,14 @@
     font-weight: normal;
     line-height: 4rem;
   }
-  /*
+
   &__menuListItem.active {
     background-color: #ffc72c;
     width: 100%;
     font-weight: 600;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   }
-  */
+
   &__menuListItem::before {
     content: "";
     display: inline-block;
@@ -118,7 +118,7 @@
     background-color: #ffc72c;
     top: 0;
     left: 0;
-    transition: all 0.5s;
+    transition: all 0.3s;
   }
 
   &__menuListItem:hover:before {
@@ -174,6 +174,10 @@
     font-weight: bold;
     font-size: 1.5rem; /* 1.5rem 150%*/
   }
+  &__listText {
+    position: relative;
+    pointer-events: none;
+  }
 }
 .shop.checkout {
   grid-template-columns: 1fr;
@@ -227,7 +231,7 @@
   &__rightBtn {
     padding: 2rem 6rem; /* 2rem 6rem */
     font-size: 2rem; /* 2rem*/
-    border-radius: 42.5px;
+    border-radius: 2px;
     text-decoration: none;
     font-family: "Poppins", sans-serif;
     font-weight: 500;
@@ -472,6 +476,7 @@
   transition: all 0.5s;
   margin-bottom: 6rem;
   position: relative;
+  padding-bottom: 1.5rem;
   &__IngridientsList,
   &__ExtraProteinList,
   &__ExtraSaladList,
@@ -571,10 +576,10 @@
     color: #ff5722;
     align-items: center;
     justify-content: flex-start;
-    margin-right: 4rem;
+    margin-right: 3rem;
   }
   &__CountBtns * {
-    margin-right: 20%;
+    margin-right: 1.3rem;
     font-weight: 700;
     font-size: 1.7rem;
   }
@@ -622,20 +627,27 @@
   max-height: 49rem;
   position: relative;
 }
+.ExtraProteinDiv,
+.ExtraSaladDiv {
+  padding-bottom: 4.5rem;
+}
+.ExtraSauceDiv {
+  padding-bottom: 3rem;
+}
 
 .MainItemDiv__BtnsDiv::before {
   content: "";
   display: block;
   position: absolute;
   bottom: 9rem;
-  height: 12rem;
+  height: 10.5rem;
   left: 1.5rem;
   width: 94.5%;
   margin: 0 auto;
   z-index: 0;
   background: linear-gradient(
     178.7deg,
-    white 50%,
+    white 77%,
     rgba(255, 255, 255, 0) 98.89%
   );
   -webkit-transform: rotate(-180deg);
@@ -695,7 +707,7 @@
     color: #202326;
     background-color: #cbcfd3;
     border: 2px solid #e5e5e5;
-    border-radius: 1.5rem;
+    border-radius: 2px; /* 1.5rem */
     z-index: 999;
   }
   &__AddBasketBtn {
@@ -709,7 +721,7 @@
     color: #fffff0;
     background-color: #202326;
     border: 2px solid #e5e5e5;
-    border-radius: 35px;
+    border-radius: 2px; /* 35px */
   }
 }
 .verticalCardDiv {
