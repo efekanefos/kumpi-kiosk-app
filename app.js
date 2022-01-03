@@ -2332,7 +2332,8 @@ function addCustomize(event) {
         if (lastItem > -1) {
           newArr.splice(lastItem, 1);
         }
-        event.target.parentNode.parentNode.style.display = "none";
+        event.target.parentNode.parentNode.remove();
+        //event.target.parentNode.parentNode.style.display = "none";
         basket__itemList__totalPrice.innerText = `₤${(
           Math.round(newArr.reduce(getSum, 0) * 100) / 100
         ).toFixed(2)}`;
