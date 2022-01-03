@@ -282,6 +282,7 @@
   transform: translateX(150%);
   transition: all 0.5s;
   background-color: white;
+  z-index: 99999;
   &__closeIcon {
     color: black;
     font-size: 300%;
@@ -303,7 +304,7 @@
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 67%;
+  max-height: 75rem; /* 67% */
   &--itemCard {
     width: 100%;
     display: flex;
@@ -404,7 +405,7 @@
     padding: 1.8rem 12rem;
     font-size: 2.5rem;
     color: #202326;
-    border-radius: 42.5px;
+    border-radius: 2px;
     border: 2px solid #e5e5e5;
     box-sizing: border-box;
     text-align: center;
@@ -420,7 +421,7 @@
 }
 
 .checkout__itemList {
-  max-height: 60rem;
+  max-height: 67rem;
 }
 .customizeSection {
   background-color: white;
@@ -711,6 +712,7 @@
     z-index: 999;
   }
   &__AddBasketBtn {
+    width: 28rem;
     font-size: 2.2rem;
     outline: none;
     text-align: center;
@@ -804,7 +806,7 @@
     outline: none;
     border: 2px solid #e5e5e5;
     box-sizing: border-box;
-    border-radius: 42.5px;
+    border-radius: 2px;
     display: block;
     margin: 0 auto;
     width: 100%;

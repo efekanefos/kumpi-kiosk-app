@@ -2373,6 +2373,8 @@ let paymentStatus = false;
 //! BASKET KISMINDAKİ CHECKOUT BUTONUNA BASILDIĞINDA GERÇEKLEŞECEKLER
 checkoutBtnDom.addEventListener("click", function (e) {
   basket__itemList.classList.replace("basket__itemList", "checkout__itemList");
+  document.querySelector(".basket__itemList__checkoutDiv").style.bottom =
+    "0rem";
 
   checkoutBtnDom.style.width = "45rem";
   menuCartDom.style.display = "none";
@@ -2487,6 +2489,8 @@ checkoutBtnDom.addEventListener("click", function (e) {
   document
     .querySelector(".checkoutCloseBtnDiv")
     .addEventListener("click", function () {
+      document.querySelector(".basket__itemList__checkoutDiv").style.bottom =
+        "6rem";
       basket__itemList.classList.replace(
         "checkout__itemList",
         "basket__itemList"
