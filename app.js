@@ -567,7 +567,9 @@ function addBasket(event) {
     } else {
       let lastItem = newArr.indexOf(newItemPrice);
       newArr.splice(lastItem, 1);
-      event.target.parentNode.parentNode.style.display = "none";
+      //console.log(event.target.parentNode.parentNode);
+      //event.target.parentNode.parentNode.style.display = "none";
+      event.target.parentNode.parentNode.remove();
       basket__itemList__totalPrice.innerText = `₤${(
         Math.round(newArr.reduce(getSum, 0) * 100) / 100
       ).toFixed(2)}`;
@@ -2375,6 +2377,8 @@ checkoutBtnDom.addEventListener("click", function (e) {
   basket__itemList.classList.replace("basket__itemList", "checkout__itemList");
   document.querySelector(".basket__itemList__checkoutDiv").style.bottom =
     "0rem";
+  document.querySelector(".basket__itemList__checkoutDiv").style.left =
+    "-60rem";
 
   checkoutBtnDom.style.width = "45rem";
   menuCartDom.style.display = "none";
@@ -2491,6 +2495,8 @@ checkoutBtnDom.addEventListener("click", function (e) {
     .addEventListener("click", function () {
       document.querySelector(".basket__itemList__checkoutDiv").style.bottom =
         "6rem";
+      document.querySelector(".basket__itemList__checkoutDiv").style.left =
+        "50%";
       basket__itemList.classList.replace(
         "checkout__itemList",
         "basket__itemList"
