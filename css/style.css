@@ -594,6 +594,19 @@
   margin: 0px auto;
 }
 
+.basket__itemList--removeItemIcon,
+.checkout__itemList--removeItemIcon {
+  font-size: 1.8rem;
+  background-color: yellow;
+  cursor: pointer;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid #000;
+  line-height: 0.7;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .basket__itemList.checkout {
   max-height: 65rem;
 }

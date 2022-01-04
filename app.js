@@ -425,6 +425,37 @@ function addBasket(event) {
   itemImg.src = `${event.target.parentNode.parentNode.children[0].src}`;
   divv.appendChild(itemImg);
 
+  //! Remove Function is here!
+
+  let removeItemIcon = document.createElement("p");
+  removeItemIcon.classList.add("basket__itemList--removeItemIcon");
+  removeItemIcon.innerText = "X";
+  itemCard.appendChild(removeItemIcon);
+
+  removeItemIcon.addEventListener("click", function (event) {
+    let lastItem = parseFloat(
+      event.target.parentNode.children[3].textContent.slice(1, 5)
+    );
+    function removeItemAll(arr, value) {
+      var i = 0;
+      while (i < arr.length) {
+        if (arr[i] === value) {
+          arr.splice(i, 1);
+        } else {
+          ++i;
+        }
+      }
+      return arr;
+    }
+    console.log(removeItemAll(newArr, lastItem));
+    event.target.parentNode.remove();
+    basket__itemList__totalPrice.innerText = `₤${(
+      Math.round(newArr.reduce(getSum, 0) * 100) / 100
+    ).toFixed(2)}`;
+
+    menu__cart__itemCount.textContent = newArr.length;
+  });
+
   /* Heading */
 
   let itemHeading = document.createElement("h1");
@@ -446,6 +477,8 @@ function addBasket(event) {
   itemPrice.innerText = `${event.target.parentNode.parentNode.children[3].textContent}`;
   itemCard.appendChild(itemPrice);
 
+  /* Remove Item Icon */
+
   //* vertical div
 
   const verticalCardDiv = document.createElement("div");
@@ -455,12 +488,6 @@ function addBasket(event) {
   let VerticalitemHeading = itemHeading.cloneNode(true);
   let VerticalitemParag = itemParag.cloneNode(true);
   let VerticalitemPrice = itemPrice.cloneNode(true);
-  /*
-  let VerticalitemImg =
-    event.target.parentNode.nextElementSibling.nextElementSibling.children[0].cloneNode(
-      true
-    );
-    */
   let VerticalitemImg =
     event.target.parentNode.parentNode.children[0].cloneNode(true);
   VerticalitemImg.classList.add("verticalitemImg");
@@ -502,15 +529,12 @@ function addBasket(event) {
   itemCounterPlusBtn.addEventListener("click", function (event) {
     if (document.querySelector(".menu__heading").textContent === "Checkout") {
       let newItemPrice = parseFloat(
-        event.target.parentNode.parentNode.children[2].textContent.slice(1, 5)
+        event.target.parentNode.parentNode.children[3].textContent.slice(1, 5)
       );
 
-      //* eski hali event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
       productCount = productCount + 1;
-      //* İşlem sonrası olması gereken: event.target.parentNode.parentNode.children[3].children[1].innerText;
-      let counterItemCount =
-        event.target.parentNode.parentNode.children[4].children[1];
-      event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
+
+      event.target.parentNode.parentNode.children[5].children[1].innerText = `${productCount}`;
 
       newArr.push(newItemPrice);
 
@@ -519,17 +543,16 @@ function addBasket(event) {
       ).toFixed(2)}`;
 
       menu__cart__itemCount.textContent = newArr.length;
+      console.log(productCount);
+      console.log(newArr);
     } else {
       let newItemPrice = parseFloat(
-        event.target.parentNode.parentNode.children[2].textContent.slice(1, 5)
+        event.target.parentNode.parentNode.children[3].textContent.slice(1, 5)
       );
 
-      //* eski hali event.target.parentNode.parentNode.children[1].textContent.slice(1, -1)
       productCount = productCount + 1;
-      //* İşlem sonrası olması gereken: event.target.parentNode.parentNode.children[3].children[1].innerText;
-      let counterItemCount =
-        event.target.parentNode.parentNode.children[4].children[1];
-      event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
+
+      event.target.parentNode.parentNode.children[5].children[1].innerText = `${productCount}`;
 
       newArr.push(newItemPrice);
 
@@ -537,13 +560,15 @@ function addBasket(event) {
         Math.round(newArr.reduce(getSum, 0) * 100) / 100
       ).toFixed(2)}`;
       menu__cart__itemCount.textContent = newArr.length;
+      console.log(productCount);
+      console.log(newArr);
     }
   });
 
   /* minus */
   itemCounterMinusBtn.addEventListener("click", function (event) {
     let newItemPrice = parseFloat(
-      event.target.parentNode.parentNode.children[2].textContent.slice(1, 5)
+      event.target.parentNode.parentNode.children[3].textContent.slice(1, 5)
     );
 
     if (productCount > 1) {
@@ -559,7 +584,8 @@ function addBasket(event) {
       }
 
       productCount = productCount - 1;
-      event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
+
+      event.target.parentNode.parentNode.children[5].children[1].innerText = `${productCount}`;
       menu__cart__itemCount.textContent = newArr.length;
       basket__itemList__totalPrice.innerText = `₤${(
         Math.round(newArr.reduce(getSum, 0) * 100) / 100
@@ -632,11 +658,7 @@ function addCustomize(event) {
   cartSection.style.transform = "translateY(100%)";
   cartSection__closeIcon.style.transform = "translateY(-300%)";
   cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
-  /*
-  cartSection__leftBtn.style.transform = "translateY(300%)";
-  cartSection__rightBtn.style.transform = "translateY(300%)";
-  cartSection__Btns.style.transform = "translateY(300%)";
-  */
+
   /* seçilen yeni Item'in bilgilerini çektiğimiz ana yapı */
 
   let newItemSrc = event.target.parentNode.parentNode.children[0].src;
@@ -1884,6 +1906,7 @@ function addCustomize(event) {
     MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
       Math.round(newItemPriceFloat * 100) / 100
     ).toFixed(2)}`;
+    console.log(newItemPriceFloat);
   });
 
   MakeDealwithDrinkandBrownieMinus.addEventListener("click", () => {
@@ -1896,6 +1919,7 @@ function addCustomize(event) {
       MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
         Math.round(newItemPriceFloat * 100) / 100
       ).toFixed(2)}`;
+      console.log(newItemPriceFloat);
     }
   });
 
@@ -1958,7 +1982,7 @@ function addCustomize(event) {
     }
   }
 
-  checkOutDOM = document.querySelector(".MainItemDiv__AddBasketBtn");
+  let checkOutDOM = document.querySelector(".MainItemDiv__AddBasketBtn");
   checkOutDOM.addEventListener("click", function (event) {
     menu__heading.textContent = `Basket`;
     let ExtraProteinTotalPrice =
@@ -1998,8 +2022,6 @@ function addCustomize(event) {
     customizeSection__closeIcon.style.transform = "translateY(-300%)";
     customizeSection__closeIcon.style.transform += "translate(-50%, -50%)";
 
-    //cartSection__Btns.style.transform = "translateY(300%)";
-
     /* Ana Div */
     let itemCard = document.createElement("div");
     itemCard.classList.add("basket__itemList--itemCard");
@@ -2016,6 +2038,37 @@ function addCustomize(event) {
     itemImg.classList.add("basket__itemList--itemImg");
     itemImg.src = newItemSrc;
     divv.appendChild(itemImg);
+
+    //! Remove Function is here!
+
+    let removeItemIcon = document.createElement("p");
+    removeItemIcon.classList.add("basket__itemList--removeItemIcon");
+    removeItemIcon.innerText = "X";
+    itemCard.appendChild(removeItemIcon);
+
+    removeItemIcon.addEventListener("click", function (event) {
+      let lastItem = newItemPriceFloat;
+      function removeItemAll(arr, value) {
+        var i = 0;
+        while (i < arr.length) {
+          if (arr[i] === value) {
+            arr.splice(i, 1);
+            console.log(lastItem);
+          } else {
+            ++i;
+            console.log(lastItem);
+          }
+        }
+        return arr;
+      }
+      console.log(removeItemAll(newArr, lastItem));
+      event.target.parentNode.remove();
+      basket__itemList__totalPrice.innerText = `₤${(
+        Math.round(newArr.reduce(getSum, 0) * 100) / 100
+      ).toFixed(2)}`;
+
+      menu__cart__itemCount.textContent = newArr.length;
+    });
 
     /* Heading */
 
@@ -2038,14 +2091,6 @@ function addCustomize(event) {
     itemPrice.innerText =
       `₤` + (Math.round(newItemPriceFloat * 100) / 100).toFixed(2);
     itemCard.appendChild(itemPrice);
-
-    //* old one
-    /* 
-    itemPrice.innerText = (Math.round(newItemPriceFloat * 100) / 100).toFixed(
-      2
-    );
-    itemCard.appendChild(itemPrice);
-    */
 
     IngridientsDiv.style.transform = "translateY(0%)";
     ExtraProteinDiv.style.transform = "translateY(0%)";
@@ -2285,15 +2330,18 @@ function addCustomize(event) {
     itemCounterPlusBtn.classList.add("fas", "fa-plus");
     itemCounterDiv.appendChild(itemCounterPlusBtn);
 
-    productCount = 1;
+    let productCountCustomize = 1;
 
-    /* plus */
     itemCounterPlusBtn.addEventListener("click", function (event) {
       let newItemPrice = newItemPriceFloat;
 
-      productCount = productCount + 1;
+      productCountCustomize = productCountCustomize + 1;
 
-      event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
+      console.log(
+        event.target.parentNode.parentNode.children[5].children[1].innerText
+      );
+
+      event.target.parentNode.parentNode.children[5].children[1].innerText = `${productCountCustomize}`;
 
       newArr.push(newItemPrice);
 
@@ -2301,13 +2349,15 @@ function addCustomize(event) {
         Math.round(newArr.reduce(getSum, 0) * 100) / 100
       ).toFixed(2)}`;
       menu__cart__itemCount.textContent = newArr.length;
+      console.log(productCountCustomize);
+      console.log(newArr);
     });
 
     /* minus */
     itemCounterMinusBtn.addEventListener("click", function (event) {
       let newItemPrice = newItemPriceFloat;
 
-      if (productCount > 1) {
+      if (productCountCustomize > 1) {
         //newArr.pop(newItemPrice);
         //console.log(newArr.indexOf(newItemPrice));
         let lastItem = newArr.indexOf(newItemPrice);
@@ -2318,9 +2368,9 @@ function addCustomize(event) {
         if (lastItem > -1) {
           newArr.splice(lastItem, 1);
         }
-        productCount = productCount - 1;
+        productCountCustomize = productCountCustomize - 1;
 
-        event.target.parentNode.parentNode.children[4].children[1].innerText = `${productCount}`;
+        event.target.parentNode.parentNode.children[5].children[1].innerText = `${productCountCustomize}`;
 
         //console.log(newArr);
         basket__itemList__totalPrice.innerText = `₤${(
@@ -2339,6 +2389,8 @@ function addCustomize(event) {
         ).toFixed(2)}`;
         menu__cart__itemCount.textContent = newArr.length;
       }
+      console.log(productCountCustomize);
+      console.log(newArr);
       basket__itemList__totalPrice.innerText = `₤${(
         Math.round(newArr.reduce(getSum, 0) * 100) / 100
       ).toFixed(2)}`;
