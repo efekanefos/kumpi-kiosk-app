@@ -429,7 +429,7 @@ function addBasket(event) {
 
   let removeItemIcon = document.createElement("p");
   removeItemIcon.classList.add("basket__itemList--removeItemIcon");
-  removeItemIcon.innerText = "X";
+  removeItemIcon.innerText = "✖";
   itemCard.appendChild(removeItemIcon);
 
   removeItemIcon.addEventListener("click", function (event) {
@@ -2043,7 +2043,7 @@ function addCustomize(event) {
 
     let removeItemIcon = document.createElement("p");
     removeItemIcon.classList.add("basket__itemList--removeItemIcon");
-    removeItemIcon.innerText = "X";
+    removeItemIcon.innerText = "✖";
     itemCard.appendChild(removeItemIcon);
 
     removeItemIcon.addEventListener("click", function (event) {
@@ -2427,6 +2427,13 @@ let paymentStatus = false;
 
 //! BASKET KISMINDAKİ CHECKOUT BUTONUNA BASILDIĞINDA GERÇEKLEŞECEKLER
 checkoutBtnDom.addEventListener("click", function (e) {
+  if (newArr.length > 0) {
+    document.querySelector(".basket__itemList--removeItemIcon").style.right =
+      "0px";
+    document.querySelector(".basket__itemList--removeItemIcon").style.left =
+      "unset";
+  }
+
   basket__itemList.classList.replace("basket__itemList", "checkout__itemList");
   document.querySelector(".basket__itemList__checkoutDiv").style.bottom =
     "0rem";
@@ -2546,6 +2553,14 @@ checkoutBtnDom.addEventListener("click", function (e) {
   document
     .querySelector(".checkoutCloseBtnDiv")
     .addEventListener("click", function () {
+      if (newArr.length > 0) {
+        document.querySelector(
+          ".basket__itemList--removeItemIcon"
+        ).style.right = "unset";
+        document.querySelector(".basket__itemList--removeItemIcon").style.left =
+          "0px";
+      }
+
       document.querySelector(".basket__itemList__checkoutDiv").style.bottom =
         "6rem";
       document.querySelector(".basket__itemList__checkoutDiv").style.left =
