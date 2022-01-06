@@ -2436,6 +2436,9 @@ checkoutBtnDom.addEventListener("click", function (e) {
       "unset";
   }
 
+  document.querySelector(".errorPayment").style.opacity = "1";
+  document.querySelector(".errorPayment").style.display = "block";
+
   basket__itemList.classList.replace("basket__itemList", "checkout__itemList");
   document.querySelector(".basket__itemList__checkoutDiv").style.bottom =
     "0rem";
@@ -2481,6 +2484,7 @@ checkoutBtnDom.addEventListener("click", function (e) {
     });
 
   //! Ödeme Başarısız div'ine tıklanırsa ortadan kaybolsun
+  /*
   document
     .querySelector(".errorPayment")
     .addEventListener("click", function () {
@@ -2490,6 +2494,38 @@ checkoutBtnDom.addEventListener("click", function (e) {
       document.querySelector(".errorPayment").style.transform =
         "translate(-50%, -50%)";
       document.querySelector(".errorPayment").style.transform += "scale(0)";
+    });
+    */
+
+  document
+    .querySelector(".errorPayment__cancelOrderBtn")
+    .addEventListener("click", function () {
+      function fadeOutEffect() {
+        var fadeTarget = document.querySelector(".errorPayment");
+        var fadeEffect = setInterval(function () {
+          if (!fadeTarget.style.opacity) {
+            fadeTarget.style.opacity = 1;
+          }
+          if (fadeTarget.style.opacity > 0) {
+            fadeTarget.style.opacity -= 0.1;
+            document.querySelector(
+              ".menu"
+            ).style.filter -= `brightness(${0.1})`;
+            document.querySelector(".menu").style.filter = "brightness(1)";
+          } else {
+            clearInterval(fadeEffect);
+          }
+        }, 150);
+      }
+      document
+        .querySelector(".errorPayment")
+        .addEventListener(
+          "transitionend",
+          () => (document.querySelector(".errorPayment").style.display = "none")
+        );
+      document
+        .querySelector(".errorPayment")
+        .addEventListener("click", fadeOutEffect);
     });
 
   //! Checkout kısmına geçildiğinde Make Payment butonunun oluşması için gereken style eklemeleri
