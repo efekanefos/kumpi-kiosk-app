@@ -744,12 +744,14 @@ function addCustomize(event) {
   IngridientsList.innerHTML = IngridientsItems;
 
   /* Butonları ayarlama kısmı */
-  let customizeFullBtn = document.querySelectorAll(".customizeSection  li div");
+  let customizeFullBtn = document.querySelectorAll(".customizeSection  li");
   customizeFullBtn.forEach((el) => {
+    console.log(el);
     el.addEventListener("click", function (e) {
-      el.classList.toggle("empty");
+      el.children[0].classList.toggle("empty");
 
-      let newIndexName = e.target.id;
+      let newIndexName = e.target.children[0].id;
+      console.log(newIndexName);
       let lastItem = IngridientsArray.indexOf(newIndexName);
       if (IngridientsArray.includes(newIndexName)) {
         if (lastItem > -1) {
