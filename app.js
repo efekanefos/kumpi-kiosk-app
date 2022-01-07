@@ -399,7 +399,7 @@ function addBasket(event) {
   /* cartSection__Btns aşağı insin diye */
 
   /* basket kısmının görünür hale getirilmesi */
-  basket.style.transform = "translateX(0%)";
+  basket.style.right = "0rem";
 
   /* her addBaket butonuna basıldığında sepetteki item sayısının artması */
   itemCount++;
@@ -627,7 +627,7 @@ function addBasket(event) {
 
 /* basket kısmını kapatmamızı sağlayan closeIcon fonskiyonu*/
 basket__closeIcon.addEventListener("click", function () {
-  basket.style.transform = "translateX(150%)";
+  basket.style.right = "-60rem";
   menu__heading.textContent = `Kumpi Menu`;
 });
 
@@ -2408,7 +2408,7 @@ function addCustomize(event) {
     menu__cart__itemCount.textContent = newArr.length;
 
     /* basket kısmının görünür hale getirilmesi */
-    basket.style.transform = "translateX(0%)";
+    basket.style.right = "0rem";
 
     /* her addBaket butonuna basıldığında sepetteki item sayısının artması */
     itemCount++;
@@ -2423,7 +2423,7 @@ const menuCartDom = document.querySelector(".menu__cart");
 
 //! PAZAR ARABASI İKONUNA BASILMASIYLA BASKET KISMININ GÖRÜNÜR HALE GELMESİ
 menuCartDom.addEventListener("click", function () {
-  document.querySelector(".basket").style.transform = "translateX(0%)";
+  document.querySelector(".basket").style.right = "0rem";
 });
 
 let paymentStatus = false;
@@ -2447,7 +2447,7 @@ checkoutBtnDom.addEventListener("click", function (e) {
   document.querySelector(".basket__itemList__checkoutDiv").style.bottom =
     "4rem";
   document.querySelector(".basket__itemList__checkoutDiv").style.left =
-    "-60rem";
+    "-39.5rem";
 
   checkoutBtnDom.style.width = "45rem";
   menuCartDom.style.display = "none";
@@ -2588,7 +2588,7 @@ checkoutBtnDom.addEventListener("click", function (e) {
   //! sepetten getirdiğimiz ürünleri yerleştirdik.
   document.querySelector(".shop__menu").style.display = "none";
   document.querySelector(".shop__products").style.display = "none";
-  basket.style.transform = "translateX(150%)";
+  basket.style.right = "-60rem";
 
   //! Ödeme kısmından Ana Sayfaya ulaşmamızı sağlayan CLOSE butonu
   document
