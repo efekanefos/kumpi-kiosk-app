@@ -2459,7 +2459,7 @@ checkoutBtnDom.addEventListener("click", function (e) {
     if (paymentStatus) {
       document.querySelector(".menu").style.filter = "brightness(0.5)";
       document.querySelector(".successPayment").style.filter = "brightness(1)";
-      document.querySelector(".successPayment").style.bottom = "40%";
+      document.querySelector(".successPayment").style.bottom = "25%";
       document.querySelector(".successPayment").style.left = "50%";
       document.querySelector(".successPayment").style.transform =
         "translate(-50%, -50%)";
@@ -2476,6 +2476,7 @@ checkoutBtnDom.addEventListener("click", function (e) {
   }
 
   //! Ödeme Başarılı div'ine tıklanırsa ortadan kaybolsun
+  /*
   document
     .querySelector(".successPayment")
     .addEventListener("click", function () {
@@ -2485,6 +2486,7 @@ checkoutBtnDom.addEventListener("click", function (e) {
       document.querySelector(".successPayment").style.transform =
         "translate(-50%, -50%)";
     });
+    */
 
   //! Ödeme Başarısız div'ine tıklanırsa ortadan kaybolsun
 
@@ -2497,39 +2499,6 @@ checkoutBtnDom.addEventListener("click", function (e) {
       document.querySelector(".errorPayment").style.transform =
         "translate(-50%, -50%)";
     });
-
-  /*
-  document
-    .querySelector(".errorPayment__cancelOrderBtn")
-    .addEventListener("click", function () {
-      function fadeOutEffect() {
-        var fadeTarget = document.querySelector(".errorPayment");
-        var fadeEffect = setInterval(function () {
-          if (!fadeTarget.style.opacity) {
-            fadeTarget.style.opacity = 1;
-          }
-          if (fadeTarget.style.opacity > 0) {
-            fadeTarget.style.opacity -= 0.1;
-            document.querySelector(
-              ".menu"
-            ).style.filter -= `brightness(${0.1})`;
-            document.querySelector(".menu").style.filter = "brightness(1)";
-          } else {
-            clearInterval(fadeEffect);
-          }
-        }, 150);
-      }
-      document
-        .querySelector(".errorPayment")
-        .addEventListener(
-          "transitionend",
-          () => (document.querySelector(".errorPayment").style.display = "none")
-        );
-      document
-        .querySelector(".errorPayment")
-        .addEventListener("click", fadeOutEffect);
-    });
-    */
 
   //! Checkout kısmına geçildiğinde Make Payment butonunun oluşması için gereken style eklemeleri
   checkoutBtnDom.textContent = `Make Payment`;
