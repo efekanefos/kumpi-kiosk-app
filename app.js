@@ -381,6 +381,8 @@ let itemCount = parseInt(menu__cart__itemCount.innerText);
 let itemArray = [];
 
 function addBasket(event) {
+  itemArray.push(event.target.parentNode.parentNode.children[1].innerText);
+  console.log(itemArray);
   let productCount = 1;
 
   menu__heading.textContent = `Basket`;
@@ -2430,10 +2432,12 @@ let paymentStatus = false;
 //! BASKET KISMINDAKİ CHECKOUT BUTONUNA BASILDIĞINDA GERÇEKLEŞECEKLER
 checkoutBtnDom.addEventListener("click", function (e) {
   if (newArr.length > 0) {
-    document.querySelector(".basket__itemList--removeItemIcon").style.right =
-      "0px";
-    document.querySelector(".basket__itemList--removeItemIcon").style.left =
-      "unset";
+    document
+      .querySelectorAll(".basket__itemList--removeItemIcon")
+      .forEach(function (item) {
+        item.style.right = "0px";
+        item.style.left = "unset";
+      });
   }
 
   document.querySelector(".errorPayment").style.opacity = "1";
@@ -2441,7 +2445,7 @@ checkoutBtnDom.addEventListener("click", function (e) {
 
   basket__itemList.classList.replace("basket__itemList", "checkout__itemList");
   document.querySelector(".basket__itemList__checkoutDiv").style.bottom =
-    "0rem";
+    "4rem";
   document.querySelector(".basket__itemList__checkoutDiv").style.left =
     "-60rem";
 
@@ -2480,23 +2484,21 @@ checkoutBtnDom.addEventListener("click", function (e) {
       document.querySelector(".successPayment").style.left = "50%";
       document.querySelector(".successPayment").style.transform =
         "translate(-50%, -50%)";
-      document.querySelector(".successPayment").style.transform += "scale(0)";
     });
 
   //! Ödeme Başarısız div'ine tıklanırsa ortadan kaybolsun
-  /*
+
   document
-    .querySelector(".errorPayment")
+    .querySelector(".errorPayment__cancelOrderBtn")
     .addEventListener("click", function () {
       document.querySelector(".menu").style.filter = "brightness(1)";
-      document.querySelector(".errorPayment").style.bottom = "-60%";
+      document.querySelector(".errorPayment").style.bottom = "100%";
       document.querySelector(".errorPayment").style.left = "50%";
       document.querySelector(".errorPayment").style.transform =
         "translate(-50%, -50%)";
-      document.querySelector(".errorPayment").style.transform += "scale(0)";
     });
-    */
 
+  /*
   document
     .querySelector(".errorPayment__cancelOrderBtn")
     .addEventListener("click", function () {
@@ -2527,6 +2529,7 @@ checkoutBtnDom.addEventListener("click", function (e) {
         .querySelector(".errorPayment")
         .addEventListener("click", fadeOutEffect);
     });
+    */
 
   //! Checkout kısmına geçildiğinde Make Payment butonunun oluşması için gereken style eklemeleri
   checkoutBtnDom.textContent = `Make Payment`;
@@ -2592,11 +2595,12 @@ checkoutBtnDom.addEventListener("click", function (e) {
     .querySelector(".checkoutCloseBtnDiv")
     .addEventListener("click", function () {
       if (newArr.length > 0) {
-        document.querySelector(
-          ".basket__itemList--removeItemIcon"
-        ).style.right = "unset";
-        document.querySelector(".basket__itemList--removeItemIcon").style.left =
-          "0px";
+        document
+          .querySelectorAll(".basket__itemList--removeItemIcon")
+          .forEach(function (item) {
+            item.style.right = "unset";
+            item.style.left = "0px";
+          });
       }
 
       document.querySelector(".basket__itemList__checkoutDiv").style.bottom =
