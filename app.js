@@ -2426,7 +2426,7 @@ menuCartDom.addEventListener("click", function () {
   document.querySelector(".basket").style.right = "0rem";
 });
 
-let paymentStatus = false;
+let paymentStatus = true;
 //! ÖDEMENİN YAPILIP YAPILAMADIĞINI BELİRTEN BOOLEAN CİNSİNDEN DEĞERE SAHİP DEĞİŞKEN
 
 //! BASKET KISMINDAKİ CHECKOUT BUTONUNA BASILDIĞINDA GERÇEKLEŞECEKLER
