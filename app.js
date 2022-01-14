@@ -22,19 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
   loadNow(2);
 });
 
-/* Menu List */
-
-const list = document.querySelector(".shop__menuList");
-
-list.addEventListener("click", activeFunction);
-
-function activeFunction(event) {
-  //* .active class'ına sahip olan elementi bul ve ondaki active class'ını sil!
-  document.querySelector(".active").classList.remove("active");
-  //* üzerine tıklanmış olan elemente .active class'ını ekle!
-  event.target.classList.add("active");
-}
-
 //? Ürünlerin bilgilerini içeren Array'in başlangıcı
 
 const meals = [
@@ -283,6 +270,35 @@ const menu__heading = document.querySelector(".menu__heading");
 let newArr = [];
 //? Her yeni ürün eklendiğinde toplam fiyatın hesaplanması için eklenen ürünlerin fiyatlarının toplandığı Array
 
+fetch("https://wizioapi.com/touchscreen/kumpi/public/getCategories")
+  .then((response) => response.json())
+  .then((data) => {
+    let html = "";
+    data.forEach(function (item) {
+      let htmlSegment = `
+      <li class="shop__menuListItem">
+              <span id=${item.id} class="shop__listText">${item.name}</span>
+            </li>
+      `;
+      html += htmlSegment;
+    });
+
+    document.querySelector(".shop__menuList").innerHTML = html;
+    list.children[0].classList.add("active");
+  });
+/* Menu List */
+
+const list = document.querySelector(".shop__menuList");
+
+list.addEventListener("click", activeFunction);
+
+function activeFunction(event) {
+  //* .active class'ına sahip olan elementi bul ve ondaki active class'ını sil!
+  document.querySelector(".active").classList.remove("active");
+  //* üzerine tıklanmış olan elemente .active class'ını ekle!
+  event.target.classList.add("active");
+}
+/*
 shop__productSection.innerHTML = meals
   .map(function (item) {
     return `
@@ -295,6 +311,37 @@ shop__productSection.innerHTML = meals
   `;
   })
   .join("");
+  */
+fetch(
+  "https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/T3EBX67GHEACO7F4L3BD5363"
+)
+  .then((response) => response.json())
+  .then((data) => {
+    let card = "";
+    data.forEach(function (item) {
+      let cardSegment = `
+      <div id=${item.id} class="shop__productSection--card">
+  <img class="shop__productSection--image" src="${item.imageUrl}" />
+  <h1 class="shop__productSection--cardHeading">${item.name}</h1>
+  <p class="shop__productSection--cardParag">${item.description}</p>
+  <p class="shop__productSection--cardPrice">&#8356;${
+    item.price / (100).toFixed(2).slice(0, -3)
+  }</p>
+  
+  </div>
+      `;
+      card += cardSegment;
+    });
+
+    //shop__productSection.innerHTML = card;
+    if (shop__productSection.children.length < 0) {
+      shop__productSection.innerHTML = "efe";
+    } else {
+      shop__productSection.innerHTML = card;
+    }
+    console.log(shop__productSection.children.length);
+  });
+
 //! Ürünler Arrayîndeki verileri kullanarak grid yapısında ürünlerimizi sıraladık.
 
 //? Ürüne tıkladığımızda gelen seçim ekranın kapanmasını sağlayan ikonun fonksiyonu
