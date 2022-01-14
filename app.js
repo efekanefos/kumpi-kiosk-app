@@ -100,7 +100,9 @@ fetch(
       <div id=${item.id} class="shop__productSection--card">
   <img class="shop__productSection--image" src="${item.imageUrl}" />
   <h1 class="shop__productSection--cardHeading">${item.name}</h1>
-  <p class="shop__productSection--cardParag">${item.description}</p>
+  <p class="shop__productSection--cardParag">${
+    item.description === null ? "No Description" : item.description
+  }</p>
   <p class="shop__productSection--cardPrice">&#8356;${
     item.price / (100).toFixed(2).slice(0, -3)
   }</p>

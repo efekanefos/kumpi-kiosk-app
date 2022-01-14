@@ -172,7 +172,8 @@ html {
   overflow-x: hidden;
   max-height: 92rem;
   padding: 1rem;
-  grid-gap: 0rem;
+  grid-gap: 1.5rem;
+  grid-gap-columns: 0rem;
   margin-top: 1rem;
   padding-top: 0rem;
 }
@@ -219,7 +220,7 @@ html {
 .shop__productSection--card {
   pointer-events: none;
   padding: 1rem;
-  height: 90%;
+  height: 95%;
   margin: 1rem;
   -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
           box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -241,7 +242,7 @@ html {
   text-align: center;
   width: 100%;
   /*width: 284px; */
-  height: auto;
+  height: 40%;
   /* height: 147px; */
 }
 
@@ -1136,6 +1137,7 @@ html {
   display: flex;
   -ms-flex-item-align: start;
       align-self: flex-start;
+  width: 30%;
 }
 
 .successPayment {
