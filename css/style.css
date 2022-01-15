@@ -1043,6 +1043,10 @@ html {
   margin-top: 10rem;
 }
 
+.MainItemDiv__ItemImg {
+  width: 20% !important;
+}
+
 .MainItemDiv__ItemParag {
   color: #8a959e;
   width: 100%;

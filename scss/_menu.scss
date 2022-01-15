@@ -687,6 +687,9 @@ html {
 
 .MainItemDiv {
   margin-top: 10rem;
+  &__ItemImg {
+    width: 20% !important;
+  }
   &__ItemParag {
     color: #8a959e;
     width: 100%;
