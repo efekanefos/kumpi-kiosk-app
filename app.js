@@ -583,7 +583,13 @@ function addCustomize(event) {
         event.target.parentNode.parentNode.children[3].innerText.substring(1)
       ) * 100;
     var isCustomized = (ModifierArray.length = 0 ? false : true);
-    var modifiers = [];
+    var modifiers = {
+      id: ModifierArray,
+      name: ModifierNameArray,
+      price: ModifierPriceArray,
+      totalPrice: ModifierTotalPriceArray,
+      quantity: 1,
+    };
 
     var itemObject = {
       id: id,
@@ -594,19 +600,9 @@ function addCustomize(event) {
       isCustomized: isCustomized,
       modifiers: modifiers,
     };
-    /*
-    var modifierObject = {
-      id: id,
-      name: name,
-      price: price,
-      quantity: quantity,
-      totalPrice: totalPrice,
-      isCustomized: isCustomized,
-      modifiers: modifiers,
-    };
-    */
 
     cart.push(itemObject);
+
     console.log("cart:", cart);
   }
 
@@ -656,6 +652,9 @@ function addCustomize(event) {
 
   //! ana modifier arrayi
   let ModifierArray = [];
+  let ModifierNameArray = [];
+  let ModifierPriceArray = [];
+  let ModifierTotalPriceArray = [];
 
   fetch(
     `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/${
@@ -692,16 +691,59 @@ function addCustomize(event) {
       customizeFullBtn.forEach((el) => {
         el.addEventListener("click", function (e) {
           el.children[0].classList.toggle("empty");
+          //console.log(e.target.parentNode.children[2].innerText);
+          var newIndexId = e.target.id;
+          var newIndexName = e.target.parentNode.children[1].innerText;
+          var newIndexPrice =
+            e.target.parentNode.children[2].innerText.substring(2);
 
-          let newIndexName = e.target.id;
+          var newIndexTotalPrice =
+            e.target.parentNode.children[2].innerText.substring(2);
 
-          let lastItem = ModifierArray.indexOf(newIndexName);
-          if (ModifierArray.includes(newIndexName)) {
-            if (lastItem > -1) {
-              ModifierArray.splice(lastItem, 1);
+          let lastItemId = ModifierArray.indexOf(newIndexId);
+          let lastItemName = ModifierNameArray.indexOf(newIndexName);
+          let lastItemPrice = ModifierPriceArray.indexOf(newIndexPrice);
+          let lastItemTotalPrice =
+            ModifierTotalPriceArray.indexOf(newIndexTotalPrice);
+
+          if (ModifierArray.includes(newIndexId)) {
+            if (lastItemId > -1) {
+              ModifierArray.splice(lastItemId, 1);
+              console.log(ModifierArray);
             }
           } else {
-            ModifierArray.push(newIndexName);
+            ModifierArray.push(newIndexId);
+            console.log(ModifierArray);
+          }
+          /* */
+          if (ModifierNameArray.includes(newIndexName)) {
+            if (lastItemName > -1) {
+              ModifierNameArray.splice(lastItemName, 1);
+              console.log(ModifierNameArray);
+            }
+          } else {
+            ModifierNameArray.push(newIndexName);
+            console.log(ModifierNameArray);
+          }
+          /* */
+          if (ModifierPriceArray.includes(newIndexPrice)) {
+            if (lastItemPrice > -1) {
+              ModifierPriceArray.splice(lastItemPrice, 1);
+              console.log(ModifierPriceArray);
+            }
+          } else {
+            ModifierPriceArray.push(newIndexPrice);
+            console.log(ModifierPriceArray);
+          }
+          /* */
+          if (ModifierTotalPriceArray.includes(newIndexTotalPrice)) {
+            if (lastItemTotalPrice > -1) {
+              ModifierTotalPriceArray.splice(lastItemTotalPrice, 1);
+              console.log(ModifierTotalPriceArray);
+            }
+          } else {
+            ModifierTotalPriceArray.push(newIndexTotalPrice);
+            console.log(ModifierTotalPriceArray);
           }
         });
       });
@@ -874,17 +916,75 @@ function addCustomize(event) {
       customizeFullBtn.forEach((el) => {
         el.addEventListener("click", function (e) {
           el.children[0].classList.toggle("empty");
+          /*
+          var newIndexName = {
+            id: e.target.parentNode.id,
+            name: e.target.parentNode.children[1].innerText,
+            price:
+              parseFloat(
+                e.target.parentNode.children[2].innerText.substring(2)
+              ) * 100,
+            quantity: 1,
+            totalPrice:
+              parseFloat(
+                e.target.parentNode.children[2].innerText.substring(2)
+              ) * 100,
+          };
+           let ModifierArray = [];
+  let ModifierNameArray = [];
+  let ModifierPriceArray = [];
+  let ModifierTotalPriceArray = [];
+          */
 
-          let newIndexName = e.target.id;
-          console.log(newIndexName);
+          var newIndexId = e.target.id;
+          var newIndexName = e.target.parentNode.children[1].innerText;
+          var newIndexPrice =
+            parseFloat(e.target.parentNode.children[2].innerText.substring(2)) *
+            100;
+          var newIndexTotalPrice =
+            parseFloat(e.target.parentNode.children[2].innerText.substring(2)) *
+            100;
 
-          let lastItem = ModifierArray.indexOf(newIndexName);
-          if (ModifierArray.includes(newIndexName)) {
-            if (lastItem > -1) {
-              ModifierArray.splice(lastItem, 1);
+          let lastItemId = ModifierArray.indexOf(newIndexId);
+          let lastItemName = ModifierNameArray.indexOf(newIndexName);
+          let lastItemPrice = ModifierPriceArray.indexOf(newIndexPrice);
+          let lastItemTotalPrice =
+            ModifierTotalPriceArray.indexOf(newIndexTotalPrice);
+
+          if (ModifierArray.includes(newIndexId)) {
+            if (lastItemId > -1) {
+              ModifierArray.splice(lastItemId, 1);
+              console.log(ModifierArray);
             }
           } else {
-            ModifierArray.push(newIndexName);
+            ModifierArray.push(newIndexId);
+            console.log(ModifierArray);
+          }
+          /* */
+          if (ModifierNameArray.includes(newIndexName)) {
+            if (lastItemName > -1) {
+              ModifierNameArray.splice(lastItemName, 1);
+              console.log(ModifierNameArray);
+            }
+          } else {
+            ModifierNameArray.push(newIndexName);
+            console.log(ModifierNameArray);
+          }
+          /* */
+          if (ModifierPriceArray.includes(newIndexPrice)) {
+            if (lastItemPrice > -1) {
+              ModifierPriceArray.splice(lastItemPrice, 1);
+            }
+          } else {
+            ModifierPriceArray.push(newIndexName);
+          }
+          /* */
+          if (ModifierTotalPriceArray.includes(newIndexTotalPrice)) {
+            if (lastItemTotalPrice > -1) {
+              ModifierTotalPriceArray.splice(lastItemTotalPrice, 1);
+            }
+          } else {
+            ModifierTotalPriceArray.push(newIndexName);
           }
         });
       });
@@ -930,16 +1030,55 @@ function addCustomize(event) {
         el.addEventListener("click", function (e) {
           el.children[0].classList.toggle("empty");
 
-          let newIndexName = e.target.id;
-          console.log(newIndexName);
+          var newIndexId = e.target.id;
+          var newIndexName = e.target.parentNode.children[1].innerText;
+          var newIndexPrice =
+            parseFloat(e.target.parentNode.children[2].innerText.substring(2)) *
+            100;
+          var newIndexTotalPrice =
+            parseFloat(e.target.parentNode.children[2].innerText.substring(2)) *
+            100;
 
-          let lastItem = ModifierArray.indexOf(newIndexName);
-          if (ModifierArray.includes(newIndexName)) {
-            if (lastItem > -1) {
-              ModifierArray.splice(lastItem, 1);
+          let lastItemId = ModifierArray.indexOf(newIndexId);
+          let lastItemName = ModifierNameArray.indexOf(newIndexName);
+          let lastItemPrice = ModifierPriceArray.indexOf(newIndexPrice);
+          let lastItemTotalPrice =
+            ModifierTotalPriceArray.indexOf(newIndexTotalPrice);
+
+          if (ModifierArray.includes(newIndexId)) {
+            if (lastItemId > -1) {
+              ModifierArray.splice(lastItemId, 1);
+              console.log(ModifierArray);
             }
           } else {
-            ModifierArray.push(newIndexName);
+            ModifierArray.push(newIndexId);
+            console.log(ModifierArray);
+          }
+          /* */
+          if (ModifierNameArray.includes(newIndexName)) {
+            if (lastItemName > -1) {
+              ModifierNameArray.splice(lastItemName, 1);
+              console.log(ModifierNameArray);
+            }
+          } else {
+            ModifierNameArray.push(newIndexName);
+            console.log(ModifierNameArray);
+          }
+          /* */
+          if (ModifierPriceArray.includes(newIndexPrice)) {
+            if (lastItemPrice > -1) {
+              ModifierPriceArray.splice(lastItemPrice, 1);
+            }
+          } else {
+            ModifierPriceArray.push(newIndexName);
+          }
+          /* */
+          if (ModifierTotalPriceArray.includes(newIndexTotalPrice)) {
+            if (lastItemTotalPrice > -1) {
+              ModifierTotalPriceArray.splice(lastItemTotalPrice, 1);
+            }
+          } else {
+            ModifierTotalPriceArray.push(newIndexName);
           }
         });
       });
@@ -989,16 +1128,55 @@ function addCustomize(event) {
         el.addEventListener("click", function (e) {
           el.children[0].classList.toggle("empty");
 
-          let newIndexName = e.target.id;
-          console.log(newIndexName);
+          var newIndexId = e.target.id;
+          var newIndexName = e.target.parentNode.children[1].innerText;
+          var newIndexPrice =
+            parseFloat(e.target.parentNode.children[2].innerText.substring(2)) *
+            100;
+          var newIndexTotalPrice =
+            parseFloat(e.target.parentNode.children[2].innerText.substring(2)) *
+            100;
 
-          let lastItem = ModifierArray.indexOf(newIndexName);
-          if (ModifierArray.includes(newIndexName)) {
-            if (lastItem > -1) {
-              ModifierArray.splice(lastItem, 1);
+          let lastItemId = ModifierArray.indexOf(newIndexId);
+          let lastItemName = ModifierNameArray.indexOf(newIndexName);
+          let lastItemPrice = ModifierPriceArray.indexOf(newIndexPrice);
+          let lastItemTotalPrice =
+            ModifierTotalPriceArray.indexOf(newIndexTotalPrice);
+
+          if (ModifierArray.includes(newIndexId)) {
+            if (lastItemId > -1) {
+              ModifierArray.splice(lastItemId, 1);
+              console.log(ModifierArray);
             }
           } else {
-            ModifierArray.push(newIndexName);
+            ModifierArray.push(newIndexId);
+            console.log(ModifierArray);
+          }
+          /* */
+          if (ModifierNameArray.includes(newIndexName)) {
+            if (lastItemName > -1) {
+              ModifierNameArray.splice(lastItemName, 1);
+              console.log(ModifierNameArray);
+            }
+          } else {
+            ModifierNameArray.push(newIndexName);
+            console.log(ModifierNameArray);
+          }
+          /* */
+          if (ModifierPriceArray.includes(newIndexPrice)) {
+            if (lastItemPrice > -1) {
+              ModifierPriceArray.splice(lastItemPrice, 1);
+            }
+          } else {
+            ModifierPriceArray.push(newIndexName);
+          }
+          /* */
+          if (ModifierTotalPriceArray.includes(newIndexTotalPrice)) {
+            if (lastItemTotalPrice > -1) {
+              ModifierTotalPriceArray.splice(lastItemTotalPrice, 1);
+            }
+          } else {
+            ModifierTotalPriceArray.push(newIndexName);
           }
         });
       });
@@ -1044,16 +1222,55 @@ function addCustomize(event) {
         el.addEventListener("click", function (e) {
           el.children[0].classList.toggle("empty");
 
-          let newIndexName = e.target.id;
-          console.log(newIndexName);
+          var newIndexId = e.target.id;
+          var newIndexName = e.target.parentNode.children[1].innerText;
+          var newIndexPrice =
+            parseFloat(e.target.parentNode.children[2].innerText.substring(2)) *
+            100;
+          var newIndexTotalPrice =
+            parseFloat(e.target.parentNode.children[2].innerText.substring(2)) *
+            100;
 
-          let lastItem = ModifierArray.indexOf(newIndexName);
-          if (ModifierArray.includes(newIndexName)) {
-            if (lastItem > -1) {
-              ModifierArray.splice(lastItem, 1);
+          let lastItemId = ModifierArray.indexOf(newIndexId);
+          let lastItemName = ModifierNameArray.indexOf(newIndexName);
+          let lastItemPrice = ModifierPriceArray.indexOf(newIndexPrice);
+          let lastItemTotalPrice =
+            ModifierTotalPriceArray.indexOf(newIndexTotalPrice);
+
+          if (ModifierArray.includes(newIndexId)) {
+            if (lastItemId > -1) {
+              ModifierArray.splice(lastItemId, 1);
+              console.log(ModifierArray);
             }
           } else {
-            ModifierArray.push(newIndexName);
+            ModifierArray.push(newIndexId);
+            console.log(ModifierArray);
+          }
+          /* */
+          if (ModifierNameArray.includes(newIndexName)) {
+            if (lastItemName > -1) {
+              ModifierNameArray.splice(lastItemName, 1);
+              console.log(ModifierNameArray);
+            }
+          } else {
+            ModifierNameArray.push(newIndexName);
+            console.log(ModifierNameArray);
+          }
+          /* */
+          if (ModifierPriceArray.includes(newIndexPrice)) {
+            if (lastItemPrice > -1) {
+              ModifierPriceArray.splice(lastItemPrice, 1);
+            }
+          } else {
+            ModifierPriceArray.push(newIndexName);
+          }
+          /* */
+          if (ModifierTotalPriceArray.includes(newIndexTotalPrice)) {
+            if (lastItemTotalPrice > -1) {
+              ModifierTotalPriceArray.splice(lastItemTotalPrice, 1);
+            }
+          } else {
+            ModifierTotalPriceArray.push(newIndexName);
           }
         });
       });
@@ -1099,16 +1316,55 @@ function addCustomize(event) {
         el.addEventListener("click", function (e) {
           el.children[0].classList.toggle("empty");
 
-          let newIndexName = e.target.id;
-          console.log(newIndexName);
+          var newIndexId = e.target.id;
+          var newIndexName = e.target.parentNode.children[1].innerText;
+          var newIndexPrice =
+            parseFloat(e.target.parentNode.children[2].innerText.substring(2)) *
+            100;
+          var newIndexTotalPrice =
+            parseFloat(e.target.parentNode.children[2].innerText.substring(2)) *
+            100;
 
-          let lastItem = ModifierArray.indexOf(newIndexName);
-          if (ModifierArray.includes(newIndexName)) {
-            if (lastItem > -1) {
-              ModifierArray.splice(lastItem, 1);
+          let lastItemId = ModifierArray.indexOf(newIndexId);
+          let lastItemName = ModifierNameArray.indexOf(newIndexName);
+          let lastItemPrice = ModifierPriceArray.indexOf(newIndexPrice);
+          let lastItemTotalPrice =
+            ModifierTotalPriceArray.indexOf(newIndexTotalPrice);
+
+          if (ModifierArray.includes(newIndexId)) {
+            if (lastItemId > -1) {
+              ModifierArray.splice(lastItemId, 1);
+              console.log(ModifierArray);
             }
           } else {
-            ModifierArray.push(newIndexName);
+            ModifierArray.push(newIndexId);
+            console.log(ModifierArray);
+          }
+          /* */
+          if (ModifierNameArray.includes(newIndexName)) {
+            if (lastItemName > -1) {
+              ModifierNameArray.splice(lastItemName, 1);
+              console.log(ModifierNameArray);
+            }
+          } else {
+            ModifierNameArray.push(newIndexName);
+            console.log(ModifierNameArray);
+          }
+          /* */
+          if (ModifierPriceArray.includes(newIndexPrice)) {
+            if (lastItemPrice > -1) {
+              ModifierPriceArray.splice(lastItemPrice, 1);
+            }
+          } else {
+            ModifierPriceArray.push(newIndexName);
+          }
+          /* */
+          if (ModifierTotalPriceArray.includes(newIndexTotalPrice)) {
+            if (lastItemTotalPrice > -1) {
+              ModifierTotalPriceArray.splice(lastItemTotalPrice, 1);
+            }
+          } else {
+            ModifierTotalPriceArray.push(newIndexName);
           }
         });
       });
@@ -1129,8 +1385,10 @@ function addCustomize(event) {
   let checkOutDOM = document.querySelector(".MainItemDiv__AddBasketBtn");
   checkOutDOM.addEventListener("click", function (event) {
     getItemInput(event);
-    console.log(ModifierArray);
-    console.log(event.target.parentNode.parentNode.children);
+
+    console.log(cart);
+    //console.log(ModifierArray);
+    //console.log(event.target.parentNode.parentNode.children);
     menu__heading.textContent = `Basket`;
     let ExtraProteinTotalPrice = 0;
 
