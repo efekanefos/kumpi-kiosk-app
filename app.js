@@ -78,11 +78,13 @@ document.addEventListener("DOMContentLoaded", function () {
       let card = "";
       data.forEach(function (item) {
         let cardSegment = `
-        <div id=${item.id} class="shop__productSection--card">
+        <div id=${item.modifierLists[0].id} class="shop__productSection--card">
     <img id="OPAKOQNIBN6EO34HYL4YXKNI" class="shop__productSection--image" src="${
       item.imageUrl
     }" />
-    <h1 class="shop__productSection--cardHeading">${item.name}</h1>
+    <h1 id=${item.id} class="shop__productSection--cardHeading">${
+          item.name
+        }</h1>
     <p class="shop__productSection--cardParag">${
       item.description === null ? "No Description" : item.description
     }</p>
@@ -213,13 +215,13 @@ ettiğimiz kısım */
         .children[0]
     );
 */
-    console.log(event.target.parentNode.children[0]);
+    console.log(event.target.parentNode.children[1].id);
 
     /* seçilen item'ın verilerini cartSection üzerinde display ediyoruz. */
     cartSection.innerHTML = `
 <img class="cartSection__Img" id=${event.target.parentNode.children[0].id} src="${event.target.parentNode.children[0].src}"/>
 <h1 id=${event.target.parentNode.id} class="cartSection__Heading">${event.target.parentNode.children[1].textContent}</h1>
-<p class="cartSection__Ingridients">${event.target.parentNode.children[2].textContent}</p>
+<p id=${event.target.parentNode.children[1].id} class="cartSection__Ingridients">${event.target.parentNode.children[2].textContent}</p>
 <h3 class="cartSection__Price">${event.target.parentNode.children[3].textContent}</h3>
 <div class="cartSection__Btns">
           <a class="cartSection__leftBtn" href="#">Customize</a>
@@ -239,24 +241,17 @@ ettiğimiz kısım */
   cartSection__leftBtn.addEventListener("click", addCustomize);
   cartSection__leftBtn.style.transform = "translateX(0%)";
   cartSection__rightBtn.style.transform = "translateX(0%)";
-  // Finish doing things after the pause
-  /* Add Basket(rightBtn) butonuna tıklanırsa addBasket fonksiyonu çalışsın */
-  /* Add Customize(leftBtn) butonuna tıklanırsa addCustomize fonksiyonu çalışsın */
-  /*
-  function continueExecution() {
-    
-  }
-  setTimeout(continueExecution, 3000); // Wait ten seconds before continuing
-  */
 }
 
 /* sepetteki item sayısını integer cinsine çavirip siteden başta alıyoruz. */
 let itemCount = parseInt(menu__cart__itemCount.innerText);
-let itemArray = [];
+//let itemArray = [];
+let cart = [];
+/* cart array'i oluştu. */
 
 function addBasket(event) {
-  itemArray.push(event.target.parentNode.parentNode.children[1].innerText);
-  console.log(itemArray);
+  //itemArray.push(event.target.parentNode.parentNode.children[1].innerText);
+  console.log(event.target.parentNode.parentNode.children);
   let productCount = 1;
 
   menu__heading.textContent = `Basket`;
@@ -265,11 +260,7 @@ function addBasket(event) {
   cartSection.style.transform = "translateY(100%)";
   cartSection__closeIcon.style.transform = "translateY(-300%)";
   cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
-  /*
-  cartSection__leftBtn.style.transform = "translateX(-300%)";
-  cartSection__rightBtn.style.transform = "translateX(300%)";
-  cartSection__Btns.style.transform = "translateY(300%)";
-  */
+
   /* cartSection__Btns aşağı insin diye */
 
   /* basket kısmının görünür hale getirilmesi */
@@ -280,6 +271,38 @@ function addBasket(event) {
 
   /* ui tarafında bu sayının güncellenmesi */
   menu__cart__itemCount.textContent = newArr.length;
+
+  function getItemInput(event) {
+    event.preventDefault();
+    // basket'a ekleme yapıldığı anda ürünün verilerini çekiyoruz.
+    var id = event.target.parentNode.parentNode.children[2].id;
+    var name = event.target.parentNode.parentNode.children[1].innerText;
+    var price =
+      parseFloat(
+        event.target.parentNode.parentNode.children[3].innerText.substring(1)
+      ) * 100;
+    var quantity = 1;
+    var totalPrice =
+      parseFloat(
+        event.target.parentNode.parentNode.children[3].innerText.substring(1)
+      ) * 100;
+    var isCustomized = false;
+    var modifiers = [];
+
+    var itemObject = {
+      id: id,
+      name: name,
+      price: price,
+      quantity: quantity,
+      totalPrice: totalPrice,
+      isCustomized: isCustomized,
+      modifiers: modifiers,
+    };
+
+    cart.push(itemObject);
+    console.log("cart:", cart);
+  }
+  getItemInput(event);
 
   /* her bir eklenen item için card yapısı oluşturma */
 
