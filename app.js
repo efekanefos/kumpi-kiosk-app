@@ -568,6 +568,48 @@ function addCustomize(event) {
     event.target.parentNode.parentNode.children[3].textContent.slice(1, 5)
   );
 
+  function getItemInput(event) {
+    event.preventDefault();
+    // basket'a ekleme yapıldığı anda ürünün verilerini çekiyoruz.
+    var id = event.target.parentNode.parentNode.children[2].id;
+    var name = event.target.parentNode.parentNode.children[1].innerText;
+    var price =
+      parseFloat(
+        event.target.parentNode.parentNode.children[3].innerText.substring(1)
+      ) * 100;
+    var quantity = 1;
+    var totalPrice =
+      parseFloat(
+        event.target.parentNode.parentNode.children[3].innerText.substring(1)
+      ) * 100;
+    var isCustomized = (ModifierArray.length = 0 ? false : true);
+    var modifiers = [];
+
+    var itemObject = {
+      id: id,
+      name: name,
+      price: price,
+      quantity: quantity,
+      totalPrice: totalPrice,
+      isCustomized: isCustomized,
+      modifiers: modifiers,
+    };
+    /*
+    var modifierObject = {
+      id: id,
+      name: name,
+      price: price,
+      quantity: quantity,
+      totalPrice: totalPrice,
+      isCustomized: isCustomized,
+      modifiers: modifiers,
+    };
+    */
+
+    cart.push(itemObject);
+    console.log("cart:", cart);
+  }
+
   /* Seçilen Item'ın verileri ana div */
   let MainItemDiv = document.createElement("div");
   MainItemDiv.classList.add("MainItemDiv");
@@ -612,6 +654,9 @@ function addCustomize(event) {
   /* item id'sini alma item'in heading'inde duruyor */
   console.log(event.target.parentNode.parentNode.children[0].id);
 
+  //! ana modifier arrayi
+  let ModifierArray = [];
+
   fetch(
     `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/${
       ""
@@ -640,8 +685,6 @@ function addCustomize(event) {
 
       ExtraProteinList.innerHTML = list;
 
-      let ProteinArray = [];
-
       /* Butonları ayarlama kısmı */
       let customizeFullBtn = document.querySelectorAll(
         ".ExtraProteinDiv__ExtraProteinList li"
@@ -652,13 +695,13 @@ function addCustomize(event) {
 
           let newIndexName = e.target.id;
 
-          let lastItem = ProteinArray.indexOf(newIndexName);
-          if (ProteinArray.includes(newIndexName)) {
+          let lastItem = ModifierArray.indexOf(newIndexName);
+          if (ModifierArray.includes(newIndexName)) {
             if (lastItem > -1) {
-              ProteinArray.splice(lastItem, 1);
+              ModifierArray.splice(lastItem, 1);
             }
           } else {
-            ProteinArray.push(newIndexName);
+            ModifierArray.push(newIndexName);
           }
         });
       });
@@ -754,6 +797,7 @@ function addCustomize(event) {
         MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
           Math.round(newItemPriceFloat * 100) / 100
         ).toFixed(2)}`;
+
         break;
 
       default:
@@ -775,6 +819,7 @@ function addCustomize(event) {
         ExtraSaladDiv.style.transform = "translateY(0%)";
         RemoveHeading.textContent = `Add Extra Protein`;
         RemoveParag.textContent = `Choose up to 3`;
+
         break;
       case `Add Extra Sauce`:
         ExtraProteinDiv.style.transform = "translateY(0%)";
@@ -823,8 +868,6 @@ function addCustomize(event) {
 
       ExtraSaladList.innerHTML = list;
 
-      let MealsArray = [];
-
       let customizeFullBtn = document.querySelectorAll(
         ".ExtraSaladDiv__ExtraSaladList  li"
       );
@@ -834,17 +877,14 @@ function addCustomize(event) {
 
           let newIndexName = e.target.id;
           console.log(newIndexName);
-          console.log(MealsArray);
 
-          let lastItem = MealsArray.indexOf(newIndexName);
-          if (MealsArray.includes(newIndexName)) {
+          let lastItem = ModifierArray.indexOf(newIndexName);
+          if (ModifierArray.includes(newIndexName)) {
             if (lastItem > -1) {
-              MealsArray.splice(lastItem, 1);
-              console.log(MealsArray);
+              ModifierArray.splice(lastItem, 1);
             }
           } else {
-            MealsArray.push(newIndexName);
-            console.log(MealsArray);
+            ModifierArray.push(newIndexName);
           }
         });
       });
@@ -883,8 +923,6 @@ function addCustomize(event) {
 
       ExtraSauceList.innerHTML = list;
 
-      let SauceArray = [];
-
       let customizeFullBtn = document.querySelectorAll(
         ".ExtraSauceDiv__ExtraSauceList  li"
       );
@@ -894,17 +932,14 @@ function addCustomize(event) {
 
           let newIndexName = e.target.id;
           console.log(newIndexName);
-          console.log(SauceArray);
 
-          let lastItem = SauceArray.indexOf(newIndexName);
-          if (SauceArray.includes(newIndexName)) {
+          let lastItem = ModifierArray.indexOf(newIndexName);
+          if (ModifierArray.includes(newIndexName)) {
             if (lastItem > -1) {
-              SauceArray.splice(lastItem, 1);
-              console.log(SauceArray);
+              ModifierArray.splice(lastItem, 1);
             }
           } else {
-            SauceArray.push(newIndexName);
-            console.log(SauceArray);
+            ModifierArray.push(newIndexName);
           }
         });
       });
@@ -947,8 +982,6 @@ function addCustomize(event) {
 
       ExtraDealList.innerHTML = list;
 
-      let DealArray = [];
-
       let customizeFullBtn = document.querySelectorAll(
         ".ExtraDealDiv__ExtraDealList  li"
       );
@@ -958,17 +991,14 @@ function addCustomize(event) {
 
           let newIndexName = e.target.id;
           console.log(newIndexName);
-          console.log(DealArray);
 
-          let lastItem = DealArray.indexOf(newIndexName);
-          if (DealArray.includes(newIndexName)) {
+          let lastItem = ModifierArray.indexOf(newIndexName);
+          if (ModifierArray.includes(newIndexName)) {
             if (lastItem > -1) {
-              DealArray.splice(lastItem, 1);
-              console.log(DealArray);
+              ModifierArray.splice(lastItem, 1);
             }
           } else {
-            DealArray.push(newIndexName);
-            console.log(DealArray);
+            ModifierArray.push(newIndexName);
           }
         });
       });
@@ -1007,8 +1037,6 @@ function addCustomize(event) {
 
       ExtraPotatoList.innerHTML = list;
 
-      let PotatoArray = [];
-
       let customizeFullBtn = document.querySelectorAll(
         ".ExtraPotatoDiv__ExtraPotatoList  li"
       );
@@ -1018,17 +1046,14 @@ function addCustomize(event) {
 
           let newIndexName = e.target.id;
           console.log(newIndexName);
-          console.log(PotatoArray);
 
-          let lastItem = PotatoArray.indexOf(newIndexName);
-          if (PotatoArray.includes(newIndexName)) {
+          let lastItem = ModifierArray.indexOf(newIndexName);
+          if (ModifierArray.includes(newIndexName)) {
             if (lastItem > -1) {
-              PotatoArray.splice(lastItem, 1);
-              console.log(PotatoArray);
+              ModifierArray.splice(lastItem, 1);
             }
           } else {
-            PotatoArray.push(newIndexName);
-            console.log(PotatoArray);
+            ModifierArray.push(newIndexName);
           }
         });
       });
@@ -1067,8 +1092,6 @@ function addCustomize(event) {
 
       ExtraToppersList.innerHTML = list;
 
-      let ToppersArray = [];
-
       let customizeFullBtn = document.querySelectorAll(
         ".ExtraToppersDiv__ExtraToppersList  li"
       );
@@ -1078,17 +1101,14 @@ function addCustomize(event) {
 
           let newIndexName = e.target.id;
           console.log(newIndexName);
-          console.log(ToppersArray);
 
-          let lastItem = ToppersArray.indexOf(newIndexName);
-          if (ToppersArray.includes(newIndexName)) {
+          let lastItem = ModifierArray.indexOf(newIndexName);
+          if (ModifierArray.includes(newIndexName)) {
             if (lastItem > -1) {
-              ToppersArray.splice(lastItem, 1);
-              console.log(ToppersArray);
+              ModifierArray.splice(lastItem, 1);
             }
           } else {
-            ToppersArray.push(newIndexName);
-            console.log(ToppersArray);
+            ModifierArray.push(newIndexName);
           }
         });
       });
@@ -1108,6 +1128,9 @@ function addCustomize(event) {
 
   let checkOutDOM = document.querySelector(".MainItemDiv__AddBasketBtn");
   checkOutDOM.addEventListener("click", function (event) {
+    getItemInput(event);
+    console.log(ModifierArray);
+    console.log(event.target.parentNode.parentNode.children);
     menu__heading.textContent = `Basket`;
     let ExtraProteinTotalPrice = 0;
 
