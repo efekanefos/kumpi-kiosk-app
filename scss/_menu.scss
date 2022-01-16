@@ -90,7 +90,7 @@ html {
     max-height: 92rem;
     padding: 1rem;
     grid-gap: 1.5rem;
-    grid-gap-columns: 0rem;
+    //grid-gap-columns: 0rem;
     margin-top: 1rem;
     padding-top: 0rem;
   }
@@ -133,7 +133,7 @@ html {
   &__productSection--card {
     pointer-events: none;
     padding: 1rem;
-    height: 95%;
+    //height: 95%;
     margin: 1rem;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; //4 numara
     background-color: #fff;
@@ -158,7 +158,7 @@ html {
     font-style: normal;
     font-weight: 600;
     padding-top: 1rem;
-    height: 4rem;
+    padding-bottom: 1rem;
     font-size: 1.1rem; /* 1.1rem  100%*/
   }
   &__productSection--cardParag {
@@ -488,11 +488,14 @@ html {
 .ExtraSaladDiv,
 .ExtraSauceDiv,
 .ExtraDealDiv,
-.DrinkDiv {
+.ExtraPotatoDiv,
+.ExtraToppersDiv,
+.DrinkDiv,
+.GoforMealsDiv {
   font-size: 3rem;
   margin-top: 1rem;
   transition: all 0.5s;
-  margin-bottom: 6rem;
+  margin-bottom: 0rem;
   position: relative;
   padding-bottom: 1.5rem;
   &__IngridientsList,
@@ -500,7 +503,10 @@ html {
   &__ExtraSaladList,
   &__ExtraSauceList,
   &__ExtraDealList,
-  &__DrinkList {
+  &__ExtraPotatoList,
+  &__ExtraToppersList,
+  &__DrinkList,
+  &__GoforMealsList {
     list-style: none;
     margin: 0 auto;
     margin-top: 3rem;
@@ -516,7 +522,10 @@ html {
   &__ExtraProteinListItem,
   &__ExtraSaladListItem,
   &__ExtraSauceListItem,
-  &__ExtraDealListItem {
+  &__ExtraDealListItem,
+  &__ExtraPotatoListItem,
+  &__ExtraToppersListItem,
+  &__GoforMealsListItem {
     font-size: 1.8rem;
     padding: 1.5rem;
     margin-bottom: 1rem;
@@ -640,7 +649,9 @@ html {
 .IngridientsDiv,
 .ExtraProteinDiv,
 .ExtraSaladDiv,
-.ExtraSauceDiv {
+.ExtraSauceDiv,
+.ExtraDealDiv,
+.GoforMealsDiv {
   overflow-y: scroll;
   max-height: 49rem;
   position: relative;
@@ -670,6 +681,8 @@ html {
   );
   -webkit-transform: rotate(-180deg);
   transform: rotate(-180deg);
+
+  display: none;
 }
 
 .MainItemDiv__BtnsDiv.effectOff::before {
@@ -764,7 +777,7 @@ html {
 
 .successPayment {
   position: absolute;
-  bottom: -70%;
+  bottom: -150%;
   left: 50%;
   z-index: 999;
   transform: translate(-50%, -50%);
@@ -816,7 +829,7 @@ html {
 .errorPayment {
   position: absolute;
   z-index: 999;
-  bottom: -60%;
+  bottom: -150%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;

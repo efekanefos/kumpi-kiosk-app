@@ -173,7 +173,6 @@ html {
   max-height: 92rem;
   padding: 1rem;
   grid-gap: 1.5rem;
-  grid-gap-columns: 0rem;
   margin-top: 1rem;
   padding-top: 0rem;
 }
@@ -220,7 +219,6 @@ html {
 .shop__productSection--card {
   pointer-events: none;
   padding: 1rem;
-  height: 95%;
   margin: 1rem;
   -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
           box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -253,7 +251,7 @@ html {
   font-style: normal;
   font-weight: 600;
   padding-top: 1rem;
-  height: 4rem;
+  padding-bottom: 1rem;
   font-size: 1.1rem;
   /* 1.1rem  100%*/
 }
@@ -666,47 +664,92 @@ html {
 .ExtraSaladDiv,
 .ExtraSauceDiv,
 .ExtraDealDiv,
-.DrinkDiv {
+.ExtraPotatoDiv,
+.ExtraToppersDiv,
+.DrinkDiv,
+.GoforMealsDiv {
   font-size: 3rem;
   margin-top: 1rem;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
-  margin-bottom: 6rem;
+  margin-bottom: 0rem;
   position: relative;
   padding-bottom: 1.5rem;
 }
 
-.IngridientsDiv__IngridientsList, .IngridientsDiv__ExtraProteinList, .IngridientsDiv__ExtraSaladList, .IngridientsDiv__ExtraSauceList, .IngridientsDiv__ExtraDealList, .IngridientsDiv__DrinkList,
+.IngridientsDiv__IngridientsList, .IngridientsDiv__ExtraProteinList, .IngridientsDiv__ExtraSaladList, .IngridientsDiv__ExtraSauceList, .IngridientsDiv__ExtraDealList, .IngridientsDiv__ExtraPotatoList, .IngridientsDiv__ExtraToppersList, .IngridientsDiv__DrinkList, .IngridientsDiv__GoforMealsList,
 .ExtraProteinDiv__IngridientsList,
 .ExtraProteinDiv__ExtraProteinList,
 .ExtraProteinDiv__ExtraSaladList,
 .ExtraProteinDiv__ExtraSauceList,
 .ExtraProteinDiv__ExtraDealList,
+.ExtraProteinDiv__ExtraPotatoList,
+.ExtraProteinDiv__ExtraToppersList,
 .ExtraProteinDiv__DrinkList,
+.ExtraProteinDiv__GoforMealsList,
 .ExtraSaladDiv__IngridientsList,
 .ExtraSaladDiv__ExtraProteinList,
 .ExtraSaladDiv__ExtraSaladList,
 .ExtraSaladDiv__ExtraSauceList,
 .ExtraSaladDiv__ExtraDealList,
+.ExtraSaladDiv__ExtraPotatoList,
+.ExtraSaladDiv__ExtraToppersList,
 .ExtraSaladDiv__DrinkList,
+.ExtraSaladDiv__GoforMealsList,
 .ExtraSauceDiv__IngridientsList,
 .ExtraSauceDiv__ExtraProteinList,
 .ExtraSauceDiv__ExtraSaladList,
 .ExtraSauceDiv__ExtraSauceList,
 .ExtraSauceDiv__ExtraDealList,
+.ExtraSauceDiv__ExtraPotatoList,
+.ExtraSauceDiv__ExtraToppersList,
 .ExtraSauceDiv__DrinkList,
+.ExtraSauceDiv__GoforMealsList,
 .ExtraDealDiv__IngridientsList,
 .ExtraDealDiv__ExtraProteinList,
 .ExtraDealDiv__ExtraSaladList,
 .ExtraDealDiv__ExtraSauceList,
 .ExtraDealDiv__ExtraDealList,
+.ExtraDealDiv__ExtraPotatoList,
+.ExtraDealDiv__ExtraToppersList,
 .ExtraDealDiv__DrinkList,
+.ExtraDealDiv__GoforMealsList,
+.ExtraPotatoDiv__IngridientsList,
+.ExtraPotatoDiv__ExtraProteinList,
+.ExtraPotatoDiv__ExtraSaladList,
+.ExtraPotatoDiv__ExtraSauceList,
+.ExtraPotatoDiv__ExtraDealList,
+.ExtraPotatoDiv__ExtraPotatoList,
+.ExtraPotatoDiv__ExtraToppersList,
+.ExtraPotatoDiv__DrinkList,
+.ExtraPotatoDiv__GoforMealsList,
+.ExtraToppersDiv__IngridientsList,
+.ExtraToppersDiv__ExtraProteinList,
+.ExtraToppersDiv__ExtraSaladList,
+.ExtraToppersDiv__ExtraSauceList,
+.ExtraToppersDiv__ExtraDealList,
+.ExtraToppersDiv__ExtraPotatoList,
+.ExtraToppersDiv__ExtraToppersList,
+.ExtraToppersDiv__DrinkList,
+.ExtraToppersDiv__GoforMealsList,
 .DrinkDiv__IngridientsList,
 .DrinkDiv__ExtraProteinList,
 .DrinkDiv__ExtraSaladList,
 .DrinkDiv__ExtraSauceList,
 .DrinkDiv__ExtraDealList,
-.DrinkDiv__DrinkList {
+.DrinkDiv__ExtraPotatoList,
+.DrinkDiv__ExtraToppersList,
+.DrinkDiv__DrinkList,
+.DrinkDiv__GoforMealsList,
+.GoforMealsDiv__IngridientsList,
+.GoforMealsDiv__ExtraProteinList,
+.GoforMealsDiv__ExtraSaladList,
+.GoforMealsDiv__ExtraSauceList,
+.GoforMealsDiv__ExtraDealList,
+.GoforMealsDiv__ExtraPotatoList,
+.GoforMealsDiv__ExtraToppersList,
+.GoforMealsDiv__DrinkList,
+.GoforMealsDiv__GoforMealsList {
   list-style: none;
   margin: 0 auto;
   margin-top: 3rem;
@@ -718,37 +761,79 @@ html {
 .ExtraSaladDiv__DrinkList,
 .ExtraSauceDiv__DrinkList,
 .ExtraDealDiv__DrinkList,
-.DrinkDiv__DrinkList {
+.ExtraPotatoDiv__DrinkList,
+.ExtraToppersDiv__DrinkList,
+.DrinkDiv__DrinkList,
+.GoforMealsDiv__DrinkList {
   margin-top: 2rem;
   padding-bottom: 4rem;
 }
 
-.IngridientsDiv__IngridientsListItem, .IngridientsDiv__ExtraProteinListItem, .IngridientsDiv__ExtraSaladListItem, .IngridientsDiv__ExtraSauceListItem, .IngridientsDiv__ExtraDealListItem,
+.IngridientsDiv__IngridientsListItem, .IngridientsDiv__ExtraProteinListItem, .IngridientsDiv__ExtraSaladListItem, .IngridientsDiv__ExtraSauceListItem, .IngridientsDiv__ExtraDealListItem, .IngridientsDiv__ExtraPotatoListItem, .IngridientsDiv__ExtraToppersListItem, .IngridientsDiv__GoforMealsListItem,
 .ExtraProteinDiv__IngridientsListItem,
 .ExtraProteinDiv__ExtraProteinListItem,
 .ExtraProteinDiv__ExtraSaladListItem,
 .ExtraProteinDiv__ExtraSauceListItem,
 .ExtraProteinDiv__ExtraDealListItem,
+.ExtraProteinDiv__ExtraPotatoListItem,
+.ExtraProteinDiv__ExtraToppersListItem,
+.ExtraProteinDiv__GoforMealsListItem,
 .ExtraSaladDiv__IngridientsListItem,
 .ExtraSaladDiv__ExtraProteinListItem,
 .ExtraSaladDiv__ExtraSaladListItem,
 .ExtraSaladDiv__ExtraSauceListItem,
 .ExtraSaladDiv__ExtraDealListItem,
+.ExtraSaladDiv__ExtraPotatoListItem,
+.ExtraSaladDiv__ExtraToppersListItem,
+.ExtraSaladDiv__GoforMealsListItem,
 .ExtraSauceDiv__IngridientsListItem,
 .ExtraSauceDiv__ExtraProteinListItem,
 .ExtraSauceDiv__ExtraSaladListItem,
 .ExtraSauceDiv__ExtraSauceListItem,
 .ExtraSauceDiv__ExtraDealListItem,
+.ExtraSauceDiv__ExtraPotatoListItem,
+.ExtraSauceDiv__ExtraToppersListItem,
+.ExtraSauceDiv__GoforMealsListItem,
 .ExtraDealDiv__IngridientsListItem,
 .ExtraDealDiv__ExtraProteinListItem,
 .ExtraDealDiv__ExtraSaladListItem,
 .ExtraDealDiv__ExtraSauceListItem,
 .ExtraDealDiv__ExtraDealListItem,
+.ExtraDealDiv__ExtraPotatoListItem,
+.ExtraDealDiv__ExtraToppersListItem,
+.ExtraDealDiv__GoforMealsListItem,
+.ExtraPotatoDiv__IngridientsListItem,
+.ExtraPotatoDiv__ExtraProteinListItem,
+.ExtraPotatoDiv__ExtraSaladListItem,
+.ExtraPotatoDiv__ExtraSauceListItem,
+.ExtraPotatoDiv__ExtraDealListItem,
+.ExtraPotatoDiv__ExtraPotatoListItem,
+.ExtraPotatoDiv__ExtraToppersListItem,
+.ExtraPotatoDiv__GoforMealsListItem,
+.ExtraToppersDiv__IngridientsListItem,
+.ExtraToppersDiv__ExtraProteinListItem,
+.ExtraToppersDiv__ExtraSaladListItem,
+.ExtraToppersDiv__ExtraSauceListItem,
+.ExtraToppersDiv__ExtraDealListItem,
+.ExtraToppersDiv__ExtraPotatoListItem,
+.ExtraToppersDiv__ExtraToppersListItem,
+.ExtraToppersDiv__GoforMealsListItem,
 .DrinkDiv__IngridientsListItem,
 .DrinkDiv__ExtraProteinListItem,
 .DrinkDiv__ExtraSaladListItem,
 .DrinkDiv__ExtraSauceListItem,
-.DrinkDiv__ExtraDealListItem {
+.DrinkDiv__ExtraDealListItem,
+.DrinkDiv__ExtraPotatoListItem,
+.DrinkDiv__ExtraToppersListItem,
+.DrinkDiv__GoforMealsListItem,
+.GoforMealsDiv__IngridientsListItem,
+.GoforMealsDiv__ExtraProteinListItem,
+.GoforMealsDiv__ExtraSaladListItem,
+.GoforMealsDiv__ExtraSauceListItem,
+.GoforMealsDiv__ExtraDealListItem,
+.GoforMealsDiv__ExtraPotatoListItem,
+.GoforMealsDiv__ExtraToppersListItem,
+.GoforMealsDiv__GoforMealsListItem {
   font-size: 1.8rem;
   padding: 1.5rem;
   margin-bottom: 1rem;
@@ -779,9 +864,18 @@ html {
 .ExtraDealDiv__ExtraProteinListItem:last-child,
 .ExtraDealDiv__ExtraSaladListItem:last-child,
 .ExtraDealDiv__ExtraSauceListItem:last-child,
+.ExtraPotatoDiv__ExtraProteinListItem:last-child,
+.ExtraPotatoDiv__ExtraSaladListItem:last-child,
+.ExtraPotatoDiv__ExtraSauceListItem:last-child,
+.ExtraToppersDiv__ExtraProteinListItem:last-child,
+.ExtraToppersDiv__ExtraSaladListItem:last-child,
+.ExtraToppersDiv__ExtraSauceListItem:last-child,
 .DrinkDiv__ExtraProteinListItem:last-child,
 .DrinkDiv__ExtraSaladListItem:last-child,
-.DrinkDiv__ExtraSauceListItem:last-child {
+.DrinkDiv__ExtraSauceListItem:last-child,
+.GoforMealsDiv__ExtraProteinListItem:last-child,
+.GoforMealsDiv__ExtraSaladListItem:last-child,
+.GoforMealsDiv__ExtraSauceListItem:last-child {
   -webkit-box-shadow: none;
           box-shadow: none;
   background: #fff;
@@ -792,7 +886,10 @@ html {
 .ExtraSaladDiv__DrinkListItem,
 .ExtraSauceDiv__DrinkListItem,
 .ExtraDealDiv__DrinkListItem,
-.DrinkDiv__DrinkListItem {
+.ExtraPotatoDiv__DrinkListItem,
+.ExtraToppersDiv__DrinkListItem,
+.DrinkDiv__DrinkListItem,
+.GoforMealsDiv__DrinkListItem {
   font-size: 2rem;
   text-align: left;
   display: -webkit-box;
@@ -817,8 +914,14 @@ html {
 .ExtraSauceDiv__DrinkListItem--btn,
 .ExtraDealDiv__IngridientsListItem--btn,
 .ExtraDealDiv__DrinkListItem--btn,
+.ExtraPotatoDiv__IngridientsListItem--btn,
+.ExtraPotatoDiv__DrinkListItem--btn,
+.ExtraToppersDiv__IngridientsListItem--btn,
+.ExtraToppersDiv__DrinkListItem--btn,
 .DrinkDiv__IngridientsListItem--btn,
-.DrinkDiv__DrinkListItem--btn {
+.DrinkDiv__DrinkListItem--btn,
+.GoforMealsDiv__IngridientsListItem--btn,
+.GoforMealsDiv__DrinkListItem--btn {
   background-image: url(../images/Button.png);
   background-repeat: no-repeat;
   background-position: center center;
@@ -835,7 +938,10 @@ html {
 .ExtraSaladDiv__DrinkListItem--btn,
 .ExtraSauceDiv__DrinkListItem--btn,
 .ExtraDealDiv__DrinkListItem--btn,
-.DrinkDiv__DrinkListItem--btn {
+.ExtraPotatoDiv__DrinkListItem--btn,
+.ExtraToppersDiv__DrinkListItem--btn,
+.DrinkDiv__DrinkListItem--btn,
+.GoforMealsDiv__DrinkListItem--btn {
   background-image: url(../images/emptyBtn.png);
   background-repeat: no-repeat;
   background-position: center center;
@@ -852,7 +958,10 @@ html {
 .ExtraSaladDiv__IngridientsListItem--btn.empty,
 .ExtraSauceDiv__IngridientsListItem--btn.empty,
 .ExtraDealDiv__IngridientsListItem--btn.empty,
-.DrinkDiv__IngridientsListItem--btn.empty {
+.ExtraPotatoDiv__IngridientsListItem--btn.empty,
+.ExtraToppersDiv__IngridientsListItem--btn.empty,
+.DrinkDiv__IngridientsListItem--btn.empty,
+.GoforMealsDiv__IngridientsListItem--btn.empty {
   background-image: url(../images/emptyBtn.png);
   background-repeat: no-repeat;
   background-position: center center;
@@ -869,7 +978,10 @@ html {
 .ExtraSaladDiv__DrinkListItem--btn.activeDrink,
 .ExtraSauceDiv__DrinkListItem--btn.activeDrink,
 .ExtraDealDiv__DrinkListItem--btn.activeDrink,
-.DrinkDiv__DrinkListItem--btn.activeDrink {
+.ExtraPotatoDiv__DrinkListItem--btn.activeDrink,
+.ExtraToppersDiv__DrinkListItem--btn.activeDrink,
+.DrinkDiv__DrinkListItem--btn.activeDrink,
+.GoforMealsDiv__DrinkListItem--btn.activeDrink {
   background-image: url(../images/Button.png);
   background-repeat: no-repeat;
   background-position: center center;
@@ -886,7 +998,10 @@ html {
 .ExtraSaladDiv__CountBtns,
 .ExtraSauceDiv__CountBtns,
 .ExtraDealDiv__CountBtns,
-.DrinkDiv__CountBtns {
+.ExtraPotatoDiv__CountBtns,
+.ExtraToppersDiv__CountBtns,
+.DrinkDiv__CountBtns,
+.GoforMealsDiv__CountBtns {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -905,7 +1020,10 @@ html {
 .ExtraSaladDiv__CountBtns *,
 .ExtraSauceDiv__CountBtns *,
 .ExtraDealDiv__CountBtns *,
-.DrinkDiv__CountBtns * {
+.ExtraPotatoDiv__CountBtns *,
+.ExtraToppersDiv__CountBtns *,
+.DrinkDiv__CountBtns *,
+.GoforMealsDiv__CountBtns * {
   margin-right: 1.3rem;
   font-weight: 700;
   font-size: 1.7rem;
@@ -916,7 +1034,10 @@ html {
 .ExtraSaladDiv__CountBtns--minus,
 .ExtraSauceDiv__CountBtns--minus,
 .ExtraDealDiv__CountBtns--minus,
-.DrinkDiv__CountBtns--minus {
+.ExtraPotatoDiv__CountBtns--minus,
+.ExtraToppersDiv__CountBtns--minus,
+.DrinkDiv__CountBtns--minus,
+.GoforMealsDiv__CountBtns--minus {
   background-color: #fff4e4;
   padding: 10%;
   border-radius: 50%;
@@ -927,7 +1048,10 @@ html {
 .ExtraSaladDiv__CountBtns--plus,
 .ExtraSauceDiv__CountBtns--plus,
 .ExtraDealDiv__CountBtns--plus,
-.DrinkDiv__CountBtns--plus {
+.ExtraPotatoDiv__CountBtns--plus,
+.ExtraToppersDiv__CountBtns--plus,
+.DrinkDiv__CountBtns--plus,
+.GoforMealsDiv__CountBtns--plus {
   background-color: #fff4e4;
   padding: 10%;
   border-radius: 50%;
@@ -938,7 +1062,10 @@ html {
 .ExtraSaladDiv__Text,
 .ExtraSauceDiv__Text,
 .ExtraDealDiv__Text,
-.DrinkDiv__Text {
+.ExtraPotatoDiv__Text,
+.ExtraToppersDiv__Text,
+.DrinkDiv__Text,
+.GoforMealsDiv__Text {
   margin-right: auto;
 }
 
@@ -947,7 +1074,10 @@ html {
 .ExtraSaladDiv__Price,
 .ExtraSauceDiv__Price,
 .ExtraDealDiv__Price,
-.DrinkDiv__Price {
+.ExtraPotatoDiv__Price,
+.ExtraToppersDiv__Price,
+.DrinkDiv__Price,
+.GoforMealsDiv__Price {
   color: #8a959e;
   font-size: 1.8rem;
 }
@@ -957,7 +1087,10 @@ html {
 .ExtraSaladDiv__DrinkHeading,
 .ExtraSauceDiv__DrinkHeading,
 .ExtraDealDiv__DrinkHeading,
-.DrinkDiv__DrinkHeading {
+.ExtraPotatoDiv__DrinkHeading,
+.ExtraToppersDiv__DrinkHeading,
+.DrinkDiv__DrinkHeading,
+.GoforMealsDiv__DrinkHeading {
   font-size: 2rem;
   color: #202326;
   font-weight: 600;
@@ -971,7 +1104,10 @@ html {
 .ExtraSaladDiv__DrinkParag,
 .ExtraSauceDiv__DrinkParag,
 .ExtraDealDiv__DrinkParag,
-.DrinkDiv__DrinkParag {
+.ExtraPotatoDiv__DrinkParag,
+.ExtraToppersDiv__DrinkParag,
+.DrinkDiv__DrinkParag,
+.GoforMealsDiv__DrinkParag {
   font-size: 1.2rem;
   color: #8a959e;
   font-weight: 400;
@@ -987,15 +1123,23 @@ html {
 .ExtraSauceDiv__DrinkParag,
 .ExtraDealDiv__DrinkHeading,
 .ExtraDealDiv__DrinkParag,
+.ExtraPotatoDiv__DrinkHeading,
+.ExtraPotatoDiv__DrinkParag,
+.ExtraToppersDiv__DrinkHeading,
+.ExtraToppersDiv__DrinkParag,
 .DrinkDiv__DrinkHeading,
-.DrinkDiv__DrinkParag {
+.DrinkDiv__DrinkParag,
+.GoforMealsDiv__DrinkHeading,
+.GoforMealsDiv__DrinkParag {
   padding-left: 3rem;
 }
 
 .IngridientsDiv,
 .ExtraProteinDiv,
 .ExtraSaladDiv,
-.ExtraSauceDiv {
+.ExtraSauceDiv,
+.ExtraDealDiv,
+.GoforMealsDiv {
   overflow-y: scroll;
   max-height: 49rem;
   position: relative;
@@ -1023,6 +1167,7 @@ html {
   background: linear-gradient(178.7deg, white 77%, rgba(255, 255, 255, 0) 98.89%);
   -webkit-transform: rotate(-180deg);
   transform: rotate(-180deg);
+  display: none;
 }
 
 .MainItemDiv__BtnsDiv.effectOff::before {
@@ -1147,7 +1292,7 @@ html {
 
 .successPayment {
   position: absolute;
-  bottom: -70%;
+  bottom: -150%;
   left: 50%;
   z-index: 999;
   -webkit-transform: translate(-50%, -50%);
@@ -1208,7 +1353,7 @@ html {
 .errorPayment {
   position: absolute;
   z-index: 999;
-  bottom: -60%;
+  bottom: -150%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);

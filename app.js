@@ -122,7 +122,8 @@ function activeFunction(event) {
   document.querySelector(".active").classList.remove("active");
   //* üzerine tıklanmış olan elemente .active class'ını ekle!
   event.target.classList.add("active");
-  console.log(event.target.children[0].id);
+  //let activeOne = event.target.children[0];
+  console.log(event.target.children[0]);
   fetch(
     `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/${event.target.children[0].id}`
   )
@@ -130,11 +131,18 @@ function activeFunction(event) {
     .then((data) => {
       let card = "";
       data.forEach(function (item) {
+        console.log("itemId:", item.modifierLists[0].id);
         let cardSegment = `
-        <div id=${item.id} class="shop__productSection--card">
-    <img class="shop__productSection--image" src="${item.imageUrl}" />
-    <h1 class="shop__productSection--cardHeading">${item.name}</h1>
-    <p class="shop__productSection--cardParag">${item.description}</p>
+        <div id=${item.modifierLists[0].id}  class="shop__productSection--card">
+    <img id=${
+      event.target.children[0].id
+    } class="shop__productSection--image" src="${item.imageUrl}" />
+    <h1 id=${item.id} class="shop__productSection--cardHeading">${
+          item.name
+        }</h1>
+    <p class="shop__productSection--cardParag">${
+      item.description === null ? "No Description" : item.description
+    }</p>
     <p class="shop__productSection--cardPrice">&#8356;${
       item.price / (100).toFixed(2).slice(0, -3)
     }</p>
@@ -148,21 +156,6 @@ function activeFunction(event) {
     });
 }
 
-/*
-shop__productSection.innerHTML = meals
-  .map(function (item) {
-    return `
-  <div class="shop__productSection--card">
-  <img class="shop__productSection--image" src="${item.image}" />
-  <h1 class="shop__productSection--cardHeading">${item.name}</h1>
-  <p class="shop__productSection--cardParag">${item.ingridients}</p>
-  <p class="shop__productSection--cardPrice">&#8356;${item.price}</p>
-  </div>
-  `;
-  })
-  .join("");
-  */
-
 //! Ürünler Arrayîndeki verileri kullanarak grid yapısında ürünlerimizi sıraladık.
 
 //? Ürüne tıkladığımızda gelen seçim ekranın kapanmasını sağlayan ikonun fonksiyonu
@@ -172,8 +165,10 @@ cartSection__closeIcon.addEventListener("click", function () {
   cartSection__closeIcon.style.transform = "translateY(-300%)";
   cartSection__closeIcon.style.transform += "translate(-50%, -50%)";
   //* X ikonun kaybolması
+  /*
   cartSection__leftBtn.style.transform = "translateX(-300%)";
   cartSection__rightBtn.style.transform = "translateX(300%)";
+  */
   menu__heading.textContent = `Kumpi Menu`;
 });
 
@@ -208,11 +203,18 @@ ettiğimiz kısım */
 
     /* reduce metodu ile toplam fiyat bilgisini elde ediyoruz. */
     //console.log(newArr.reduce(getSum, 0));
+    /*
+    console.log(
+      event.target.parentNode.parentNode.parentNode.parentNode.children[0]
+        .children[0]
+    );
+*/
+    console.log(event.target.parentNode.children[0].id);
 
     /* seçilen item'ın verilerini cartSection üzerinde display ediyoruz. */
     cartSection.innerHTML = `
-<img class="cartSection__Img" src="${event.target.parentNode.children[0].src}"/>
-<h1 class="cartSection__Heading">${event.target.parentNode.children[1].textContent}</h1>
+<img class="cartSection__Img" id=${event.target.parentNode.children[0].id} src="${event.target.parentNode.children[0].src}"/>
+<h1 id=${event.target.parentNode.id} class="cartSection__Heading">${event.target.parentNode.children[1].textContent}</h1>
 <p class="cartSection__Ingridients">${event.target.parentNode.children[2].textContent}</p>
 <h3 class="cartSection__Price">${event.target.parentNode.children[3].textContent}</h3>
 <div class="cartSection__Btns">
@@ -571,7 +573,7 @@ function addCustomize(event) {
   /* Remove Elements Heading */
   let RemoveHeading = document.createElement("h1");
   RemoveHeading.classList.add("MainItemDiv__RemoveHeading");
-  RemoveHeading.textContent = `Remove Elements`;
+  RemoveHeading.textContent = `Extra Protein`;
   MainItemDiv.appendChild(RemoveHeading);
 
   /* Remove Elements Parag */
@@ -580,58 +582,72 @@ function addCustomize(event) {
   RemoveParag.textContent = `Choose what you remove`;
   MainItemDiv.appendChild(RemoveParag);
 
-  /* Çıkarilabilir malzeme listesi */
-  let IngridientsArray = [
-    "Slow Roast Peppers",
-    "Tomato Sauce",
-    "Onion",
-    "Garlic",
-    "White Sauce",
-    "Tabouli",
-    "Lettuce",
-    "Red Sauce",
-    "Pepper",
-  ];
+  /* item id'sini alma item'in heading'inde duruyor */
+  console.log(event.target.parentNode.parentNode.children[0].id);
 
-  /* listeyi kapsayan div */
-  let IngridientsDiv = document.createElement("div");
-  IngridientsDiv.classList.add("IngridientsDiv");
-  MainItemDiv.appendChild(IngridientsDiv);
+  fetch(
+    `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/${event.target.parentNode.parentNode.children[0].id}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      let list = "";
+      data[0].modifierLists[0].modifiers.forEach(function (item) {
+        let listSegment = `
+        <li id=${item.id} class="ExtraProteinDiv__ExtraProteinListItem">
+        <div id="${
+          item.id
+        }" class="IngridientsDiv__IngridientsListItem--btn empty"></div>
+    
+    <span class="ExtraProteinDiv__Text">${item.name}</span>
+    <span class="ExtraProteinDiv__Price">+&#8356;${
+      item.price / (100).toFixed(2).slice(0, -3)
+    }</span>
+    </li>
+        `;
+        list += listSegment;
+      });
 
-  /* listenin kendisi */
-  let IngridientsList = document.createElement("ul");
-  IngridientsList.classList.add("IngridientsDiv__IngridientsList");
-  IngridientsDiv.appendChild(IngridientsList);
+      ExtraProteinList.innerHTML = list;
 
-  /* liste elemanlarının liste içerisine eklenmesi */
-  let IngridientsItems = IngridientsArray.map(function (item) {
-    return `
-    <li class="IngridientsDiv__IngridientsListItem">
-    <div id="${item}" class="IngridientsDiv__IngridientsListItem--btn"></div>
-    ${item}</li>
-    `;
-  }).join("");
-  IngridientsList.innerHTML = IngridientsItems;
+      let ProteinArray = [];
 
-  /* Butonları ayarlama kısmı */
-  let customizeFullBtn = document.querySelectorAll(".customizeSection  li");
-  customizeFullBtn.forEach((el) => {
-    console.log(el);
-    el.addEventListener("click", function (e) {
-      el.children[0].classList.toggle("empty");
+      /* Butonları ayarlama kısmı */
+      let customizeFullBtn = document.querySelectorAll(
+        ".ExtraProteinDiv__ExtraProteinList li"
+      );
+      customizeFullBtn.forEach((el) => {
+        el.addEventListener("click", function (e) {
+          el.children[0].classList.toggle("empty");
 
-      let newIndexName = e.target.children[0].id;
-      console.log(newIndexName);
-      let lastItem = IngridientsArray.indexOf(newIndexName);
-      if (IngridientsArray.includes(newIndexName)) {
-        if (lastItem > -1) {
-          IngridientsArray.splice(lastItem, 1);
-        }
-      } else {
-        IngridientsArray.push(newIndexName);
-      }
+          let newIndexName = e.target.id;
+
+          let lastItem = ProteinArray.indexOf(newIndexName);
+          if (ProteinArray.includes(newIndexName)) {
+            if (lastItem > -1) {
+              ProteinArray.splice(lastItem, 1);
+            }
+          } else {
+            ProteinArray.push(newIndexName);
+          }
+        });
+      });
     });
-  });
+
+  /*
+   */
+
+  /* Extra Protein listesi div'i */
+
+  let ExtraProteinDiv = document.createElement("div");
+  ExtraProteinDiv.classList.add("ExtraProteinDiv");
+  MainItemDiv.appendChild(ExtraProteinDiv);
+
+  /* Extra Protein listesinin kendisi */
+
+  let ExtraProteinList = document.createElement("ul");
+  ExtraProteinList.classList.add("ExtraProteinDiv__ExtraProteinList");
+  ExtraProteinDiv.appendChild(ExtraProteinList);
+
   /* Buttons Div */
   let BtnsDiv = document.createElement("div");
   BtnsDiv.classList.add("MainItemDiv__BtnsDiv");
@@ -662,44 +678,53 @@ function addCustomize(event) {
 
   MainItemDiv__NextBtnDOM.addEventListener("click", function () {
     switch (RemoveHeading.innerText) {
-      case `Remove Elements`:
-        IngridientsDiv.style.transform = "translateY(200%)";
-        ExtraProteinDiv.style.transform = "translateY(-126%)"; /* -150 */
-        ExtraSaladDiv.style.transform = "translateY(0%)"; /* -275 */
+      case `Extra Protein`:
+        ExtraProteinDiv.style.transform = "translateY(150%)"; /* -150 */
+        ExtraSaladDiv.style.transform = "translateY(-123%)"; /* -275 */
         ExtraSauceDiv.style.transform = "translateY(0%)";
-        RemoveHeading.textContent = `Add Extra Protein`;
-        RemoveParag.textContent = `Choose up to 3`;
+        RemoveHeading.textContent = `Go for Meals`;
+        RemoveParag.textContent = `Choose what you want`;
         break;
-      case `Add Extra Protein`:
-        IngridientsDiv.style.transform = "translateY(200%)";
-        ExtraProteinDiv.style.transform = "translateY(0%)";
-        ExtraSaladDiv.style.transform = "translateY(-240%)"; /* 275 */
-        ExtraSauceDiv.style.transform = "translateY(0%)";
-        RemoveHeading.textContent = `Add Extra Salads and Vegetables`;
-        RemoveParag.textContent = `Choose up to 3`;
+      case `Go for Meals`:
+        ExtraProteinDiv.style.transform = "translateY(150%)";
+        ExtraSaladDiv.style.transform = "translateY(150%)"; /* 275 */
+        ExtraSauceDiv.style.transform = "translateY(-225%)";
+        RemoveHeading.textContent = `Salads & Vegetables`;
+
         break;
-      case `Add Extra Salads and Vegetables`:
-        IngridientsDiv.style.transform = "translateY(200%)";
-        ExtraProteinDiv.style.transform = "translateY(0%)";
-        ExtraSaladDiv.style.transform = "translateY(0%)";
-        ExtraSauceDiv.style.transform = "translateY(-353%)";
-        RemoveHeading.textContent = `Add Extra Sauce`;
-        RemoveParag.textContent = `Choose up to 2`;
+      case `Salads & Vegetables`:
+        ExtraProteinDiv.style.transform = "translateY(150%)";
+        ExtraSaladDiv.style.transform = "translateY(150%)";
+        ExtraSauceDiv.style.transform = "translateY(150%)";
+        ExtraDealDiv.style.transform = "translateY(-162rem)";
+        RemoveHeading.textContent = `Sauces`;
+
         break;
-      case `Add Extra Sauce`:
-        IngridientsDiv.style.transform = "translateY(200%)";
-        ExtraProteinDiv.style.transform = "translateY(0%)";
-        ExtraSaladDiv.style.transform = "translateY(0%)";
-        ExtraSauceDiv.style.transform = "translateY(0%)";
-        ExtraDealDiv.style.transform = "translateY(-228rem)"; /* -3700% */
-        RemoveHeading.textContent = `Make Deal with Drink and Brownie`;
-        RemoveParag.textContent = `Choose up to 1`;
+      case `Sauces`:
+        ExtraProteinDiv.style.transform = "translateY(150%)";
+        ExtraSaladDiv.style.transform = "translateY(150%)";
+        ExtraSauceDiv.style.transform = "translateY(150%)";
+        ExtraDealDiv.style.transform = "translateY(150%)"; /* -3700% */
+        ExtraPotatoDiv.style.transform = "translateY(-200rem)";
+        RemoveHeading.textContent = `Your Potato`;
+
+        break;
+      case `Your Potato`:
+        ExtraProteinDiv.style.transform = "translateY(150%)";
+        ExtraSaladDiv.style.transform = "translateY(150%)";
+        ExtraSauceDiv.style.transform = "translateY(150%)";
+        ExtraDealDiv.style.transform = "translateY(150%)";
+        ExtraPotatoDiv.style.transform = "translateY(150%)";
+        ExtraToppersDiv.style.transform = "translateY(-230rem)";
+        RemoveHeading.textContent = `Toppers`;
+
         BtnsDiv.classList.add("effectOff");
         MainItemDiv__NextBtnDOM.style.visibility = "hidden";
         MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
           Math.round(newItemPriceFloat * 100) / 100
         ).toFixed(2)}`;
         break;
+
       default:
     }
   });
@@ -709,21 +734,18 @@ function addCustomize(event) {
   MainItemDiv__BackBtnDOM.addEventListener("click", function () {
     switch (RemoveHeading.innerText) {
       case `Add Extra Protein`:
-        IngridientsDiv.style.transform = "translateY(0%)";
         ExtraProteinDiv.style.transform = "translateY(0%)";
         ExtraSaladDiv.style.transform = "translateY(0%)";
         RemoveHeading.textContent = `Remove Elements`;
-        RemoveParag.textContent = `Choose what you remove`;
+        RemoveParag.textContent = `Choose what you want`;
         break;
       case `Add Extra Salads and Vegetables`:
-        IngridientsDiv.style.transform = "translateY(200%)";
         ExtraProteinDiv.style.transform = "translateY(-128%)";
         ExtraSaladDiv.style.transform = "translateY(0%)";
         RemoveHeading.textContent = `Add Extra Protein`;
         RemoveParag.textContent = `Choose up to 3`;
         break;
       case `Add Extra Sauce`:
-        IngridientsDiv.style.transform = "translateY(200%)";
         ExtraProteinDiv.style.transform = "translateY(0%)";
         ExtraSaladDiv.style.transform = "translateY(-240%)";
         ExtraSauceDiv.style.transform = "translateY(0%)";
@@ -732,7 +754,6 @@ function addCustomize(event) {
         break;
 
       case `Make Deal with Drink and Brownie`:
-        IngridientsDiv.style.transform = "translateY(200%)";
         ExtraProteinDiv.style.transform = "translateY(0%)";
         ExtraSaladDiv.style.transform = "translateY(0%)";
         ExtraSauceDiv.style.transform = "translateY(-355%)";
@@ -746,346 +767,57 @@ function addCustomize(event) {
     }
   });
 
-  /* Çıkarilabilir malzeme listesi */
-  let ExtraProteinArray = [
-    "Beef Meatballs with Tomato Souce",
-    "Roasted Chorizo",
-    "Lemon and Chilli Chicken (Mild)",
-    "Crispy Chicken",
-    "Golden Halloumi (Vegetarian)",
-    "Falafel (Vegetarian)",
-    "Steak",
-    "Ricotta",
-    "Avocado",
-  ];
-
-  let BeefMeatballswithTomatoSouceCounter = 0;
-  let RoastedChorizoCounter = 0;
-  let LemonandChilliChickenCounter = 0;
-  let CrispyChickenCounter = 0;
-  let GoldenHalloumiVegetarianCounter = 0;
-  let FalafelCounter = 0;
-  let SteakCounter = 0;
-  let RicottaCounter = 0;
-  let AvocadoCounter = 0;
-
-  /* Extra Protein listesi div'i */
-  let ExtraProteinDiv = document.createElement("div");
-  ExtraProteinDiv.classList.add("ExtraProteinDiv");
-  MainItemDiv.appendChild(ExtraProteinDiv);
-
-  /* Extra Protein listesinin kendisi */
-  let ExtraProteinList = document.createElement("ul");
-  ExtraProteinList.classList.add("ExtraProteinDiv__ExtraProteinList");
-  ExtraProteinDiv.appendChild(ExtraProteinList);
-
-  /* liste elemanlarının liste içerisine eklenmesi */
-  let ExtraProteinItems = ExtraProteinArray.map(function (item) {
-    return `
-    <li class="ExtraProteinDiv__ExtraProteinListItem">
-    <div class="ExtraProteinDiv__CountBtns">
-      <i id=${item
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat(
-          "__minus"
-        )} class="ExtraProteinDiv__CountBtns--minus fas fa-minus"></i>
-      <span id=${item
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat("__number")} class="ExtraProteinDiv__CountBtns--number">0</span>
-      <i id=${item
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat(
-          "__plus"
-        )} class="ExtraProteinDiv__CountBtns--plus fas fa-plus"></i>
-    </div>
-    <span class="ExtraProteinDiv__Text">${item}</span>
-    <span class="ExtraProteinDiv__Price">+&#8356;2.50</span>
-    </li>
-    `;
-  }).join("");
-  ExtraProteinList.innerHTML = ExtraProteinItems;
-
-  /* BeefMeatballswithTomatoSouce */
-
-  let BeefNumber = document.querySelector(
-    "#BeefMeatballswithTomatoSouce__number"
-  );
-  let BeefPlus = document.querySelector("#BeefMeatballswithTomatoSouce__plus");
-  let BeefMinus = document.querySelector(
-    "#BeefMeatballswithTomatoSouce__minus"
-  );
-
-  /* RoastedChorizo */
-
-  let RoastedNumber = document.querySelector("#RoastedChorizo__number");
-  let RoastedPlus = document.querySelector("#RoastedChorizo__plus");
-  let RoastedMinus = document.querySelector("#RoastedChorizo__minus");
-
-  /* LemonandChilliChickenMild */
-
-  let LemonNumber = document.querySelector(
-    "#LemonandChilliChickenMild__number"
-  );
-  let LemonPlus = document.querySelector("#LemonandChilliChickenMild__plus");
-  let LemonMinus = document.querySelector("#LemonandChilliChickenMild__minus");
-
-  /* CrispyChicken */
-
-  let CrispyNumber = document.querySelector("#CrispyChicken__number");
-  let CrispyPlus = document.querySelector("#CrispyChicken__plus");
-  let CrispyMinus = document.querySelector("#CrispyChicken__minus");
-
-  /* GoldenHalloumiVegetarian */
-
-  let GoldenNumber = document.querySelector(
-    "#GoldenHalloumiVegetarian__number"
-  );
-  let GoldenPlus = document.querySelector("#GoldenHalloumiVegetarian__plus");
-  let GoldenMinus = document.querySelector("#GoldenHalloumiVegetarian__minus");
-
-  /* Falafel */
-
-  let FalafelNumber = document.querySelector("#FalafelVegetarian__number");
-  let FalafelPlus = document.querySelector("#FalafelVegetarian__plus");
-  let FalafelMinus = document.querySelector("#FalafelVegetarian__minus");
-
-  /* Steak */
-
-  let SteakNumber = document.querySelector("#Steak__number");
-  let SteakPlus = document.querySelector("#Steak__plus");
-  let SteakMinus = document.querySelector("#Steak__minus");
-
-  /* RicottaChorizo */
-
-  let RicottaNumber = document.querySelector("#Ricotta__number");
-  let RicottaPlus = document.querySelector("#Ricotta__plus");
-  let RicottaMinus = document.querySelector("#Ricotta__minus");
-
-  /* Avocado */
-
-  let AvocadoNumber = document.querySelector("#Avocado__number");
-  let AvocadoPlus = document.querySelector("#Avocado__plus");
-  let AvocadoMinus = document.querySelector("#Avocado__minus");
-
-  BeefPlus.addEventListener("click", () => {
-    BeefMeatballswithTomatoSouceCounter =
-      BeefMeatballswithTomatoSouceCounter + 1;
-    BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
-    newItemPriceFloat = newItemPriceFloat + 2.5;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  BeefMinus.addEventListener("click", () => {
-    if (BeefMeatballswithTomatoSouceCounter > 0) {
-      BeefMeatballswithTomatoSouceCounter =
-        BeefMeatballswithTomatoSouceCounter - 1;
-      BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
-      newItemPriceFloat = newItemPriceFloat - 2.5;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  RoastedPlus.addEventListener("click", () => {
-    RoastedChorizoCounter = RoastedChorizoCounter + 1;
-    RoastedNumber.textContent = RoastedChorizoCounter;
-    newItemPriceFloat = newItemPriceFloat + 2.5;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  RoastedMinus.addEventListener("click", () => {
-    if (RoastedChorizoCounter > 0) {
-      RoastedChorizoCounter = RoastedChorizoCounter - 1;
-      RoastedNumber.textContent = RoastedChorizoCounter;
-      newItemPriceFloat = newItemPriceFloat - 2.5;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  LemonPlus.addEventListener("click", () => {
-    LemonandChilliChickenCounter = LemonandChilliChickenCounter + 1;
-    LemonNumber.textContent = LemonandChilliChickenCounter;
-    newItemPriceFloat = newItemPriceFloat + 2.5;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  LemonMinus.addEventListener("click", () => {
-    if (LemonandChilliChickenCounter > 0) {
-      LemonandChilliChickenCounter = LemonandChilliChickenCounter - 1;
-      LemonNumber.textContent = LemonandChilliChickenCounter;
-      newItemPriceFloat = newItemPriceFloat - 2.5;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  CrispyPlus.addEventListener("click", () => {
-    CrispyChickenCounter = CrispyChickenCounter + 1;
-    CrispyNumber.textContent = CrispyChickenCounter;
-    newItemPriceFloat = newItemPriceFloat + 2.5;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  CrispyMinus.addEventListener("click", () => {
-    if (CrispyChickenCounter > 0) {
-      CrispyChickenCounter = CrispyChickenCounter - 1;
-      CrispyNumber.textContent = CrispyChickenCounter;
-      newItemPriceFloat = newItemPriceFloat - 2.5;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  GoldenPlus.addEventListener("click", () => {
-    GoldenHalloumiVegetarianCounter = GoldenHalloumiVegetarianCounter + 1;
-    GoldenNumber.textContent = GoldenHalloumiVegetarianCounter;
-    newItemPriceFloat = newItemPriceFloat + 2.5;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  GoldenMinus.addEventListener("click", () => {
-    if (GoldenHalloumiVegetarianCounter > 0) {
-      GoldenHalloumiVegetarianCounter = GoldenHalloumiVegetarianCounter - 1;
-      GoldenNumber.textContent = GoldenHalloumiVegetarianCounter;
-      newItemPriceFloat = newItemPriceFloat - 2.5;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  FalafelPlus.addEventListener("click", () => {
-    FalafelCounter = FalafelCounter + 1;
-    FalafelNumber.textContent = FalafelCounter;
-    newItemPriceFloat = newItemPriceFloat + 2.5;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  FalafelMinus.addEventListener("click", () => {
-    if (FalafelCounter > 0) {
-      FalafelCounter = FalafelCounter - 1;
-      FalafelNumber.textContent = FalafelCounter;
-      newItemPriceFloat = newItemPriceFloat - 2.5;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  SteakPlus.addEventListener("click", () => {
-    SteakCounter = SteakCounter + 1;
-    SteakNumber.textContent = SteakCounter;
-    newItemPriceFloat = newItemPriceFloat + 2.5;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  SteakMinus.addEventListener("click", () => {
-    if (SteakCounter > 0) {
-      SteakCounter = SteakCounter - 1;
-      SteakNumber.textContent = SteakCounter;
-      newItemPriceFloat = newItemPriceFloat - 2.5;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  RicottaPlus.addEventListener("click", () => {
-    RicottaCounter = RicottaCounter + 1;
-    RicottaNumber.textContent = RicottaCounter;
-    newItemPriceFloat = newItemPriceFloat + 2.5;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  RicottaMinus.addEventListener("click", () => {
-    if (RicottaCounter > 0) {
-      RicottaCounter = RicottaCounter - 1;
-      RicottaNumber.textContent = RicottaCounter;
-      newItemPriceFloat = newItemPriceFloat - 2.5;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  AvocadoPlus.addEventListener("click", () => {
-    AvocadoCounter = AvocadoCounter + 1;
-    AvocadoNumber.textContent = AvocadoCounter;
-    newItemPriceFloat = newItemPriceFloat + 2.5;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  AvocadoMinus.addEventListener("click", () => {
-    if (AvocadoCounter > 0) {
-      AvocadoCounter = AvocadoCounter - 1;
-      AvocadoNumber.textContent = AvocadoCounter;
-      newItemPriceFloat = newItemPriceFloat - 2.5;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
   /* Add Extra Salads and Vegetables Array */
-  let ExtraSaladArray = [
-    { name: "Charred Sweetcorn", price: 0.75 },
-    { name: "Chopped Pickles", price: 0.75 },
-    { name: "Roasted Red Peppers", price: 0.75 },
-    { name: "Kimchi (Mild)", price: 0.95 },
-    { name: "Black Olives", price: 0.95 },
-    { name: "Smashed Avocado", price: 1.25 },
-    { name: "Seafood", price: 1.25 },
-    { name: "Corn", price: 1.25 },
-    { name: "Tofu", price: 1.25 },
-  ];
 
-  let CharredSweetcornCounter = 0;
-  let ChoppedPicklesCounter = 0;
-  let RoastedRedPeppersCounter = 0;
-  let KimchiMildCounter = 0;
-  let BlackOlivesCounter = 0;
-  let SmashedAvocadoCounter = 0;
-  let SeafoodCounter = 0;
-  let CornCounter = 0;
-  let TofuCounter = 0;
+  fetch(
+    `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/T3EBX67GHEACO7F4L3BD5363`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      let list = "";
+      data[0].modifierLists[1].modifiers.forEach(function (item) {
+        let listSegment = `
+        <li id=${item.id} class="ExtraProteinDiv__ExtraProteinListItem">
+        <div id="${
+          item.id
+        }" class="IngridientsDiv__IngridientsListItem--btn empty"></div>
+    <span class="ExtraProteinDiv__Text">${item.name}</span>
+    <span class="ExtraProteinDiv__Price">+&#8356;${
+      item.price / (100).toFixed(2).slice(0, -3)
+    }</span>
+    </li>
+        `;
+        list += listSegment;
+      });
+
+      ExtraSaladList.innerHTML = list;
+
+      let MealsArray = [];
+
+      let customizeFullBtn = document.querySelectorAll(
+        ".ExtraSaladDiv__ExtraSaladList  li"
+      );
+      customizeFullBtn.forEach((el) => {
+        el.addEventListener("click", function (e) {
+          el.children[0].classList.toggle("empty");
+
+          let newIndexName = e.target.id;
+          console.log(newIndexName);
+          console.log(MealsArray);
+
+          let lastItem = MealsArray.indexOf(newIndexName);
+          if (MealsArray.includes(newIndexName)) {
+            if (lastItem > -1) {
+              MealsArray.splice(lastItem, 1);
+              console.log(MealsArray);
+            }
+          } else {
+            MealsArray.push(newIndexName);
+            console.log(MealsArray);
+          }
+        });
+      });
+    });
 
   /* Add Extra Salads and Vegetables listesi div'i */
   let ExtraSaladDiv = document.createElement("div");
@@ -1097,313 +829,55 @@ function addCustomize(event) {
   ExtraSaladList.classList.add("ExtraSaladDiv__ExtraSaladList");
   ExtraSaladDiv.appendChild(ExtraSaladList);
 
-  /* liste elemanlarının liste içerisine eklenmesi */
-  let ExtraSaladItems = ExtraSaladArray.map(function (item) {
-    return `
-    <li class="ExtraSaladDiv__ExtraSaladListItem">
-    <div class="ExtraSaladDiv__CountBtns">
-      <i id=${item.name
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat(
-          "__minus"
-        )} class="ExtraSaladDiv__CountBtns--minus fas fa-minus"></i>
-      <span id=${item.name
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat("__number")} class="ExtraSaladDiv__CountBtns--number">0</span>
-      <i id=${item.name
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat(
-          "__plus"
-        )} class="ExtraSaladDiv__CountBtns--plus fas fa-plus"></i>
-    </div>
-    <span class="ExtraSaladDiv__Text">${item.name}</span>
-    <span class="ExtraSaladDiv__Price">+&#8356;${item.price}</span>
+  fetch(
+    `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/T3EBX67GHEACO7F4L3BD5363`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      let list = "";
+      data[0].modifierLists[2].modifiers.forEach(function (item) {
+        let listSegment = `
+        <li id=${item.id} class="ExtraProteinDiv__ExtraProteinListItem">
+        <div id="${
+          item.id
+        }" class="IngridientsDiv__IngridientsListItem--btn empty"></div>
+    <span class="ExtraProteinDiv__Text">${item.name}</span>
+    <span class="ExtraProteinDiv__Price">+&#8356;${
+      item.price / (100).toFixed(2).slice(0, -3)
+    }</span>
     </li>
-    `;
-  }).join("");
-  ExtraSaladList.innerHTML = ExtraSaladItems;
+        `;
+        list += listSegment;
+      });
 
-  /* CharredSweetcorn */
+      ExtraSauceList.innerHTML = list;
 
-  let CharredSweetcornNumber = document.querySelector(
-    "#CharredSweetcorn__number"
-  );
-  let CharredSweetcornPlus = document.querySelector("#CharredSweetcorn__plus");
-  let CharredSweetcornMinus = document.querySelector(
-    "#CharredSweetcorn__minus"
-  );
+      let SauceArray = [];
 
-  CharredSweetcornPlus.addEventListener("click", () => {
-    CharredSweetcornCounter = CharredSweetcornCounter + 1;
-    CharredSweetcornNumber.textContent = CharredSweetcornCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
+      let customizeFullBtn = document.querySelectorAll(
+        ".ExtraSauceDiv__ExtraSauceList  li"
+      );
+      customizeFullBtn.forEach((el) => {
+        el.addEventListener("click", function (e) {
+          el.children[0].classList.toggle("empty");
 
-  CharredSweetcornMinus.addEventListener("click", () => {
-    if (CharredSweetcornCounter > 0) {
-      CharredSweetcornCounter = CharredSweetcornCounter - 1;
-      CharredSweetcornNumber.textContent = CharredSweetcornCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
+          let newIndexName = e.target.id;
+          console.log(newIndexName);
+          console.log(SauceArray);
 
-  /* ChoppedPickles */
-
-  let ChoppedPicklesNumber = document.querySelector("#ChoppedPickles__number");
-  let ChoppedPicklesPlus = document.querySelector("#ChoppedPickles__plus");
-  let ChoppedPicklesMinus = document.querySelector("#ChoppedPickles__minus");
-
-  ChoppedPicklesPlus.addEventListener("click", () => {
-    ChoppedPicklesCounter = ChoppedPicklesCounter + 1;
-    ChoppedPicklesNumber.textContent = ChoppedPicklesCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  ChoppedPicklesMinus.addEventListener("click", () => {
-    if (ChoppedPicklesCounter > 0) {
-      ChoppedPicklesCounter = ChoppedPicklesCounter - 1;
-      ChoppedPicklesNumber.textContent = ChoppedPicklesCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* RoastedRedPeppers */
-
-  let RoastedRedPeppersNumber = document.querySelector(
-    "#RoastedRedPeppers__number"
-  );
-  let RoastedRedPeppersPlus = document.querySelector(
-    "#RoastedRedPeppers__plus"
-  );
-  let RoastedRedPeppersMinus = document.querySelector(
-    "#RoastedRedPeppers__minus"
-  );
-
-  RoastedRedPeppersPlus.addEventListener("click", () => {
-    RoastedRedPeppersCounter = RoastedRedPeppersCounter + 1;
-    RoastedRedPeppersNumber.textContent = RoastedRedPeppersCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  RoastedRedPeppersMinus.addEventListener("click", () => {
-    if (RoastedRedPeppersCounter > 0) {
-      RoastedRedPeppersCounter = RoastedRedPeppersCounter - 1;
-      RoastedRedPeppersNumber.textContent = RoastedRedPeppersCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* KimchiMild */
-
-  let KimchiMildNumber = document.querySelector("#KimchiMild__number");
-  let KimchiMildPlus = document.querySelector("#KimchiMild__plus");
-  let KimchiMildMinus = document.querySelector("#KimchiMild__minus");
-
-  KimchiMildPlus.addEventListener("click", () => {
-    KimchiMildCounter = KimchiMildCounter + 1;
-    KimchiMildNumber.textContent = KimchiMildCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.95;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  KimchiMildMinus.addEventListener("click", () => {
-    if (KimchiMildCounter > 0) {
-      KimchiMildCounter = KimchiMildCounter - 1;
-      KimchiMildNumber.textContent = KimchiMildCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.95;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* BlackOlives */
-
-  let BlackOlivesNumber = document.querySelector("#BlackOlives__number");
-  let BlackOlivesPlus = document.querySelector("#BlackOlives__plus");
-  let BlackOlivesMinus = document.querySelector("#BlackOlives__minus");
-
-  BlackOlivesPlus.addEventListener("click", () => {
-    BlackOlivesCounter = BlackOlivesCounter + 1;
-    BlackOlivesNumber.textContent = BlackOlivesCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.95;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  BlackOlivesMinus.addEventListener("click", () => {
-    if (BlackOlivesCounter > 0) {
-      BlackOlivesCounter = BlackOlivesCounter - 1;
-      BlackOlivesNumber.textContent = BlackOlivesCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.95;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* SmashedAvocado */
-
-  let SmashedAvocadoNumber = document.querySelector("#SmashedAvocado__number");
-  let SmashedAvocadoPlus = document.querySelector("#SmashedAvocado__plus");
-  let SmashedAvocadoMinus = document.querySelector("#SmashedAvocado__minus");
-
-  SmashedAvocadoPlus.addEventListener("click", () => {
-    SmashedAvocadoCounter = SmashedAvocadoCounter + 1;
-    SmashedAvocadoNumber.textContent = SmashedAvocadoCounter;
-    newItemPriceFloat = newItemPriceFloat + 1.25;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  SmashedAvocadoMinus.addEventListener("click", () => {
-    if (SmashedAvocadoCounter > 0) {
-      SmashedAvocadoCounter = SmashedAvocadoCounter - 1;
-      SmashedAvocadoNumber.textContent = SmashedAvocadoCounter;
-      newItemPriceFloat = newItemPriceFloat - 1.25;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* Seafood */
-
-  let SeafoodNumber = document.querySelector("#Seafood__number");
-  let SeafoodPlus = document.querySelector("#Seafood__plus");
-  let SeafoodMinus = document.querySelector("#Seafood__minus");
-
-  SeafoodPlus.addEventListener("click", () => {
-    SeafoodCounter = SeafoodCounter + 1;
-    SeafoodNumber.textContent = SeafoodCounter;
-    newItemPriceFloat = newItemPriceFloat + 1.25;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  SeafoodMinus.addEventListener("click", () => {
-    if (SeafoodCounter > 0) {
-      SeafoodCounter = SeafoodCounter - 1;
-      SeafoodNumber.textContent = SeafoodCounter;
-      newItemPriceFloat = newItemPriceFloat - 1.25;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* Corn */
-
-  let CornNumber = document.querySelector("#Corn__number");
-  let CornPlus = document.querySelector("#Corn__plus");
-  let CornMinus = document.querySelector("#Corn__minus");
-
-  CornPlus.addEventListener("click", () => {
-    CornCounter = CornCounter + 1;
-    CornNumber.textContent = CornCounter;
-    newItemPriceFloat = newItemPriceFloat + 1.25;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  CornMinus.addEventListener("click", () => {
-    if (CornCounter > 0) {
-      CornCounter = CornCounter - 1;
-      CornNumber.textContent = CornCounter;
-      newItemPriceFloat = newItemPriceFloat - 1.25;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* Tofu */
-
-  let TofuNumber = document.querySelector("#Tofu__number");
-  let TofuPlus = document.querySelector("#Tofu__plus");
-  let TofuMinus = document.querySelector("#Tofu__minus");
-
-  TofuPlus.addEventListener("click", () => {
-    TofuCounter = TofuCounter + 1;
-    TofuNumber.textContent = TofuCounter;
-    newItemPriceFloat = newItemPriceFloat + 1.25;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  TofuMinus.addEventListener("click", () => {
-    if (TofuCounter > 0) {
-      TofuCounter = TofuCounter - 1;
-      TofuNumber.textContent = TofuCounter;
-      newItemPriceFloat = newItemPriceFloat - 1.25;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* Add Extra Sauce Array */
-  let ExtraSauceArray = [
-    "Garlic Sauce",
-    "Mayonnaise",
-    "Sour Cream",
-    "Smoky BBQ",
-    "Tomato Ketchup",
-    "Sriracha Hot Sauce Fermented Hot Sauce (Mild)",
-    "Ranch",
-    "Burger",
-    "Mustard",
-  ];
-
-  let GarlicSauceCounter = 0;
-  let MayonnaiseCounter = 0;
-  let SourCreamCounter = 0;
-  let SmokyBBQCounter = 0;
-  let TomatoKetchupCounter = 0;
-  let SrirachaHotSauceFermentedHotSauceMildCounter = 0;
-  let RanchCounter = 0;
-  let BurgerCounter = 0;
-  let MustardCounter = 0;
+          let lastItem = SauceArray.indexOf(newIndexName);
+          if (SauceArray.includes(newIndexName)) {
+            if (lastItem > -1) {
+              SauceArray.splice(lastItem, 1);
+              console.log(SauceArray);
+            }
+          } else {
+            SauceArray.push(newIndexName);
+            console.log(SauceArray);
+          }
+        });
+      });
+    });
 
   /* Add Extra Sauce listesi div'i */
   let ExtraSauceDiv = document.createElement("div");
@@ -1416,296 +890,58 @@ function addCustomize(event) {
   ExtraSauceDiv.appendChild(ExtraSauceList);
 
   /* liste elemanlarının liste içerisine eklenmesi */
-  let ExtraSauceItems = ExtraSauceArray.map(function (item) {
-    return `
-    <li class="ExtraSauceDiv__ExtraSauceListItem">
-    <div class="ExtraSauceDiv__CountBtns">
-      <i id=${item
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat(
-          "__minus"
-        )} class="ExtraSauceDiv__CountBtns--minus fas fa-minus"></i>
-      <span id=${item
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat("__number")} class="ExtraSauceDiv__CountBtns--number">0</span>
-      <i id=${item
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat(
-          "__plus"
-        )} class="ExtraSauceDiv__CountBtns--plus fas fa-plus"></i>
-    </div>
-    <span class="ExtraSauceDiv__Text">${item}</span>
-    <span class="ExtraSauceDiv__Price">+&#8356;0.75</span>
-    </li>
-    `;
-  }).join("");
-  ExtraSauceList.innerHTML = ExtraSauceItems;
-
-  /* GarlicSauce */
-
-  let GarlicSauceNumber = document.querySelector("#GarlicSauce__number");
-  let GarlicSaucePlus = document.querySelector("#GarlicSauce__plus");
-  let GarlicSauceMinus = document.querySelector("#GarlicSauce__minus");
-
-  GarlicSaucePlus.addEventListener("click", () => {
-    GarlicSauceCounter = GarlicSauceCounter + 1;
-    GarlicSauceNumber.textContent = GarlicSauceCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  GarlicSauceMinus.addEventListener("click", () => {
-    if (GarlicSauceCounter > 0) {
-      GarlicSauceCounter = GarlicSauceCounter - 1;
-      GarlicSauceNumber.textContent = GarlicSauceCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* Mayonnaise */
-
-  let MayonnaiseNumber = document.querySelector("#Mayonnaise__number");
-  let MayonnaisePlus = document.querySelector("#Mayonnaise__plus");
-  let MayonnaiseMinus = document.querySelector("#Mayonnaise__minus");
-
-  MayonnaisePlus.addEventListener("click", () => {
-    MayonnaiseCounter = MayonnaiseCounter + 1;
-    MayonnaiseNumber.textContent = MayonnaiseCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  MayonnaiseMinus.addEventListener("click", () => {
-    if (MayonnaiseCounter > 0) {
-      MayonnaiseCounter = MayonnaiseCounter - 1;
-      MayonnaiseNumber.textContent = MayonnaiseCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* SourCream */
-
-  let SourCreamNumber = document.querySelector("#SourCream__number");
-  let SourCreamPlus = document.querySelector("#SourCream__plus");
-  let SourCreamMinus = document.querySelector("#SourCream__minus");
-
-  SourCreamPlus.addEventListener("click", () => {
-    SourCreamCounter = SourCreamCounter + 1;
-    SourCreamNumber.textContent = SourCreamCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  SourCreamMinus.addEventListener("click", () => {
-    if (SourCreamCounter > 0) {
-      SourCreamCounter = SourCreamCounter - 1;
-      SourCreamNumber.textContent = SourCreamCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* SmokyBBQ */
-
-  let SmokyBBQNumber = document.querySelector("#SmokyBBQ__number");
-  let SmokyBBQPlus = document.querySelector("#SmokyBBQ__plus");
-  let SmokyBBQMinus = document.querySelector("#SmokyBBQ__minus");
-
-  SmokyBBQPlus.addEventListener("click", () => {
-    SmokyBBQCounter = SmokyBBQCounter + 1;
-    SmokyBBQNumber.textContent = SmokyBBQCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  SmokyBBQMinus.addEventListener("click", () => {
-    if (SmokyBBQCounter > 0) {
-      SmokyBBQCounter = SmokyBBQCounter - 1;
-      SmokyBBQNumber.textContent = SmokyBBQCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* TomatoKetchup */
-
-  let TomatoKetchupNumber = document.querySelector("#TomatoKetchup__number");
-  let TomatoKetchupPlus = document.querySelector("#TomatoKetchup__plus");
-  let TomatoKetchupMinus = document.querySelector("#TomatoKetchup__minus");
-
-  TomatoKetchupPlus.addEventListener("click", () => {
-    TomatoKetchupCounter = TomatoKetchupCounter + 1;
-    TomatoKetchupNumber.textContent = TomatoKetchupCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  TomatoKetchupMinus.addEventListener("click", () => {
-    if (TomatoKetchupCounter > 0) {
-      TomatoKetchupCounter = TomatoKetchupCounter - 1;
-      TomatoKetchupNumber.textContent = TomatoKetchupCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* SrirachaHotSauceFermentedHotSauceMild */
-
-  let SrirachaHotSauceFermentedHotSauceMildNumber = document.querySelector(
-    "#SrirachaHotSauceFermentedHotSauceMild__number"
-  );
-  let SrirachaHotSauceFermentedHotSauceMildPlus = document.querySelector(
-    "#SrirachaHotSauceFermentedHotSauceMild__plus"
-  );
-  let SrirachaHotSauceFermentedHotSauceMildMinus = document.querySelector(
-    "#SrirachaHotSauceFermentedHotSauceMild__minus"
-  );
-
-  SrirachaHotSauceFermentedHotSauceMildPlus.addEventListener("click", () => {
-    SrirachaHotSauceFermentedHotSauceMildCounter =
-      SrirachaHotSauceFermentedHotSauceMildCounter + 1;
-    SrirachaHotSauceFermentedHotSauceMildNumber.textContent =
-      SrirachaHotSauceFermentedHotSauceMildCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  SrirachaHotSauceFermentedHotSauceMildMinus.addEventListener("click", () => {
-    if (SrirachaHotSauceFermentedHotSauceMildCounter > 0) {
-      SrirachaHotSauceFermentedHotSauceMildCounter =
-        SrirachaHotSauceFermentedHotSauceMildCounter - 1;
-      SrirachaHotSauceFermentedHotSauceMildNumber.textContent =
-        SrirachaHotSauceFermentedHotSauceMildCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* Ranch */
-
-  let RanchNumber = document.querySelector("#Ranch__number");
-  let RanchPlus = document.querySelector("#Ranch__plus");
-  let RanchMinus = document.querySelector("#Ranch__minus");
-
-  RanchPlus.addEventListener("click", () => {
-    RanchCounter = RanchCounter + 1;
-    RanchNumber.textContent = RanchCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  RanchMinus.addEventListener("click", () => {
-    if (RanchCounter > 0) {
-      RanchCounter = RanchCounter - 1;
-      RanchNumber.textContent = RanchCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* Burger */
-
-  let BurgerNumber = document.querySelector("#Burger__number");
-  let BurgerPlus = document.querySelector("#Burger__plus");
-  let BurgerMinus = document.querySelector("#Burger__minus");
-
-  BurgerPlus.addEventListener("click", () => {
-    BurgerCounter = BurgerCounter + 1;
-    BurgerNumber.textContent = BurgerCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  BurgerMinus.addEventListener("click", () => {
-    if (BurgerCounter > 0) {
-      BurgerCounter = BurgerCounter - 1;
-      BurgerNumber.textContent = BurgerCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
-
-  /* Mustard */
-
-  let MustardNumber = document.querySelector("#Mustard__number");
-  let MustardPlus = document.querySelector("#Mustard__plus");
-  let MustardMinus = document.querySelector("#Mustard__minus");
-
-  MustardPlus.addEventListener("click", () => {
-    MustardCounter = MustardCounter + 1;
-    MustardNumber.textContent = MustardCounter;
-    newItemPriceFloat = newItemPriceFloat + 0.75;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-  });
-
-  MustardMinus.addEventListener("click", () => {
-    if (MustardCounter > 0) {
-      MustardCounter = MustardCounter - 1;
-      MustardNumber.textContent = MustardCounter;
-      newItemPriceFloat = newItemPriceFloat - 0.75;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-    }
-  });
 
   /* Make Deal with Drink and Brownie Array */
-  let ExtraDealArray = [
-    { name: "Make Deal with Drink and Brownie", price: 3.95 },
-  ];
 
-  let MakeDealwithDrinkandBrownieCounter = 0;
+  fetch(
+    `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/T3EBX67GHEACO7F4L3BD5363`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      let list = "";
+      data[0].modifierLists[3].modifiers.forEach(function (item) {
+        let listSegment = `
+        <li id=${item.id} class="ExtraProteinDiv__ExtraProteinListItem">
+        <div id="${
+          item.id
+        }" class="IngridientsDiv__IngridientsListItem--btn empty"></div>
+    <span class="ExtraProteinDiv__Text">${item.name}</span>
+    <span class="ExtraProteinDiv__Price">+&#8356;${
+      item.price / (100).toFixed(2).slice(0, -3)
+    }</span>
+    </li>
+        `;
+        list += listSegment;
+      });
+
+      ExtraDealList.innerHTML = list;
+
+      let DealArray = [];
+
+      let customizeFullBtn = document.querySelectorAll(
+        ".ExtraDealDiv__ExtraDealList  li"
+      );
+      customizeFullBtn.forEach((el) => {
+        el.addEventListener("click", function (e) {
+          el.children[0].classList.toggle("empty");
+
+          let newIndexName = e.target.id;
+          console.log(newIndexName);
+          console.log(DealArray);
+
+          let lastItem = DealArray.indexOf(newIndexName);
+          if (DealArray.includes(newIndexName)) {
+            if (lastItem > -1) {
+              DealArray.splice(lastItem, 1);
+              console.log(DealArray);
+            }
+          } else {
+            DealArray.push(newIndexName);
+            console.log(DealArray);
+          }
+        });
+      });
+    });
 
   /* Add Extra Deal listesi div'i */
   let ExtraDealDiv = document.createElement("div");
@@ -1717,178 +953,136 @@ function addCustomize(event) {
   ExtraDealList.classList.add("ExtraDealDiv__ExtraDealList");
   ExtraDealDiv.appendChild(ExtraDealList);
 
-  /* liste elemanlarının liste içerisine eklenmesi */
-  let ExtraDealItems = ExtraDealArray.map(function (item) {
-    return `
-    <li class="ExtraDealDiv__ExtraDealListItem">
-    <div class="ExtraDealDiv__CountBtns">
-      <i id=${item.name
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat(
-          "__minus"
-        )} class="ExtraDealDiv__CountBtns--minus fas fa-minus"></i>
-      <span id=${item.name
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat("__number")} class="ExtraDealDiv__CountBtns--number">0</span>
-      <i id=${item.name
-        .split(" ")
-        .join("")
-        .split("(")
-        .join("")
-        .split(")")
-        .join("")
-        .concat(
-          "__plus"
-        )} class="ExtraDealDiv__CountBtns--plus fas fa-plus"></i>
-    </div>
-    <span class="ExtraDealDiv__Text">${item.name}</span>
-    <span class="ExtraDealDiv__Price">+&#8356;${item.price}</span>
+  fetch(
+    `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/T3EBX67GHEACO7F4L3BD5363`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      let list = "";
+      data[0].modifierLists[4].modifiers.forEach(function (item) {
+        let listSegment = `
+        <li id=${item.id} class="ExtraPotatoDiv__ExtraPotatoListItem">
+        <div id="${
+          item.id
+        }" class="IngridientsDiv__IngridientsListItem--btn empty"></div>
+    <span class="ExtraPotatoDiv__Text">${item.name}</span>
+    <span class="ExtraPotatoDiv__Price">+&#8356;${
+      item.price / (100).toFixed(2).slice(0, -3)
+    }</span>
     </li>
-    `;
-  }).join("");
-  ExtraDealList.innerHTML = ExtraDealItems;
+        `;
+        list += listSegment;
+      });
 
-  /* MakeDealwithDrinkandBrownie */
+      ExtraPotatoList.innerHTML = list;
 
-  let MakeDealwithDrinkandBrownieNumber = document.querySelector(
-    "#MakeDealwithDrinkandBrownie__number"
-  );
-  let MakeDealwithDrinkandBrowniePlus = document.querySelector(
-    "#MakeDealwithDrinkandBrownie__plus"
-  );
-  let MakeDealwithDrinkandBrownieMinus = document.querySelector(
-    "#MakeDealwithDrinkandBrownie__minus"
-  );
+      let PotatoArray = [];
 
-  MakeDealwithDrinkandBrowniePlus.addEventListener("click", () => {
-    MakeDealwithDrinkandBrownieCounter = MakeDealwithDrinkandBrownieCounter + 1;
-    MakeDealwithDrinkandBrownieNumber.textContent =
-      MakeDealwithDrinkandBrownieCounter;
-    newItemPriceFloat = newItemPriceFloat + 3.5;
-    MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-      Math.round(newItemPriceFloat * 100) / 100
-    ).toFixed(2)}`;
-    console.log(newItemPriceFloat);
-  });
+      let customizeFullBtn = document.querySelectorAll(
+        ".ExtraPotatoDiv__ExtraPotatoList  li"
+      );
+      customizeFullBtn.forEach((el) => {
+        el.addEventListener("click", function (e) {
+          el.children[0].classList.toggle("empty");
 
-  MakeDealwithDrinkandBrownieMinus.addEventListener("click", () => {
-    if (MakeDealwithDrinkandBrownieCounter > 0) {
-      MakeDealwithDrinkandBrownieCounter =
-        MakeDealwithDrinkandBrownieCounter - 1;
-      MakeDealwithDrinkandBrownieNumber.textContent =
-        MakeDealwithDrinkandBrownieCounter;
-      newItemPriceFloat = newItemPriceFloat - 3.5;
-      MainItemDiv__AddBasketBtnDOM.textContent = `CheckOut £${(
-        Math.round(newItemPriceFloat * 100) / 100
-      ).toFixed(2)}`;
-      console.log(newItemPriceFloat);
-    }
-  });
+          let newIndexName = e.target.id;
+          console.log(newIndexName);
+          console.log(PotatoArray);
 
-  let DrinkArray = [
-    "San Pellegrino Lemonade",
-    "San Pellegrino Blood Orange",
-    "Coca Cola",
-    "Diet Coca Cola",
-    "Still Water",
-    "Sparkling Water",
-  ];
+          let lastItem = PotatoArray.indexOf(newIndexName);
+          if (PotatoArray.includes(newIndexName)) {
+            if (lastItem > -1) {
+              PotatoArray.splice(lastItem, 1);
+              console.log(PotatoArray);
+            }
+          } else {
+            PotatoArray.push(newIndexName);
+            console.log(PotatoArray);
+          }
+        });
+      });
+    });
 
-  let DrinkDiv = document.createElement("div");
-  DrinkDiv.classList.add("DrinkDiv");
-  ExtraDealDiv.appendChild(DrinkDiv);
+  /* Add Extra Potato listesi div'i */
+  let ExtraPotatoDiv = document.createElement("div");
+  ExtraPotatoDiv.classList.add("ExtraPotatoDiv");
+  MainItemDiv.appendChild(ExtraPotatoDiv);
 
-  let DrinkHeading = document.createElement("h1");
-  DrinkHeading.classList.add("DrinkDiv__DrinkHeading");
-  DrinkHeading.textContent = `Choice of Drink`;
-  DrinkDiv.appendChild(DrinkHeading);
+  /* Add Extra Potato listesinin kendisi */
+  let ExtraPotatoList = document.createElement("ul");
+  ExtraPotatoList.classList.add("ExtraPotatoDiv__ExtraPotatoList");
+  ExtraPotatoDiv.appendChild(ExtraPotatoList);
 
-  let DrinkParag = document.createElement("p");
-  DrinkParag.classList.add("DrinkDiv__DrinkParag");
-  DrinkParag.textContent = `Required`;
-  DrinkDiv.appendChild(DrinkParag);
+  fetch(
+    `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/T3EBX67GHEACO7F4L3BD5363`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      let list = "";
+      data[0].modifierLists[5].modifiers.forEach(function (item) {
+        let listSegment = `
+        <li id=${item.id} class="ExtraToppersDiv__ExtraToppersListItem">
+        <div id="${
+          item.id
+        }" class="IngridientsDiv__IngridientsListItem--btn empty"></div>
+    <span class="ExtraToppersDiv__Text">${item.name}</span>
+    <span class="ExtraToppersDiv__Price">+&#8356;${
+      item.price / (100).toFixed(2).slice(0, -3)
+    }</span>
+    </li>
+        `;
+        list += listSegment;
+      });
 
-  /* listenin kendisi */
-  let DrinkList = document.createElement("ul");
-  DrinkList.classList.add("DrinkDiv__DrinkList");
-  DrinkDiv.appendChild(DrinkList);
+      ExtraToppersList.innerHTML = list;
+
+      let ToppersArray = [];
+
+      let customizeFullBtn = document.querySelectorAll(
+        ".ExtraToppersDiv__ExtraToppersList  li"
+      );
+      customizeFullBtn.forEach((el) => {
+        el.addEventListener("click", function (e) {
+          el.children[0].classList.toggle("empty");
+
+          let newIndexName = e.target.id;
+          console.log(newIndexName);
+          console.log(ToppersArray);
+
+          let lastItem = ToppersArray.indexOf(newIndexName);
+          if (ToppersArray.includes(newIndexName)) {
+            if (lastItem > -1) {
+              ToppersArray.splice(lastItem, 1);
+              console.log(ToppersArray);
+            }
+          } else {
+            ToppersArray.push(newIndexName);
+            console.log(ToppersArray);
+          }
+        });
+      });
+    });
+
+  /* Add Extra Toppers listesi div'i */
+  let ExtraToppersDiv = document.createElement("div");
+  ExtraToppersDiv.classList.add("ExtraToppersDiv");
+  MainItemDiv.appendChild(ExtraToppersDiv);
+
+  /* Add Extra Toppers listesinin kendisi */
+  let ExtraToppersList = document.createElement("ul");
+  ExtraToppersList.classList.add("ExtraToppersDiv__ExtraToppersList");
+  ExtraToppersDiv.appendChild(ExtraToppersList);
 
   /* liste elemanlarının liste içerisine eklenmesi */
-  let DrinkItems = DrinkArray.map(function (item) {
-    return `
-    <li class="DrinkDiv__DrinkListItem">
-    <div id="${item}" class="DrinkDiv__DrinkListItem--btn"></div>
-    ${item}</li>
-    `;
-  }).join("");
-  DrinkList.innerHTML = DrinkItems;
-
-  const DrinklistDOM = document.querySelector(".DrinkDiv__DrinkList");
-
-  DrinklistDOM.addEventListener("click", activeFunctionDrink);
-
-  let lastDrinkDom;
-
-  function activeFunctionDrink(event) {
-    if (document.querySelector(".activeDrink") === null) {
-      event.target.classList.add("activeDrink");
-      document.querySelector(".activeDrink").classList.remove("activeDrink");
-      event.target.classList.add("activeDrink");
-      let lastDrink = event.target.parentNode.innerText;
-      lastDrinkDom = lastDrink;
-    } else {
-      document.querySelector(".activeDrink").classList.remove("activeDrink");
-      event.target.classList.add("activeDrink");
-      let lastDrink = event.target.parentNode.innerText;
-      lastDrinkDom = lastDrink;
-    }
-  }
 
   let checkOutDOM = document.querySelector(".MainItemDiv__AddBasketBtn");
   checkOutDOM.addEventListener("click", function (event) {
     menu__heading.textContent = `Basket`;
-    let ExtraProteinTotalPrice =
-      BeefMeatballswithTomatoSouceCounter * 2.5 +
-      RoastedChorizoCounter * 2.5 +
-      LemonandChilliChickenCounter * 2.5 +
-      CrispyChickenCounter * 2.5 +
-      GoldenHalloumiVegetarianCounter * 2.5 +
-      FalafelCounter * 2.5 +
-      SteakCounter * 2.5 +
-      RicottaCounter * 2.5 +
-      AvocadoCounter * 2.5;
+    let ExtraProteinTotalPrice = 0;
 
-    let ExtraSaladTotalPrice =
-      CharredSweetcornCounter * 0.75 +
-      ChoppedPicklesCounter * 0.75 +
-      RoastedRedPeppersCounter * 0.75 +
-      KimchiMildCounter * 0.95 +
-      BlackOlivesCounter * 0.95 +
-      SmashedAvocadoCounter * 1.25 +
-      SeafoodCounter * 1.25 +
-      TofuCounter * 1.25 +
-      CornCounter * 1.25;
+    let ExtraSaladTotalPrice = 0;
 
-    let ExtraSauceTotalPrice =
-      GarlicSauceCounter * 0.75 +
-      MayonnaiseCounter * 0.75 +
-      SourCreamCounter * 0.75 +
-      SmokyBBQCounter * 0.75 +
-      TomatoKetchupCounter * 0.75 +
-      SrirachaHotSauceFermentedHotSauceMildCounter * 0.75 +
-      RanchCounter * 2.5 +
-      BurgerCounter * 2.5 +
-      MustardCounter * 2.5;
+    let ExtraSauceTotalPrice = 0;
 
     customizeSection.style.transform = "translateY(100%)";
     customizeSection__closeIcon.style.transform = "translateY(-300%)";
@@ -1964,119 +1158,16 @@ function addCustomize(event) {
       `₤` + (Math.round(newItemPriceFloat * 100) / 100).toFixed(2);
     itemCard.appendChild(itemPrice);
 
-    IngridientsDiv.style.transform = "translateY(0%)";
     ExtraProteinDiv.style.transform = "translateY(0%)";
     ExtraSaladDiv.style.transform = "translateY(0%)";
     ExtraSauceDiv.style.transform = "translateY(0%)";
-    RemoveHeading.textContent = `Remove Elements`;
-    RemoveParag.textContent = `Choose what you remove`;
+    ExtraDealDiv.style.transform = "translateY(0%)";
+    ExtraPotatoDiv.style.transform = "translateY(0%)";
+    ExtraToppersDiv.style.transform = "translateY(0%)";
+    RemoveHeading.textContent = `Extra Protein`;
 
     customizeSection.firstElementChild.remove();
     BtnsDiv.style.display = "flex";
-
-    let ExtraProteinCounters = [
-      {
-        counter: BeefMeatballswithTomatoSouceCounter,
-        name: "Beef Meatballs with Tomato Souce",
-        number: BeefNumber,
-      },
-      {
-        counter: RoastedChorizoCounter,
-        name: "Roasted Chorizo",
-        number: RoastedNumber,
-      },
-      {
-        counter: LemonandChilliChickenCounter,
-        name: "Lemon and Chilli Chicken",
-        number: LemonNumber,
-      },
-      {
-        counter: CrispyChickenCounter,
-        name: "Crispy Chicken",
-        number: CrispyNumber,
-      },
-      {
-        counter: GoldenHalloumiVegetarianCounter,
-        name: "Golden Halloumi Vegetarian",
-        number: GoldenNumber,
-      },
-      { counter: FalafelCounter, name: "Falafel", number: FalafelNumber },
-      { counter: SteakCounter, name: "Steak", number: SteakNumber },
-      { counter: RicottaCounter, name: "Ricotta", number: RicottaNumber },
-      { counter: AvocadoCounter, name: "Avocado", number: AvocadoNumber },
-    ];
-
-    let ExtraSaladCounters = [
-      {
-        counter: CharredSweetcornCounter,
-        name: "Charred Sweetcorn",
-        number: CharredSweetcornNumber,
-      },
-      {
-        counter: ChoppedPicklesCounter,
-        name: "Chopped Pickles",
-        number: ChoppedPicklesNumber,
-      },
-      {
-        counter: RoastedRedPeppersCounter,
-        name: "Roasted Red Peppers",
-        number: RoastedRedPeppersNumber,
-      },
-      {
-        counter: KimchiMildCounter,
-        name: "Kimchi (Mild)",
-        number: KimchiMildNumber,
-      },
-      {
-        counter: BlackOlivesCounter,
-        name: "Black Olives",
-        number: BlackOlivesNumber,
-      },
-      {
-        counter: SmashedAvocadoCounter,
-        name: "Smashed Avocado",
-        number: SmashedAvocadoNumber,
-      },
-      { counter: SeafoodCounter, name: "Seafood", number: SeafoodNumber },
-      { counter: TofuCounter, name: "Tofu", number: TofuNumber },
-      { counter: CornCounter, name: "Corn", number: CornNumber },
-    ];
-
-    let ExtraSauceCounters = [
-      {
-        counter: GarlicSauceCounter,
-        name: "Garlic Sauce",
-        number: GarlicSauceNumber,
-      },
-      {
-        counter: MayonnaiseCounter,
-        name: "Mayonnaise",
-        number: MayonnaiseNumber,
-      },
-      {
-        counter: SourCreamCounter,
-        name: "Sour Cream",
-        number: SourCreamNumber,
-      },
-      {
-        counter: SmokyBBQCounter,
-        name: "Smoky BBQ",
-        number: SmokyBBQNumber,
-      },
-      {
-        counter: TomatoKetchupCounter,
-        name: "Tomato Ketchup",
-        number: TomatoKetchupNumber,
-      },
-      {
-        counter: SrirachaHotSauceFermentedHotSauceMildCounter,
-        name: "Sriracha Hot Sauce Fermented Hot Sauce (Mild)",
-        number: SrirachaHotSauceFermentedHotSauceMildNumber,
-      },
-      { counter: RanchCounter, name: "Ranch", number: RanchNumber },
-      { counter: BurgerCounter, name: "Burger", number: BurgerNumber },
-      { counter: MustardCounter, name: "Mustard", number: MustardNumber },
-    ];
 
     let ExtraProteinBasketArray = [];
     let ExtraSaladBasketArray = [];
@@ -2084,76 +1175,17 @@ function addCustomize(event) {
 
     //? PROTEIN SECTION
 
-    ExtraProteinCounters.forEach(function (item) {
-      if (item.counter > 0) {
-        ExtraProteinBasketArray.push(item.name);
-      } else {
-      }
-    });
-
-    ExtraProteinCounters.forEach(function (item) {
-      item.counter = 0;
-    });
-
-    ExtraProteinCounters.forEach(function (item) {
-      item.number.textContent = item.counter;
-      /* BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter; */
-    });
-
-    //? SALAD SECTION
-
-    ExtraSaladCounters.forEach(function (item) {
-      if (item.counter > 0) {
-        ExtraSaladBasketArray.push(item.name);
-      } else {
-      }
-    });
-
-    ExtraSaladCounters.forEach(function (item) {
-      item.counter = 0;
-    });
-
-    ExtraSaladCounters.forEach(function (item) {
-      item.number.textContent = item.counter;
-      /* BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter; */
-    });
-
-    //? SAUCE SECTION
-
-    ExtraSauceCounters.forEach(function (item) {
-      if (item.counter > 0) {
-        ExtraSauceBasketArray.push(item.name);
-      } else {
-      }
-    });
-
-    ExtraSauceCounters.forEach(function (item) {
-      item.counter = 0;
-    });
-
-    ExtraSauceCounters.forEach(function (item) {
-      item.number.textContent = item.counter;
-      //! BeefNumber.textContent = BeefMeatballswithTomatoSouceCounter;
-    });
-
     //*IngridientsArray
-    itemParag.innerText = IngridientsArray.join(" ");
 
     itemParag.innerHTML = `
-    <p class="customizeSection__basketParag">${(itemParag.innerText =
-      IngridientsArray.join(" "))}</p>
     <h1 class="customizeSection__basketHeading" >Add Extra Protein (£${ExtraProteinTotalPrice})</h1>
     <p>${ExtraProteinBasketArray.join(", ")}</p>
       <h1 class="customizeSection__basketHeading">Add Extra Salads and Vegetables (£${ExtraSaladTotalPrice})</h1>
       <p>${ExtraSaladBasketArray.join(", ")}</p>
       <h1 class="customizeSection__basketHeading">Add Extra Sauce (£${ExtraSauceTotalPrice})</h1>
       <p>${ExtraSauceBasketArray.join(", ")}</p>
-      <h1 class="customizeSection__basketHeading">Make it a Meal Deal  (£${
-        MakeDealwithDrinkandBrownieCounter * 3.95
-      })</h1>
-      <p class="customizeSection__basketParag">Meal Deal with Drink and Brownie, Choice of Drink, ${
-        lastDrinkDom !== undefined ? lastDrinkDom : ""
-      }</p> 
+     
+      
     `;
 
     //* vertical div
