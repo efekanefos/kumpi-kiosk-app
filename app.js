@@ -69,6 +69,36 @@ const menu__heading = document.querySelector(".menu__heading");
 let newArr = [];
 //? Her yeni ürün eklendiğinde toplam fiyatın hesaplanması için eklenen ürünlerin fiyatlarının toplandığı Array
 
+document.addEventListener("DOMContentLoaded", function () {
+  fetch(
+    `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/OPAKOQNIBN6EO34HYL4YXKNI`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      let card = "";
+      data.forEach(function (item) {
+        let cardSegment = `
+        <div id=${item.id} class="shop__productSection--card">
+    <img id="OPAKOQNIBN6EO34HYL4YXKNI" class="shop__productSection--image" src="${
+      item.imageUrl
+    }" />
+    <h1 class="shop__productSection--cardHeading">${item.name}</h1>
+    <p class="shop__productSection--cardParag">${
+      item.description === null ? "No Description" : item.description
+    }</p>
+    <p class="shop__productSection--cardPrice">&#8356;${
+      item.price / (100).toFixed(2).slice(0, -3)
+    }</p>
+    
+    </div>
+        `;
+        card += cardSegment;
+      });
+
+      shop__productSection.innerHTML = card;
+    });
+});
+
 fetch("https://wizioapi.com/touchscreen/kumpi/public/getCategories")
   .then((response) => response.json())
   .then((data) => {
@@ -88,32 +118,6 @@ fetch("https://wizioapi.com/touchscreen/kumpi/public/getCategories")
 /* Menu List */
 
 const list = document.querySelector(".shop__menuList");
-
-fetch(
-  `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/OPAKOQNIBN6EO34HYL4YXKNI`
-)
-  .then((response) => response.json())
-  .then((data) => {
-    let card = "";
-    data.forEach(function (item) {
-      let cardSegment = `
-      <div id=${item.id} class="shop__productSection--card">
-  <img class="shop__productSection--image" src="${item.imageUrl}" />
-  <h1 class="shop__productSection--cardHeading">${item.name}</h1>
-  <p class="shop__productSection--cardParag">${
-    item.description === null ? "No Description" : item.description
-  }</p>
-  <p class="shop__productSection--cardPrice">&#8356;${
-    item.price / (100).toFixed(2).slice(0, -3)
-  }</p>
-  
-  </div>
-      `;
-      card += cardSegment;
-    });
-
-    shop__productSection.innerHTML = card;
-  });
 
 list.addEventListener("click", activeFunction);
 
@@ -209,7 +213,7 @@ ettiğimiz kısım */
         .children[0]
     );
 */
-    console.log(event.target.parentNode.children[0].id);
+    console.log(event.target.parentNode.children[0]);
 
     /* seçilen item'ın verilerini cartSection üzerinde display ediyoruz. */
     cartSection.innerHTML = `
@@ -586,7 +590,11 @@ function addCustomize(event) {
   console.log(event.target.parentNode.parentNode.children[0].id);
 
   fetch(
-    `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/${event.target.parentNode.parentNode.children[0].id}`
+    `https://wizioapi.com/touchscreen/kumpi/public/getCategoryItems/${
+      ""
+        ? OPAKOQNIBN6EO34HYL4YXKNI
+        : event.target.parentNode.parentNode.children[0].id
+    }`
   )
     .then((response) => response.json())
     .then((data) => {
